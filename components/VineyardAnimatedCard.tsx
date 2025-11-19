@@ -9,19 +9,18 @@ import {
 } from "react-native";
 import { Score } from "./Score";
 import { Link } from "expo-router";
-import { VineyardI } from "../lib/wineture";
+import { IVineyard } from "../interfaces";
 
-export function VineyardCard({ vineyard }: { vineyard: VineyardI }) {
+export function VineyardCard({ vineyard }: { vineyard: IVineyard }) {
   return (
-    <Link href={`/${vineyard.slug}`} asChild>
+    <Link href={`/${vineyard.uuid}`} asChild>
       <Pressable className="active:opacity-70 border border-black active:border-white/50 mb-2 bg-gray-500/10 rounded-xl p-4">
-        <View className="flex-row gap-4" key={vineyard.slug}>
+        <View className="flex-row gap-4" key={vineyard.uuid}>
           <Image source={{ uri: vineyard.img }} style={styles.image} />
           <View className="flex-shrink">
             <Text className="mb-1" style={styles.title}>
-              {vineyard.name}
+              {vineyard.vineyardName}
             </Text>
-            <Score score={vineyard.score} maxScore={10} />
             <Text className="mt-2 flex-shrink" style={styles.description}>
               {vineyard.description.slice(0, 100)}...
             </Text>
@@ -36,7 +35,7 @@ export function VineyardAnimatedCard({
   vineyard,
   index,
 }: {
-  vineyard: VineyardI;
+  vineyard: IVineyard;
   index: number;
 }) {
   const opacity = useRef(new Animated.Value(0)).current;

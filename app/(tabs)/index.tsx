@@ -4,6 +4,7 @@ import { Screen } from "../../components/Screen";
 import { useRouter } from "expo-router/build/exports";
 import { useEffect, useState } from "react";
 import { LoginForm } from "../../components/LoginForm";
+import { VineyardList } from "../../components/VineyardList";
 
 export default function HomeScreen() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -11,7 +12,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      router.replace("/home");
+      router.replace("/");
     }
   }, [isLoggedIn, router]);
 
@@ -29,11 +30,7 @@ export default function HomeScreen() {
   return (
     <Screen>
       <StatusBar style="light" />
-      <Text className="text-3xl font-bold text-emerald-600">Home</Text>
-      <Text className="text-base text-gray-700 text-center">
-        Bienvenido a la pantalla principal. Aquí irá el contenido privado de tu
-        app.
-      </Text>
+      <VineyardList />
     </Screen>
   );
 }

@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
-import { Link } from "expo-router";
 
 import { FlatList, View, ActivityIndicator, Pressable } from "react-native";
-import { getVineyards, VineyardI } from "../lib/wineture";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { getVineyards } from "../lib/wineture";
 import { VineyardAnimatedCard } from "./VineyardAnimatedCard";
-import { Logo } from "./Logo";
 
-import { CircleInfoIcon } from "./Icons";
 import { Screen } from "./Screen";
+import { IVineyard } from "../interfaces";
 
-export function Main() {
-  const [vineyards, setVineyards] = useState<VineyardI[]>([]);
+export function VineyardList() {
+  const [vineyards, setVineyards] = useState<IVineyard[]>([]);
 
   useEffect(() => {
     getVineyards().then((vineyards) => {
+      console.log(vineyards);
       setVineyards(vineyards);
     });
   }, []);
@@ -26,7 +24,7 @@ export function Main() {
       ) : (
         <FlatList
           data={vineyards}
-          keyExtractor={(vineyard) => vineyard.id.toString()}
+          keyExtractor={(vineyard) => vineyard.vineyardId.toString()}
           renderItem={({ item, index }) => (
             <VineyardAnimatedCard vineyard={item} index={index} />
           )}
