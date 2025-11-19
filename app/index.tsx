@@ -1,15 +1,13 @@
-import "./global.css";
+import { View, Text, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-
-export default function App() {
+export default function Index() {
   return (
     <View style={styles.container}>
       <Text className="text-green-500">
         Open up App.tsx to start working on your app!
       </Text>
       <StatusBar style="auto" />
-      <Text>New Text Component</Text>
+      <Text>New Text Component3</Text>
     </View>
   );
 }
