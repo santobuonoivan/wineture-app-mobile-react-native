@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Alert, TextInput, View, Text, TouchableOpacity } from "react-native";
+import { TextInput, View, Text, TouchableOpacity } from "react-native";
+import { Screen } from "./Screen";
 
 type LoginFormProps = {
   onLogin?: (credentials: { email: string; password: string }) => void;
@@ -10,12 +11,11 @@ export function LoginForm({ onLogin }: LoginFormProps) {
   const [password, setPassword] = useState("");
 
   const handleSubmit = () => {
-    Alert.alert("Login", `Intentando ingresar con ${email}`);
     onLogin?.({ email, password });
   };
 
   return (
-    <View className="w-full gap-4">
+    <Screen>
       <View className="gap-2">
         <Text className="text-sm font-semibold text-white">Correo</Text>
         <TextInput
@@ -50,6 +50,6 @@ export function LoginForm({ onLogin }: LoginFormProps) {
           Iniciar sesión
         </Text>
       </TouchableOpacity>
-    </View>
+    </Screen>
   );
 }
