@@ -19,7 +19,7 @@ export const getVineyards = async (
   const {
     lat = -35.4161,
     long = -69.6167,
-    radius = 653,
+    radius = 2653,
     currentPage = 1,
     pageSize = 20,
   } = params;
@@ -51,7 +51,7 @@ export const getVineyards = async (
       throw new Error("Invalid response format");
     }
 
-    return vineyards.data;
+    return [...vineyards.data, ...vineyards.data]; // Duplicate the array for testing
   } catch (error) {
     console.error("Error fetching vineyards:", error);
 

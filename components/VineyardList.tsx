@@ -18,11 +18,12 @@ export function VineyardList() {
   }, []);
 
   return (
-    <Screen>
+    <View className="w-full flex-1 pt-4 px-2 ">
       {vineyards.length === 0 ? (
         <ActivityIndicator color={"#fff"} size={"large"} />
       ) : (
         <FlatList
+          className=" h-full "
           data={vineyards}
           keyExtractor={(vineyard) => vineyard.vineyardId.toString()}
           renderItem={({ item, index }) => (
@@ -30,6 +31,6 @@ export function VineyardList() {
           )}
         />
       )}
-    </Screen>
+    </View>
   );
 }

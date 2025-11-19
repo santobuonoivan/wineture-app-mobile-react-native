@@ -14,9 +14,12 @@ import { IVineyard } from "../interfaces";
 export function VineyardCard({ vineyard }: { vineyard: IVineyard }) {
   return (
     <Link href={`/${vineyard.uuid}`} asChild>
-      <Pressable className="active:opacity-70 border border-black active:border-white/50 mb-2 bg-gray-500/10 rounded-xl p-4">
+      <Pressable className="active:opacity-70 border border-black active:border-white/50 mb-2 bg-gray-500/10 rounded-xl p-2">
         <View className="flex-row gap-4" key={vineyard.uuid}>
-          <Image source={{ uri: vineyard.img }} style={styles.image} />
+          <Image
+            source={{ uri: vineyard.images[0]?.url ?? vineyard.img }}
+            style={styles.image}
+          />
           <View className="flex-shrink">
             <Text className="mb-1" style={styles.title}>
               {vineyard.vineyardName}
@@ -57,9 +60,6 @@ export function VineyardAnimatedCard({
 }
 
 const styles = StyleSheet.create({
-  card: {
-    marginBottom: 42,
-  },
   image: {
     width: 107,
     height: 147,
@@ -74,11 +74,5 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     color: "#eee",
-  },
-  score: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "green",
-    marginBottom: 10,
   },
 });
