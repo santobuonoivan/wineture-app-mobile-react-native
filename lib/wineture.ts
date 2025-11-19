@@ -1,21 +1,62 @@
 import { IVineyardResponse, IVineyard } from "../interfaces/IVineyard";
+import { config } from "../config/env";
 
-export const getVineyards = async (): Promise<IVineyard[]> => {
-  const vineyards: IVineyardResponse = await fetch(
-    "https://api.wineture.cl/api/v1/vineyards/findByGeo?lat=-35.4161&long=-69.6167&radius=653&currentPage=1&pageSize=20",
-    {
+// Use the config instead of direct process.env access
+const API_BASE_URL = config.API_BASE_URL;
+const API_KEY = config.API_KEY;
+
+interface GetVineyardsParams {
+  lat?: number;
+  long?: number;
+  radius?: number;
+  currentPage?: number;
+  pageSize?: number;
+}
+
+export const getVineyards = async (
+  params: GetVineyardsParams = {}
+): Promise<IVineyard[]> => {
+  const {
+    lat = -35.4161,
+    long = -69.6167,
+    radius = 653,
+    currentPage = 1,
+    pageSize = 20,
+  } = params;
+
+  const url = new URL(`${API_BASE_URL}/vineyards/findByGeo`);
+  url.searchParams.set("lat", lat.toString());
+  url.searchParams.set("long", long.toString());
+  url.searchParams.set("radius", radius.toString());
+  url.searchParams.set("currentPage", currentPage.toString());
+  url.searchParams.set("pageSize", pageSize.toString());
+
+  try {
+    const response = await fetch(url.toString(), {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "HTTP-X-API-KEY": "EAB0A38835EBA59230EF98D8879DC2C198DF96AF",
+        "HTTP-X-API-KEY": API_KEY,
       },
-    }
-  )
-    .then((res) => res.json())
-    .catch((error) => {
-      console.error("Error fetching vineyards:", error);
-      return { data: [], total: 0 }; // Return an empty response on error
     });
-  console.log("Fetched vineyards:", vineyards);
-  return vineyards.data;
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const vineyards: IVineyardResponse = await response.json();
+
+    // Validate response structure
+    if (!vineyards || !Array.isArray(vineyards.data)) {
+      throw new Error("Invalid response format");
+    }
+
+    return vineyards.data;
+  } catch (error) {
+    console.error("Error fetching vineyards:", error);
+
+    // Return empty array instead of throwing to prevent app crashes
+    // In production, you might want to throw specific errors for different scenarios
+    return [];
+  }
 };
