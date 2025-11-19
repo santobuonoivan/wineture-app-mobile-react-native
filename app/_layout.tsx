@@ -8,14 +8,11 @@ import { Logo } from "../components/Logo";
 export default function Layout() {
   const insets = useSafeAreaInsets();
   return (
-    <View
-      style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}
-      className="flex-1 bg-white items-center justify-center"
-    >
+    <View className="flex-1 bg-black">
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: "white" },
-          headerTintColor: "yellow",
+          headerStyle: { backgroundColor: "black" },
+          headerTintColor: "white",
           headerTitle: "",
           headerLeft: () => <Logo />,
           headerRight: () => (
