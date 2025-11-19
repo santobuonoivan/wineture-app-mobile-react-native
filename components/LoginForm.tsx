@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { Alert, TextInput, View, Text, TouchableOpacity } from "react-native";
 
-export function LoginForm() {
+type LoginFormProps = {
+  onLogin?: (credentials: { email: string; password: string }) => void;
+};
+
+export function LoginForm({ onLogin }: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = () => {
     Alert.alert("Login", `Intentando ingresar con ${email}`);
+    onLogin?.({ email, password });
   };
 
   return (
