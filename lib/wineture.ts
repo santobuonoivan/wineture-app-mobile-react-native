@@ -51,7 +51,7 @@ export const getVineyards = async (
       throw new Error("Invalid response format");
     }
 
-    return [...vineyards.data, ...vineyards.data]; // Duplicate the array for testing
+    return vineyards.data;
   } catch (error) {
     console.error("Error fetching vineyards:", error);
 

@@ -5,6 +5,7 @@ import { useRouter } from "expo-router/build/exports";
 import { useEffect, useState } from "react";
 import { LoginForm } from "../../components/LoginForm";
 import { VineyardList } from "../../components/VineyardList";
+import MapComponent from "../../components/MapComponent";
 
 export default function HomeScreen() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,6 +31,7 @@ export default function HomeScreen() {
   return (
     <Screen>
       <StatusBar style="light" />
+      <MapComponent />
       <VineyardList />
     </Screen>
   );
