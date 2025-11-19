@@ -65,12 +65,12 @@ Una vez instalado el dev build, vuelve a ejecutar `npx expo start` y escanea el 
 
 ## Comandos útiles
 
-| Comando | Descripción |
-| --- | --- |
-| `npx expo start --clear` | Arranca Metro y Expo Dev Tools limpiando caché. |
+| Comando                                   | Descripción                                            |
+| ----------------------------------------- | ------------------------------------------------------ |
+| `npx expo start --clear`                  | Arranca Metro y Expo Dev Tools limpiando caché.        |
 | `npx expo run:android --variant devDebug` | Genera/instala un build nativo con nueva arquitectura. |
-| `npx expo-doctor@latest` | Revisa dependencias y configuración. |
-| `npm test` | (Reservado) Ejecuta pruebas si se añaden. |
+| `npx expo-doctor@latest`                  | Revisa dependencias y configuración.                   |
+| `npm test`                                | (Reservado) Ejecuta pruebas si se añaden.              |
 
 ## Problemas comunes
 
