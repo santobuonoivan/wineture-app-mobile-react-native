@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 
 import { FlatList, View, ActivityIndicator, Pressable } from "react-native";
-import { getVineyards } from "../lib/getVineyardsByGeo";
+import { getVineyardsByGeo } from "../lib/getVineyardsByGeo";
 import { VineyardAnimatedCard } from "./VineyardAnimatedCard";
 
-import { Screen } from "./Screen";
 import { IVineyard } from "../interfaces";
 
 export function VineyardList() {
   const [vineyards, setVineyards] = useState<IVineyard[]>([]);
 
   useEffect(() => {
-    getVineyards().then((vineyards) => {
+    getVineyardsByGeo().then((vineyards) => {
       setVineyards(vineyards);
     });
   }, []);
