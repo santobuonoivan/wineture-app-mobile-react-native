@@ -1,8 +1,6 @@
 import "../../global.css";
 import { Tabs } from "expo-router";
 import { HomeIcon, InfoIcon } from "../../components/Icons";
-import { useEffect } from "react";
-import { check } from "prettier";
 
 export default function TabsLayout() {
   return (

@@ -53,8 +53,6 @@ export const getVineyards = async (
 
     return vineyards.data;
   } catch (error) {
-    console.error("Error fetching vineyards:", error);
-
     // Return empty array instead of throwing to prevent app crashes
     // In production, you might want to throw specific errors for different scenarios
     return [];

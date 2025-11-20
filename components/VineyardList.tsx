@@ -12,7 +12,6 @@ export function VineyardList() {
 
   useEffect(() => {
     getVineyards().then((vineyards) => {
-      console.log(vineyards);
       setVineyards(vineyards);
     });
   }, []);

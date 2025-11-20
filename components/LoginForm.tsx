@@ -16,40 +16,42 @@ export function LoginForm({ onLogin }: LoginFormProps) {
 
   return (
     <Screen>
-      <View className="gap-2">
-        <Text className="text-sm font-semibold text-white">Correo</Text>
-        <TextInput
-          className="rounded-xl border border-white/30 px-4 py-3 text-white"
-          placeholder="tu@correo.com"
-          placeholderTextColor="#9CA3AF"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          value={email}
-          onChangeText={setEmail}
-        />
-      </View>
+      <View className="flex-1 justify-center items-center space-y-6 gap-4">
+        <View className="w-72 gap-2">
+          <Text className="text-sm font-semibold text-white">Correo</Text>
+          <TextInput
+            className="rounded-xl border border-white/30 px-4 py-3 text-white"
+            placeholder="tu@correo.com"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
+          />
+        </View>
 
-      <View className="gap-2">
-        <Text className="text-sm font-semibold text-white">Contraseña</Text>
-        <TextInput
-          className="rounded-xl border border-white/30 px-4 py-3 text-white"
-          placeholder="••••••••"
-          placeholderTextColor="#9CA3AF"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
-      </View>
+        <View className="w-72 gap-2">
+          <Text className="text-sm font-semibold text-white">Contraseña</Text>
+          <TextInput
+            className="rounded-xl border border-white/30 px-4 py-3 text-white"
+            placeholder="••••••••"
+            placeholderTextColor="#9CA3AF"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+        </View>
 
-      <TouchableOpacity
-        className="mt-2 rounded-xl bg-emerald-500 py-3"
-        activeOpacity={0.85}
-        onPress={handleSubmit}
-      >
-        <Text className="text-center text-base font-semibold text-black">
-          Iniciar sesión
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          className="w-72 mt-2 rounded-xl bg-emerald-500 py-3"
+          activeOpacity={0.85}
+          onPress={handleSubmit}
+        >
+          <Text className="text-center text-base font-semibold text-black">
+            Iniciar sesión
+          </Text>
+        </TouchableOpacity>
+      </View>
     </Screen>
   );
 }

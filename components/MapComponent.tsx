@@ -39,7 +39,6 @@ const MapComponent: React.FC<MapComponentProps> = ({
         const location = await Location.getCurrentPositionAsync({});
         setLocation(location);
       } catch (error) {
-        console.log("Error getting location:", error);
       } finally {
         setLoading(false);
       }

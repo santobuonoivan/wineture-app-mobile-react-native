@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Screen } from "../../components/Screen";
 import { useRouter } from "expo-router/build/exports";
@@ -21,10 +21,12 @@ export default function HomeScreen() {
     return (
       <Screen>
         <StatusBar style="light" />
-        <Text className="text-3xl font-bold text-white">
-          Por favor inicia sesión
-        </Text>
-        <LoginForm onLogin={() => setIsLoggedIn(true)} />
+        <View className="flex-1 justify-center items-center space-y-6">
+          <Text className="text-3xl font-bold text-white">
+            Por favor inicia sesión
+          </Text>
+          <LoginForm onLogin={() => setIsLoggedIn(true)} />
+        </View>
       </Screen>
     );
   }
