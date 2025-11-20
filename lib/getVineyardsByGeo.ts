@@ -13,7 +13,7 @@ interface GetVineyardsParams {
   pageSize?: number;
 }
 
-export const getVineyards = async (
+export const getVineyardsByGeo = async (
   params: GetVineyardsParams = {}
 ): Promise<IVineyard[]> => {
   const {
