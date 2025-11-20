@@ -15,7 +15,7 @@ export default function VineyardDetail() {
   useEffect(() => {
     getVineyardInfoByUUID({ uuid: vineyard_uuid }).then((data) => {
       const vineyardData = data.data;
-      if (Object.keys(vineyardData).length > 0) {
+      if (!!vineyardData) {
         setVineyard(vineyardData as IVineyardInfoWithWinesData);
       }
     });
