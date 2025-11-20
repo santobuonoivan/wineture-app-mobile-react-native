@@ -43,3 +43,50 @@ export interface IVineyardResponse {
   /** Cantidad total de elementos en el array 'data'. */
   total: number;
 }
+
+export interface GetVineyardWinesParams {
+  uuid: string;
+}
+
+export interface IVineyardInfoWithWinesData {
+  vineyardId: number;
+  uuid: string;
+  deletedAt: string | null;
+  statusId: number;
+  active: boolean;
+  vineyardName: string;
+  email: string;
+  phone: string;
+  img: string;
+  description: string;
+  additionalInfo: string;
+  descriptionEN: string;
+  additionalInfoEN: string;
+  createdAt: string;
+  updatedAt: string;
+  wines: {
+    wineId: number;
+    wineBrand: string;
+    wineCategory: string;
+    wineName: string;
+    wineBarCode: string | null;
+    alcoholContent: string;
+    monthsInBarrel: string;
+    strain: string;
+    valley: string;
+    image: string;
+    description: string;
+    promoDescription: string;
+    deletedAt: string | null;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+    vineyardId: number;
+    price: string;
+  }[];
+}
+
+export interface IVineyardInfoWithWinesResponse {
+  status: number;
+  data: IVineyardInfoWithWinesData | {};
+}

@@ -2,31 +2,23 @@ import { View, Text, ScrollView, Image, Pressable } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Screen } from "../components/Screen";
 import { useEffect, useState } from "react";
-import { IVineyard } from "../interfaces";
-
-// Mock vineyard data - in a real app this would come from an API
-const mockVineyard: IVineyard = {
-  uuid: "sample-uuid",
-  vineyardId: 1,
-  vineyardName: "Viña de Ejemplo",
-  description:
-    "Esta es una viña de ejemplo para mostrar el detalle. En una aplicación real, aquí cargarías los datos desde tu API usando el UUID del parámetro de la ruta.",
-  img: "https://via.placeholder.com/300x400/666/fff?text=Viña",
-  locations: [],
-  images: [],
-  lat: -35.4161,
-  long: -69.6167,
-};
+import { IVineyardInfoWithWinesData } from "../interfaces";
+import { getVineyardInfoByUUID } from "../lib";
 
 export default function VineyardDetail() {
   const { vineyard_uuid } = useLocalSearchParams<{ vineyard_uuid: string }>();
   const router = useRouter();
-  const [vineyard, setVineyard] = useState<IVineyard | null>(null);
+  const [vineyard, setVineyard] = useState<IVineyardInfoWithWinesData | null>(
+    null
+  );
 
   useEffect(() => {
-    // TODO: Fetch real vineyard data using vineyard_uuid
-    // For now, we'll use mock data
-    setVineyard(mockVineyard);
+    getVineyardInfoByUUID({ uuid: vineyard_uuid }).then((data) => {
+      const vineyardData = data.data;
+      if (Object.keys(vineyardData).length > 0) {
+        setVineyard(vineyardData as IVineyardInfoWithWinesData);
+      }
+    });
   }, [vineyard_uuid]);
 
   if (!vineyard) {
@@ -51,7 +43,7 @@ export default function VineyardDetail() {
 
         <View className="flex-1">
           <Image
-            source={{ uri: vineyard.img }}
+            source={{ uri: vineyard?.img }}
             className="w-full h-64 rounded-lg mb-4"
             resizeMode="cover"
           />
@@ -70,22 +62,7 @@ export default function VineyardDetail() {
             </Text>
             <Text className="text-gray-300">UUID: {vineyard.uuid}</Text>
             <Text className="text-gray-300">ID: {vineyard.vineyardId}</Text>
-            <Text className="text-gray-300">Latitud: {vineyard.lat}</Text>
-            <Text className="text-gray-300">Longitud: {vineyard.long}</Text>
           </View>
-
-          {vineyard.locations && vineyard.locations.length > 0 && (
-            <View className="bg-gray-800 rounded-lg p-4">
-              <Text className="text-white text-lg font-semibold mb-2">
-                Ubicaciones adicionales
-              </Text>
-              {vineyard.locations.map((location) => (
-                <Text key={location.id} className="text-gray-300 mb-1">
-                  • {location.location}
-                </Text>
-              ))}
-            </View>
-          )}
         </View>
       </ScrollView>
     </Screen>

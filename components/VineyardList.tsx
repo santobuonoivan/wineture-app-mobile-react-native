@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { FlatList, View, ActivityIndicator, Pressable } from "react-native";
-import { getVineyardsByGeo } from "../lib/getVineyardsByGeo";
+import { getVineyardsByGeo } from "../lib";
 import { VineyardAnimatedCard } from "./VineyardAnimatedCard";
 
 import { IVineyard } from "../interfaces";

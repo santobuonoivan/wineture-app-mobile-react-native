@@ -32,6 +32,7 @@ export default function Layout() {
             <Link asChild href="/about">
               <Pressable>
                 <CircleInfoIcon />
+                {/* se podria cambiar por el carrito de compras */}
               </Pressable>
             </Link>
           ),
