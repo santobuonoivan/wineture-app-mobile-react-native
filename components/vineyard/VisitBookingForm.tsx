@@ -6,7 +6,7 @@ import {
   Pressable,
   ActivityIndicator,
 } from "react-native";
-import { getVineyardCalendarConfig } from "../lib";
+import { getVineyardCalendarConfig } from "../../lib";
 import { DateTime } from "luxon";
 
 export function VisitBookingForm({ vineyardId }: { vineyardId: number }) {

@@ -88,7 +88,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
               ? `
           L.marker([${currentLat}, ${currentLng}])
             .addTo(map)
-            .bindPopup('Your Location')
+            .bindPopup('yo')
             .openPopup();
           `
               : ""

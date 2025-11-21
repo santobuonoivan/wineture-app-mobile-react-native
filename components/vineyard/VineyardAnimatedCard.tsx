@@ -7,9 +7,9 @@ import {
   Animated,
   Pressable,
 } from "react-native";
-import { Score } from "./Score";
+import { Score } from "../Score";
 import { Link } from "expo-router";
-import { IVineyard } from "../interfaces";
+import { IVineyard } from "../../interfaces";
 
 export function VineyardCard({ vineyard }: { vineyard: IVineyard }) {
   return (
