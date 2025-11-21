@@ -4,6 +4,7 @@ import { Screen } from "../components/Screen";
 import { useEffect, useState } from "react";
 import { IVineyardInfoWithWinesData } from "../interfaces";
 import { getVineyardInfoByUUID } from "../lib";
+import { VisitBookingForm } from "../components/VisitBookingForm";
 
 export default function VineyardDetail() {
   const { vineyard_uuid } = useLocalSearchParams<{ vineyard_uuid: string }>();
@@ -56,13 +57,30 @@ export default function VineyardDetail() {
             {vineyard.description}
           </Text>
 
-          <View className="bg-gray-800 rounded-lg p-4 mb-4">
+          <Pressable
+            onPress={() => router.push(`/wines/${vineyard.vineyardId}`)}
+            className="bg-[#800020] py-3 rounded-xl mb-6 items-center"
+            style={{
+              shadowColor: "#000",
+              shadowOpacity: 0.3,
+              shadowRadius: 6,
+              shadowOffset: { width: 0, height: 3 },
+            }}
+          >
+            <Text className="text-white text-base font-semibold">
+              Ver catálogo de vinos
+            </Text>
+          </Pressable>
+
+          <View className="bg-gray-800 rounded-lg p-4 mb-6">
             <Text className="text-white text-lg font-semibold mb-2">
               Información de ubicación
             </Text>
             <Text className="text-gray-300">UUID: {vineyard.uuid}</Text>
             <Text className="text-gray-300">ID: {vineyard.vineyardId}</Text>
           </View>
+
+          <VisitBookingForm vineyardId={vineyard.vineyardId} />
         </View>
       </ScrollView>
     </Screen>

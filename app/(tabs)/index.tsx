@@ -22,9 +22,6 @@ export default function HomeScreen() {
       <Screen>
         <StatusBar style="light" />
         <View className="flex-1 justify-center items-center space-y-6">
-          <Text className="text-3xl font-bold text-white">
-            Por favor inicia sesión
-          </Text>
           <LoginForm onLogin={() => setIsLoggedIn(true)} />
         </View>
       </Screen>

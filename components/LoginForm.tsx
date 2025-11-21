@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { TextInput, View, Text, TouchableOpacity } from "react-native";
-import { Screen } from "./Screen";
+import {
+  TextInput,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 type LoginFormProps = {
   onLogin?: (credentials: { email: string; password: string }) => void;
@@ -15,43 +22,58 @@ export function LoginForm({ onLogin }: LoginFormProps) {
   };
 
   return (
-    <Screen>
-      <View className="flex-1 justify-center items-center space-y-6 gap-4">
-        <View className="w-72 gap-2">
-          <Text className="text-sm font-semibold text-white">Correo</Text>
-          <TextInput
-            className="rounded-xl border border-white/30 px-4 py-3 text-white"
-            placeholder="tu@correo.com"
-            placeholderTextColor="#9CA3AF"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            value={email}
-            onChangeText={setEmail}
-          />
-        </View>
-
-        <View className="w-72 gap-2">
-          <Text className="text-sm font-semibold text-white">Contraseña</Text>
-          <TextInput
-            className="rounded-xl border border-white/30 px-4 py-3 text-white"
-            placeholder="••••••••"
-            placeholderTextColor="#9CA3AF"
-            secureTextEntry
-            value={password}
-            onChangeText={setPassword}
-          />
-        </View>
-
-        <TouchableOpacity
-          className="w-72 mt-2 rounded-xl bg-emerald-500 py-3"
-          activeOpacity={0.85}
-          onPress={handleSubmit}
+    <LinearGradient
+      colors={["#6B0F1A", "#9A031E"]}
+      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 24,
+        }}
+      >
+        <View
+          className="w-full max-w-[400px] bg-white rounded-2xl p-6"
+          style={{
+            shadowColor: "#000",
+            shadowOpacity: 0.25,
+            shadowRadius: 10,
+            shadowOffset: { width: 0, height: 4 },
+            elevation: 6,
+          }}
         >
-          <Text className="text-center text-base font-semibold text-black">
-            Iniciar sesión
+          <View className="items-center mb-6">
+            <Image
+              source={require("../assets/logo.webp")}
+              style={{ height: 80, width: 80, resizeMode: "contain" }}
+            />
+          </View>
+
+          <Text className="text-center text-[14px] text-black/70 tracking-widest mb-6">
+            INICIA SESIÓN EN TU CUENTA
           </Text>
-        </TouchableOpacity>
-      </View>
-    </Screen>
+
+          <TouchableOpacity
+            onPress={handleSubmit}
+            activeOpacity={0.85}
+            className="bg-[#800020] py-3 rounded-lg flex-row justify-center items-center"
+          >
+            <Text className="text-white text-[16px] font-semibold">
+              Entra con SSO
+            </Text>
+          </TouchableOpacity>
+
+          <View className="my-6 border-b border-gray-300" />
+
+          <TouchableOpacity onPress={() => {}}>
+            <Text className="text-center text-black/60">
+              Si eres nuevo regístrate
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </LinearGradient>
   );
 }

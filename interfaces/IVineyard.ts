@@ -48,6 +48,10 @@ export interface GetVineyardWinesParams {
   uuid: string;
 }
 
+export interface GetVineyardCalendarParams {
+  vineyardId: number;
+}
+
 export interface IVineyardInfoWithWinesData {
   vineyardId: number;
   uuid: string;
