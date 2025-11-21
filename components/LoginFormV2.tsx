@@ -12,6 +12,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "../hooks/useAuth";
+import { useLanguage } from "../hooks/useLanguage";
 
 export function LoginFormV2() {
   const [email, setEmail] = useState("");
@@ -19,11 +20,12 @@ export function LoginFormV2() {
   const [showPassword, setShowPassword] = useState(false);
   const [forceLogin, setForceLogin] = useState(true);
   const { signIn, isLoading } = useAuth();
+  const { t } = useLanguage();
 
   const handleLogin = async () => {
     if (!forceLogin) {
       if (!email || !password) {
-        Alert.alert("Error", "Por favor completa todos los campos");
+        Alert.alert(t("common.error"), t("auth.fillFields"));
         return;
       }
     } else {
@@ -64,7 +66,7 @@ export function LoginFormV2() {
 
               {/* Título principal */}
               <Text className="text-white text-3xl font-bold text-center mb-6 mt-2">
-                Bienvenido de nuevo
+                {t("auth.welcome")}
               </Text>
 
               {/* Formulario */}
@@ -72,7 +74,7 @@ export function LoginFormV2() {
                 {/* Campo Email */}
                 <View className="flex-col">
                   <Text className="text-white text-base font-medium mb-2">
-                    Email
+                    {t("auth.email")}
                   </Text>
                   <View className="relative">
                     <View className="absolute left-4 top-0 h-14 justify-center z-10">
@@ -84,7 +86,7 @@ export function LoginFormV2() {
                     </View>
                     <TextInput
                       className="w-full h-14 bg-white/10 border border-white/20 rounded-lg text-white pl-12 pr-4 text-base"
-                      placeholder="Introduce tu email"
+                      placeholder={t("auth.emailPlaceholder")}
                       placeholderTextColor="rgba(255,255,255,0.4)"
                       value={email}
                       onChangeText={setEmail}
@@ -97,7 +99,7 @@ export function LoginFormV2() {
                 {/* Campo Contraseña */}
                 <View className="flex-col">
                   <Text className="text-white text-base font-medium mb-2">
-                    Contraseña
+                    {t("auth.password")}
                   </Text>
                   <View className="relative">
                     <View className="absolute left-4 top-0 h-14 justify-center z-10">
@@ -109,7 +111,7 @@ export function LoginFormV2() {
                     </View>
                     <TextInput
                       className="w-full h-14 bg-white/10 border border-white/20 rounded-lg text-white pl-12 pr-12 text-base"
-                      placeholder="Introduce tu contraseña"
+                      placeholder={t("auth.passwordPlaceholder")}
                       placeholderTextColor="rgba(255,255,255,0.4)"
                       value={password}
                       onChangeText={setPassword}
@@ -133,7 +135,7 @@ export function LoginFormV2() {
                 <View className="items-end pt-1">
                   <Pressable>
                     <Text className="text-white/60 text-sm underline">
-                      ¿Olvidaste tu contraseña?
+                      {t("auth.forgotPassword")}
                     </Text>
                   </Pressable>
                 </View>
@@ -158,12 +160,12 @@ export function LoginFormV2() {
                         className="mr-2"
                       />
                       <Text className="text-white text-base font-bold">
-                        Iniciando...
+                        {t("auth.signingIn")}
                       </Text>
                     </>
                   ) : (
                     <Text className="text-white text-base font-bold">
-                      Iniciar Sesión
+                      {t("auth.signIn")}
                     </Text>
                   )}
                 </TouchableOpacity>
@@ -172,9 +174,9 @@ export function LoginFormV2() {
               {/* Registro */}
               <View className="items-center">
                 <Text className="text-white/60 text-sm">
-                  ¿No tienes cuenta?{" "}
+                  {t("auth.noAccount")}{" "}
                   <Text className="font-bold text-white underline">
-                    Regístrate
+                    {t("auth.signUp")}
                   </Text>
                 </Text>
               </View>

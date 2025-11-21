@@ -8,8 +8,11 @@ import * as NavigationBar from "expo-navigation-bar";
 import { CartIcon } from "../components/Icons";
 import { Logo } from "../components/Logo";
 import { CartBadge } from "../components/cart/CartBadge";
+import { ProfileIcon } from "../components/ProfileIcon";
 import { useAuth } from "../hooks/useAuth";
 import { LoginFormV2 } from "../components/LoginFormV2";
+// Importar configuración de i18n
+import "../config/i18n";
 
 export default function Layout() {
   const insets = useSafeAreaInsets();
@@ -23,12 +26,12 @@ export default function Layout() {
   }, []);
 
   return (
-    <View className="flex-1 bg-black p-2 rounded-lg">
+    <View className="flex-1 bg-[#221013] p-2">
       <StatusBar style="light" hidden={false} />
       {isAuthenticated ? (
         <Stack
           screenOptions={{
-            headerStyle: { backgroundColor: "black" },
+            headerStyle: { backgroundColor: "#221013" },
             headerTintColor: "white",
             headerTitle: "",
             headerLeft: () => (
@@ -39,13 +42,21 @@ export default function Layout() {
               </Link>
             ),
             headerRight: () => (
-              <Link asChild href="/cart">
-                <Pressable className="relative p-3">
-                  <CartBadge count={5} />
-                  <CartIcon />
-                  {/* se podria cambiar por el carrito de compras */}
-                </Pressable>
-              </Link>
+              <View className="flex-row">
+                <Link asChild href="/cart">
+                  <Pressable className="relative p-3">
+                    <CartBadge count={5} />
+                    <CartIcon />
+                    {/* se podria cambiar por el carrito de compras */}
+                  </Pressable>
+                </Link>
+                <Link asChild href="/profile">
+                  <Pressable className="relative p-3">
+                    <ProfileIcon />
+                    {/* se podria cambiar por el carrito de compras */}
+                  </Pressable>
+                </Link>
+              </View>
             ),
           }}
         />

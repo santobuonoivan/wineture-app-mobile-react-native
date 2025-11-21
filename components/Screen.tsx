@@ -1,7 +1,14 @@
 import "../global.css";
-import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View, Platform } from "react-native";
+import { useEffect } from "react";
+import * as NavigationBar from "expo-navigation-bar";
 
 export function Screen({ children }: { children: React.ReactNode }) {
-  return <View className="w-full flex-1 bg-black px-2 ">{children}</View>;
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      NavigationBar.setVisibilityAsync("hidden");
+    }
+  }, []);
+
+  return <View className="w-full flex-1 bg-[#221013] px-2 ">{children}</View>;
 }

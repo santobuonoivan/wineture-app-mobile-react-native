@@ -1,0 +1,54 @@
+{
+  "auth": {
+    "welcome": "Bem-vindo de volta",
+    "email": "Email",
+    "password": "Senha",
+    "emailPlaceholder": "Digite seu email",
+    "passwordPlaceholder": "Digite sua senha",
+    "forgotPassword": "Esqueceu sua senha?",
+    "signIn": "Entrar",
+    "signUp": "Cadastrar",
+    "noAccount": "Não tem conta?",
+    "signingIn": "Entrando...",
+    "fillFields": "Por favor preencha todos os campos",
+    "welcomeUser": "Bem-vindo {{name}}",
+    "invalidCredentials": "Credenciais inválidas",
+    "sessionClosed": "Você saiu com sucesso",
+    "logoutConfirm": "Tem certeza que quer sair?",
+    "logout": "Sair",
+    "cancel": "Cancelar"
+  },
+  "profile": {
+    "title": "Perfil",
+    "user": "Usuário",
+    "defaultEmail": "email@exemplo.com",
+    "myActivity": "Minha Atividade",
+    "orders": "Pedidos",
+    "reservations": "Reservas",
+    "orderNumber": "Pedido #{{number}}",
+    "reservationNumber": "Reserva #{{number}}",
+    "viewMore": "Ver mais ({{count}} {{type}} a mais)",
+    "editProfile": "Editar Perfil",
+    "memberSince": "Membro desde hoje",
+    "locationUndefined": "Localização não definida",
+    "selectLanguage": "Selecionar idioma",
+    "orderStatus": {
+      "delivered": "Entregue",
+      "inTransit": "Em Trânsito",
+      "processing": "Processando",
+      "cancelled": "Cancelado"
+    },
+    "reservationStatus": {
+      "confirmed": "Confirmada",
+      "pending": "Pendente",
+      "completed": "Completada",
+      "cancelled": "Cancelada"
+    }
+  },
+  "common": {
+    "appName": "VinhedoApp",
+    "error": "Erro",
+    "success": "Sucesso",
+    "loading": "Carregando..."
+  }
+}

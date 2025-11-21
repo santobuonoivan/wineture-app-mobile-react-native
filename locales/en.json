@@ -1,0 +1,54 @@
+{
+  "auth": {
+    "welcome": "Welcome back",
+    "email": "Email",
+    "password": "Password",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password",
+    "forgotPassword": "Forgot your password?",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "noAccount": "Don't have an account?",
+    "signingIn": "Signing in...",
+    "fillFields": "Please fill all fields",
+    "welcomeUser": "Welcome {{name}}",
+    "invalidCredentials": "Invalid credentials",
+    "sessionClosed": "You have successfully logged out",
+    "logoutConfirm": "Are you sure you want to log out?",
+    "logout": "Log Out",
+    "cancel": "Cancel"
+  },
+  "profile": {
+    "title": "Profile",
+    "user": "User",
+    "defaultEmail": "email@example.com",
+    "myActivity": "My Activity",
+    "orders": "Orders",
+    "reservations": "Reservations",
+    "orderNumber": "Order #{{number}}",
+    "reservationNumber": "Reservation #{{number}}",
+    "viewMore": "View more ({{count}} more {{type}})",
+    "editProfile": "Edit Profile",
+    "memberSince": "Member since today",
+    "locationUndefined": "Location not defined",
+    "selectLanguage": "Select language",
+    "orderStatus": {
+      "delivered": "Delivered",
+      "inTransit": "In Transit",
+      "processing": "Processing",
+      "cancelled": "Cancelled"
+    },
+    "reservationStatus": {
+      "confirmed": "Confirmed",
+      "pending": "Pending",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    }
+  },
+  "common": {
+    "appName": "WineyardApp",
+    "error": "Error",
+    "success": "Success",
+    "loading": "Loading..."
+  }
+}

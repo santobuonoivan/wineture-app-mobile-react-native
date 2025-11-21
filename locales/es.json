@@ -1,0 +1,54 @@
+{
+  "auth": {
+    "welcome": "Bienvenido de nuevo",
+    "email": "Email",
+    "password": "Contraseña",
+    "emailPlaceholder": "Introduce tu email",
+    "passwordPlaceholder": "Introduce tu contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "signIn": "Iniciar Sesión",
+    "signUp": "Regístrate",
+    "noAccount": "¿No tienes cuenta?",
+    "signingIn": "Iniciando...",
+    "fillFields": "Por favor completa todos los campos",
+    "welcomeUser": "Bienvenido {{name}}",
+    "invalidCredentials": "Credenciales incorrectas",
+    "sessionClosed": "Has cerrado sesión exitosamente",
+    "logoutConfirm": "¿Estás seguro que quieres cerrar sesión?",
+    "logout": "Cerrar Sesión",
+    "cancel": "Cancelar"
+  },
+  "profile": {
+    "title": "Perfil",
+    "user": "Usuario",
+    "defaultEmail": "email@ejemplo.com",
+    "myActivity": "Mi Actividad",
+    "orders": "Pedidos",
+    "reservations": "Reservas",
+    "orderNumber": "Pedido #{{number}}",
+    "reservationNumber": "Reserva #{{number}}",
+    "viewMore": "Ver más ({{count}} {{type}} más)",
+    "editProfile": "Editar Perfil",
+    "memberSince": "Miembro desde hoy",
+    "locationUndefined": "Ubicación no definida",
+    "selectLanguage": "Seleccionar idioma",
+    "orderStatus": {
+      "delivered": "Entregado",
+      "inTransit": "En tránsito",
+      "processing": "Procesando",
+      "cancelled": "Cancelado"
+    },
+    "reservationStatus": {
+      "confirmed": "Confirmada",
+      "pending": "Pendiente",
+      "completed": "Completada",
+      "cancelled": "Cancelada"
+    }
+  },
+  "common": {
+    "appName": "ViñedoApp",
+    "error": "Error",
+    "success": "Éxito",
+    "loading": "Cargando..."
+  }
+}
