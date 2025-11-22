@@ -167,9 +167,10 @@ export default function ProfileScreen() {
   );
 
   const renderReservationItem = (reservation: Reservation) => (
-    <View
+    <TouchableOpacity
       key={reservation.id}
       className="flex-row items-center justify-between bg-transparent min-h-[72px] py-2 pr-2"
+      onPress={() => router.push(`/reservation/${reservation.id}`)}
     >
       <View className="flex-row items-center gap-4 flex-1">
         <View className="w-12 h-12 rounded-lg bg-[#c6102e]/10 items-center justify-center">
@@ -187,7 +188,7 @@ export default function ProfileScreen() {
       <Text className="text-white text-base ml-2 text-right">
         {reservation.status}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 
   const currentItems = activeTab === "orders" ? orders : reservations;

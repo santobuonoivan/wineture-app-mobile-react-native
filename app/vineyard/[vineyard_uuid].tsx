@@ -1,10 +1,18 @@
-import { View, Text, ScrollView, Image, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Screen } from "../../components/Screen";
 import { useEffect, useState } from "react";
 import { IVineyardInfoWithWinesData } from "../../interfaces";
 import { getVineyardInfoByUUID } from "../../lib";
-import { VisitBookingForm } from "../../components/vineyard/VisitBookingForm";
+import { Ionicons } from "@expo/vector-icons";
+import MapComponent from "../../components/MapComponent";
 
 export default function VineyardDetail() {
   const { vineyard_uuid } = useLocalSearchParams<{ vineyard_uuid: string }>();
@@ -25,64 +33,198 @@ export default function VineyardDetail() {
   if (!vineyard) {
     return (
       <Screen>
-        <Text className="text-white text-center text-lg mt-10">
-          Cargando viña...
-        </Text>
+        <View className="flex-1 items-center justify-center">
+          <Text className="text-white text-center text-lg">
+            Cargando viña...
+          </Text>
+        </View>
       </Screen>
     );
   }
 
   return (
     <Screen>
-      <ScrollView className="flex-1">
-        <Pressable
+      {/* Top App Bar */}
+      <View className="flex-row items-center justify-between p-4 pb-2 bg-[#221013]/90">
+        <TouchableOpacity
+          className="w-12 h-12 items-center justify-center rounded-full"
           onPress={() => router.back()}
-          className="mb-4 bg-gray-800 rounded-lg px-4 py-2 self-start"
         >
-          <Text className="text-white font-semibold">← Volver</Text>
-        </Pressable>
-
-        <View className="flex-1">
-          <Image
-            source={{ uri: vineyard?.img }}
-            className="w-full h-64 rounded-lg mb-4"
-            resizeMode="cover"
-          />
-
-          <Text className="text-white text-2xl font-bold mb-4">
-            {vineyard.vineyardName}
-          </Text>
-
-          <Text className="text-gray-300 text-base leading-6 mb-6">
-            {vineyard.description}
-          </Text>
-
-          <Pressable
-            onPress={() => router.push(`/wines/${vineyard.vineyardId}`)}
-            className="bg-[#800020] py-3 rounded-xl mb-6 items-center"
-            style={{
-              shadowColor: "#000",
-              shadowOpacity: 0.3,
-              shadowRadius: 6,
-              shadowOffset: { width: 0, height: 3 },
-            }}
-          >
-            <Text className="text-white text-base font-semibold">
-              Ver catálogo de vinos
-            </Text>
-          </Pressable>
-
-          <View className="bg-gray-800 rounded-lg p-4 mb-6">
-            <Text className="text-white text-lg font-semibold mb-2">
-              Información de ubicación
-            </Text>
-            <Text className="text-gray-300">UUID: {vineyard.uuid}</Text>
-            <Text className="text-gray-300">ID: {vineyard.vineyardId}</Text>
+          <Ionicons name="arrow-back" size={22} color="white" />
+        </TouchableOpacity>
+        <View className="flex-row items-center gap-2">
+          <TouchableOpacity className="w-10 h-10 items-center justify-center rounded-full">
+            <Ionicons name="heart-outline" size={22} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity className="w-10 h-10 items-center justify-center rounded-full">
+            <Ionicons name="share-social-outline" size={22} color="white" />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View className="flex-1 pb-20">
+        <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+          {/* Carrusel horizontal mock con 3 imágenes */}
+          <View className="flex-row overflow-x-scroll px-4 pt-2">
+            <View className="flex-row gap-3">
+              {[0, 1, 2].map((index) => (
+                <Image
+                  key={index}
+                  source={{ uri: vineyard.img }}
+                  className="h-56 w-[85vw] max-w-[340px] rounded-xl"
+                  resizeMode="cover"
+                />
+              ))}
+            </View>
           </View>
 
-          <VisitBookingForm vineyardId={vineyard.vineyardId} />
+          {/* Indicadores de página */}
+          <View className="flex-row items-center justify-center gap-2 py-4">
+            <View className="h-2 w-4 rounded-full bg-[#800020]" />
+            <View className="h-2 w-2 rounded-full bg-[#800020]/40" />
+            <View className="h-2 w-2 rounded-full bg-[#800020]/40" />
+          </View>
+
+          {/* Título y resumen */}
+          <View className="px-4 pb-2">
+            <Text className="text-white text-3xl font-bold mb-1">
+              {vineyard.vineyardName}
+            </Text>
+            <View className="flex-row items-center gap-2 pt-2">
+              <View className="flex-row items-center gap-1">
+                <Ionicons name="star" size={16} color="#facc15" />
+                <Text className="text-white font-bold text-sm">4.8</Text>
+                <Text className="text-[#c9929b] text-sm">(215 reseñas)</Text>
+              </View>
+              <Text className="text-[#c9929b] text-sm">•</Text>
+              <Text className="text-[#c9929b] text-sm">
+                Valle de Guadalupe, México
+              </Text>
+            </View>
+          </View>
+
+          {/* Información */}
+          <View className="flex flex-col gap-6 p-4">
+            {/* Sobre nosotros */}
+            <View className="bg-[#482329] p-5 rounded-xl">
+              <Text className="text-white text-xl font-bold mb-2">
+                Sobre Nosotros
+              </Text>
+              <Text className="text-[#f3d6dc] text-base leading-relaxed">
+                {vineyard.description}
+              </Text>
+            </View>
+
+            {/* Horarios y servicios */}
+            <View className="flex-col gap-4">
+              {/* Horarios */}
+              <View className="bg-[#482329] p-5 rounded-xl">
+                <View className="flex-row items-center gap-2 mb-3">
+                  <Ionicons name="time-outline" size={18} color="#f3d6dc" />
+                  <Text className="text-white text-lg font-bold">Horarios</Text>
+                </View>
+                <View className="gap-1">
+                  <Text className="text-[#f3d6dc] text-sm">
+                    <Text className="font-semibold">Lunes a Viernes:</Text>{" "}
+                    10:00 - 18:00
+                  </Text>
+                  <Text className="text-[#f3d6dc] text-sm">
+                    <Text className="font-semibold">Sábados y Domingos:</Text>{" "}
+                    10:00 - 20:00
+                  </Text>
+                </View>
+              </View>
+
+              {/* Servicios */}
+              <View className="bg-[#482329] p-5 rounded-xl">
+                <View className="flex-row items-center gap-2 mb-3">
+                  <Ionicons name="wine" size={18} color="#f3d6dc" />
+                  <Text className="text-white text-lg font-bold">
+                    Servicios
+                  </Text>
+                </View>
+                <View className="flex-row flex-wrap gap-x-6 gap-y-2">
+                  {[
+                    "Cata de vinos",
+                    "Restaurante",
+                    "Tours guiados",
+                    "Accesible",
+                  ].map((label) => (
+                    <View key={label} className="flex-row items-center gap-2">
+                      <Ionicons
+                        name="checkmark-circle-outline"
+                        size={16}
+                        color="#C06078"
+                      />
+                      <Text className="text-[#f3d6dc] text-sm">{label}</Text>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            </View>
+
+            {/* Ubicación con mapa mock */}
+            <View className="bg-[#482329] p-5 rounded-xl">
+              <View className="flex-row items-center gap-2 mb-3">
+                <Ionicons name="location-outline" size={18} color="#f3d6dc" />
+                <Text className="text-white text-lg font-bold">Ubicación</Text>
+              </View>
+              <Text className="text-[#f3d6dc] text-sm mb-4">
+                Carretera Ensenada-Tecate Km 88, Valle de Guadalupe, 22760,
+                B.C., México
+              </Text>
+              <View className="w-full aspect-video rounded-lg overflow-hidden bg-black/30">
+                <MapComponent
+                  latitude={vineyard.latitude ?? -32.0391}
+                  longitude={vineyard.longitude ?? -60.3069}
+                  markers={[
+                    {
+                      id: vineyard.uuid,
+                      latitude: vineyard.latitude ?? -32.0391,
+                      longitude: vineyard.longitude ?? -60.3069,
+                      title: vineyard.vineyardName,
+                      description: "Ubicación del viñedo",
+                    },
+                  ]}
+                />
+              </View>
+            </View>
+
+            {/* Contacto */}
+            <View className="bg-[#482329] p-5 rounded-xl mb-4">
+              <Text className="text-white text-lg font-bold mb-4">
+                Contacto
+              </Text>
+              <View className="flex-col gap-3">
+                <TouchableOpacity className="flex-row items-center justify-center gap-2 px-4 py-3 bg-[#800020]/20 rounded-lg">
+                  <Ionicons name="call-outline" size={18} color="#c6102e" />
+                  <Text className="text-[#c6102e] font-bold">Llamar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity className="flex-row items-center justify-center gap-2 px-4 py-3 bg-[#800020]/20 rounded-lg">
+                  <Ionicons name="mail-outline" size={18} color="#c6102e" />
+                  <Text className="text-[#c6102e] font-bold">Email</Text>
+                </TouchableOpacity>
+                <TouchableOpacity className="flex-row items-center justify-center gap-2 px-4 py-3 bg-[#800020]/20 rounded-lg">
+                  <Ionicons name="globe-outline" size={18} color="#c6102e" />
+                  <Text className="text-[#c6102e] font-bold">Sitio Web</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+
+        {/* Sticky footer CTA */}
+        <View className="absolute bottom-0 left-0 right-0 p-4 bg-[#221013]">
+          <TouchableOpacity
+            className="w-full h-14 rounded-xl bg-[#800020] items-center justify-center flex-row gap-2"
+            onPress={() => router.push(`/vineyard/${vineyard_uuid}/book`)}
+          >
+            <Ionicons name="calendar-outline" size={20} color="#fff" />
+            <Text className="text-white text-lg font-bold">
+              Reservar Visita
+            </Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     </Screen>
   );
 }

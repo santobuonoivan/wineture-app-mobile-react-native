@@ -66,6 +66,18 @@
       "cancelado": "Cancelado"
     }
   },
+  "reservationDetails": {
+    "title": "Detalhes da Reserva",
+    "visitLabel": "Visita a",
+    "date": "Data",
+    "time": "Hora",
+    "people": "Pessoas",
+    "statusTitle": "Reserva Confirmada",
+    "statusDescription": "Você receberá um lembrete por email 24 horas antes da sua visita. Estamos esperando por você!",
+    "specialInstructionsTitle": "Instruções Especiais",
+    "addToCalendar": "Adicionar ao Calendário",
+    "cancelReservation": "Cancelar Reserva"
+  },
   "common": {
     "appName": "VinhedoApp",
     "error": "Erro",

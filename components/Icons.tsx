@@ -17,3 +17,11 @@ export const InfoIcon = (props: any) => (
 export const CartIcon = (props: any) => (
   <AntDesign name="shopping-cart" size={24} color="white" {...props} />
 );
+
+export const MenuIconFold = (props: any) => (
+  <AntDesign name="menu-fold" size={24} color="white" {...props} />
+);
+
+export const MenuIconUnfold = (props: any) => (
+  <AntDesign name="menu-unfold" size={24} color="white" {...props} />
+);

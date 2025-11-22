@@ -66,6 +66,18 @@
       "cancelado": "Cancelled"
     }
   },
+  "reservationDetails": {
+    "title": "Reservation Details",
+    "visitLabel": "Visit to",
+    "date": "Date",
+    "time": "Time",
+    "people": "People",
+    "statusTitle": "Reservation Confirmed",
+    "statusDescription": "You will receive an email reminder 24 hours before your visit. We look forward to seeing you!",
+    "specialInstructionsTitle": "Special Instructions",
+    "addToCalendar": "Add to Calendar",
+    "cancelReservation": "Cancel Reservation"
+  },
   "common": {
     "appName": "WineyardApp",
     "error": "Error",

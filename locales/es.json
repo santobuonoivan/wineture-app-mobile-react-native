@@ -66,6 +66,18 @@
       "cancelado": "Cancelado"
     }
   },
+  "reservationDetails": {
+    "title": "Detalles de la Reserva",
+    "visitLabel": "Visita a",
+    "date": "Fecha",
+    "time": "Hora",
+    "people": "Personas",
+    "statusTitle": "Reserva Confirmada",
+    "statusDescription": "Recibirás un recordatorio por correo electrónico 24 horas antes de tu visita. ¡Te esperamos!",
+    "specialInstructionsTitle": "Instrucciones Especiales",
+    "addToCalendar": "Añadir al Calendario",
+    "cancelReservation": "Cancelar Reserva"
+  },
   "common": {
     "appName": "ViñedoApp",
     "error": "Error",
