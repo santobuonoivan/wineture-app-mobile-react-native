@@ -91,9 +91,7 @@ export const useCartStore = create<CartState>((set) => ({
   increment: (itemId: number) =>
     set((state) => {
       const items = state.items.map((item) =>
-        item.itemId === itemId
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
+        item.itemId === itemId ? { ...item, quantity: item.quantity + 1 } : item
       );
       const subtotal = calcSubtotal(items);
       const total = subtotal + state.shipping;

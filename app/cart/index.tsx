@@ -148,13 +148,18 @@ export default function Cart() {
             className={`flex w-full h-12 items-center justify-center rounded-xl ${
               isCartEmpty ? "bg-[#4a2a2f] opacity-50" : "bg-[#d41132]"
             }`}
+            onPress={() => {
+              if (!isCartEmpty) {
+                router.push("/cart/checkout-shipping");
+              }
+            }}
           >
             <Text
               className={`text-base font-bold ${
                 isCartEmpty ? "text-[#b99da1]" : "text-white"
               }`}
             >
-              Proceder al Pago
+              ORDENAR
             </Text>
           </Pressable>
         </View>

@@ -9,6 +9,7 @@ interface ConfirmModalProps {
   cancelLabel?: string;
   onAccept: () => void;
   onClose: () => void;
+  isError?: boolean;
 }
 
 export function ConfirmModal({
@@ -19,6 +20,7 @@ export function ConfirmModal({
   cancelLabel = "Cancelar",
   onAccept,
   onClose,
+  isError = false,
 }: ConfirmModalProps) {
   const handleAccept = () => {
     onAccept();
@@ -33,13 +35,25 @@ export function ConfirmModal({
       onRequestClose={onClose}
     >
       <View className="flex-1 bg-black/60 items-center justify-center px-6">
-        <View className="w-full rounded-2xl bg-[#2b1518] border border-white/10 p-6">
+        <View
+          className={`w-full rounded-2xl border p-6 ${
+            isError
+              ? "bg-[#3b1114] border-[#ff4b5c]"
+              : "bg-[#2b1518] border-white/10"
+          }`}
+        >
           {title ? (
             <Text className="text-white text-lg font-semibold mb-2">
               {title}
             </Text>
           ) : null}
-          <Text className="text-[#e7d6d8] text-sm mb-6">{body}</Text>
+          <Text
+            className={`text-sm mb-6 ${
+              isError ? "text-[#ffd7dc]" : "text-[#e7d6d8]"
+            }`}
+          >
+            {body}
+          </Text>
           <View className="flex-row justify-end gap-3">
             <Pressable
               onPress={onClose}
