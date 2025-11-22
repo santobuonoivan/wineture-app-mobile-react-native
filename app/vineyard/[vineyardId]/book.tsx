@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { VisitBookingForm } from "../../../components/vineyard/VisitBookingForm";
 
 export default function VineyardBookingScreen() {
-  const { vineyard_uuid } = useLocalSearchParams<{ vineyard_uuid: string }>();
+  const { vineyardId } = useLocalSearchParams<{ vineyardId: string }>();
   const router = useRouter();
 
   return (
@@ -31,7 +31,9 @@ export default function VineyardBookingScreen() {
         </Text>
 
         {/* Usa el formulario existente, pasando el vineyard_uuid si es necesario */}
-        <VisitBookingForm vineyardId={vineyard_uuid ?? ""} />
+        <VisitBookingForm
+          vineyardId={!isNaN(Number(vineyardId)) ? Number(vineyardId) : 0}
+        />
       </ScrollView>
     </Screen>
   );

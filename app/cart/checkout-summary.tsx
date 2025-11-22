@@ -50,7 +50,10 @@ export default function CheckoutSummary() {
         </View>
 
         <View className="w-full pt-4 space-y-3">
-          <Pressable className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#c20a29] px-6">
+          <Pressable
+            className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#c20a29] px-6"
+            onPress={() => router.push("/order/id")}
+          >
             <Text className="text-base font-bold text-white">
               Ver Detalle del Pedido
             </Text>

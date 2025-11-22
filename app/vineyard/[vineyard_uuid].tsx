@@ -157,6 +157,21 @@ export default function VineyardDetail() {
               </View>
             </View>
 
+            {/* Botón de catálogo de vinos */}
+            <View className="mt-2">
+              <TouchableOpacity
+                className="w-full h-14 rounded-xl bg-[#800020] items-center justify-center flex-row gap-2"
+                onPress={() =>
+                  router.push(`/vineyard/${vineyard_uuid}/catalog`)
+                }
+              >
+                <Ionicons name="wine" size={20} color="#fff" />
+                <Text className="text-white text-lg font-bold">
+                  Ver nuestros vinos
+                </Text>
+              </TouchableOpacity>
+            </View>
+
             {/* Contacto */}
             <View className="bg-[#482329] p-5 rounded-xl mb-4">
               <Text className="text-white text-lg font-bold mb-4">
@@ -184,7 +199,7 @@ export default function VineyardDetail() {
         <View className="absolute bottom-0 left-0 right-0 p-4 bg-[#221013]">
           <TouchableOpacity
             className="w-full h-14 rounded-xl bg-[#800020] items-center justify-center flex-row gap-2"
-            onPress={() => router.push(`/vineyard/${vineyard_uuid}/book`)}
+            onPress={() => router.push(`/vineyard/${vineyard.vineyardId}/book`)}
           >
             <Ionicons name="calendar-outline" size={20} color="#fff" />
             <Text className="text-white text-lg font-bold">
