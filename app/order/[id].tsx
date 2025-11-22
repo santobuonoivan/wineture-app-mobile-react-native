@@ -191,26 +191,34 @@ export default function OrderDetailScreen() {
             {/* Totals */}
             <View className="gap-2 pt-2">
               <View className="flex-row justify-between items-center">
-                <Text className="text-[#c9929b] text-base">{t("orderDetails.subtotal")}</Text>
+                <Text className="text-[#c9929b] text-base">
+                  {t("orderDetails.subtotal")}
+                </Text>
                 <Text className="text-white text-base">
                   ${orderDetails.subtotal.toFixed(2)}
                 </Text>
               </View>
               <View className="flex-row justify-between items-center">
-                <Text className="text-[#c9929b] text-base">{t("orderDetails.shipping")}</Text>
+                <Text className="text-[#c9929b] text-base">
+                  {t("orderDetails.shipping")}
+                </Text>
                 <Text className="text-white text-base">
                   ${orderDetails.shipping.toFixed(2)}
                 </Text>
               </View>
               <View className="flex-row justify-between items-center">
-                <Text className="text-[#c9929b] text-base">{t("orderDetails.taxes")}</Text>
+                <Text className="text-[#c9929b] text-base">
+                  {t("orderDetails.taxes")}
+                </Text>
                 <Text className="text-white text-base">
                   ${orderDetails.taxes.toFixed(2)}
                 </Text>
               </View>
               <View className="h-px bg-[#67323b] my-3" />
               <View className="flex-row justify-between items-center">
-                <Text className="text-white text-lg font-bold">{t("orderDetails.total")}</Text>
+                <Text className="text-white text-lg font-bold">
+                  {t("orderDetails.total")}
+                </Text>
                 <Text className="text-white text-lg font-bold">
                   ${orderDetails.total.toFixed(2)}
                 </Text>
