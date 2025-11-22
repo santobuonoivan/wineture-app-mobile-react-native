@@ -96,7 +96,8 @@ export default function VineyardCatalog() {
     });
   }, [vineyard_uuid]);
 
-  const wines = (vineyard?.wines ?? dummyWines) as IVineyardInfoWithWinesData["wines"];
+  const wines = (vineyard?.wines ??
+    dummyWines) as IVineyardInfoWithWinesData["wines"];
 
   const filteredWines = wines.filter((wine) => {
     if (!search.trim()) return true;
@@ -147,7 +148,7 @@ export default function VineyardCatalog() {
 
         {/* Filtros mock (sin lógica aún) */}
         <View className="flex-row gap-3 px-4 pb-3">
-          {['Tipo', 'Añada', 'Precio'].map((label) => (
+          {["Tipo", "Añada", "Precio"].map((label) => (
             <Pressable
               key={label}
               className="flex h-8 items-center justify-center gap-2 rounded-lg bg-[#2b1518] px-4 flex-row"
@@ -155,11 +156,7 @@ export default function VineyardCatalog() {
               <Text className="text-stone-200 text-sm font-medium">
                 {label}
               </Text>
-              <Ionicons
-                name="chevron-down-outline"
-                size={16}
-                color="#e5d5d8"
-              />
+              <Ionicons name="chevron-down-outline" size={16} color="#e5d5d8" />
             </Pressable>
           ))}
         </View>
@@ -169,10 +166,7 @@ export default function VineyardCatalog() {
       <ScrollView className="flex-1" contentContainerStyle={{ padding: 16 }}>
         <View className="flex flex-col gap-4">
           {filteredWines.map((wine) => (
-            <View
-              key={wine.wineId}
-              className="flex-row gap-4 mb-2"
-            >
+            <View key={wine.wineId} className="flex-row gap-4 mb-2">
               <ImageBackground
                 source={{ uri: wine.image }}
                 className="w-24 h-32 rounded-xl overflow-hidden bg-[#3a2226]"
@@ -180,10 +174,16 @@ export default function VineyardCatalog() {
               />
               <View className="flex-1 flex-col justify-between">
                 <View>
-                  <Text className="text-white text-base font-bold" numberOfLines={2}>
+                  <Text
+                    className="text-white text-base font-bold"
+                    numberOfLines={2}
+                  >
                     {wine.wineName}
                   </Text>
-                  <Text className="text-stone-400 text-sm mt-1" numberOfLines={1}>
+                  <Text
+                    className="text-stone-400 text-sm mt-1"
+                    numberOfLines={1}
+                  >
                     {wine.wineCategory}
                   </Text>
                   {wine.description && (
@@ -199,12 +199,11 @@ export default function VineyardCatalog() {
                   </Text>
                 </View>
                 <Pressable className="self-start mt-2 flex h-9 flex-row items-center justify-center gap-2 rounded-lg bg-[#d41132] px-4">
-                  <Ionicons
-                    name="cart-outline"
-                    size={16}
-                    color="white"
-                  />
-                  <Text className="text-white text-xs font-bold" numberOfLines={1}>
+                  <Ionicons name="cart-outline" size={16} color="white" />
+                  <Text
+                    className="text-white text-xs font-bold"
+                    numberOfLines={1}
+                  >
                     Añadir
                   </Text>
                 </Pressable>
