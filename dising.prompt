@@ -1,7 +1,0 @@
-necesito un diseño de app mobile para un proyecto de viñedos uso colores de tonailades de vino, mayormente tinto, donde el cliente logueandose,  puede navegar por un mapa e ir viendo los viñedos que aparezcan en al zona con su respectivo listado abajo. al seleccionar un viñedo se abre el detail de viñedo y su info.
-
-tienen un catalo de vinos que puede ir agregando a su carrito. Posteriormente un flujo de checkout para realizar el cobro y la orden.
-
-tambien se puede resservar una visita al viñedo a travez de un formularioo de dia, horario, (ambos selectores), cantidad de personas y datos como telefono y email.
-
-haz un diseño limpio, moderno y amigable visualmente. Mi stack es react-native con expo.
