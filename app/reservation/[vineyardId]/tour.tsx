@@ -73,7 +73,7 @@ export default function VineyardBookingScreen() {
     });
     // Navegar a pantalla de pago
     router.push(
-      `/vineyard/${vineyardId}/payment?date=${selectedDate}&time=${selectedTime}&people=${numberOfPeople}`
+      `/reservation/${vineyardId}/payment?date=${selectedDate}&time=${selectedTime}&people=${numberOfPeople}`
     );
   };
 
