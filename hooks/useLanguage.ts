@@ -13,16 +13,33 @@ export const useLanguage = () => {
   } = useLanguageStore();
   const { user, isAuthenticated } = useAuthStore();
 
+  // Sincronizar el store con i18n cuando cambie el idioma
+  useEffect(() => {
+    const handleLanguageChange = (lng: string) => {
+      if (lng !== currentLanguage) {
+        useLanguageStore.setState({ currentLanguage: lng as Language });
+      }
+    };
+
+    i18n.on("languageChanged", handleLanguageChange);
+
+    return () => {
+      i18n.off("languageChanged", handleLanguageChange);
+    };
+  }, [currentLanguage]);
+
   // Inicializar idioma cuando cambie el estado de autenticación
   useEffect(() => {
     if (isAuthenticated && user?.lang) {
       // Si el usuario está logueado, usar su idioma preferido
-      initializeLanguage(user.lang);
+      if (user.lang !== currentLanguage) {
+        changeLanguage(user.lang as Language);
+      }
     } else if (!isAuthenticated) {
-      // Si no está logueado, usar idioma del dispositivo
+      // Si no está logueado, inicializar con idioma del dispositivo
       initializeLanguage();
     }
-  }, [isAuthenticated, user?.lang, initializeLanguage]);
+  }, [isAuthenticated, user?.lang]);
 
   const getLanguageNames = () => ({
     es: "Español",
@@ -32,6 +49,11 @@ export const useLanguage = () => {
 
   const switchLanguage = (lang: Language) => {
     changeLanguage(lang);
+
+    // Actualizar el idioma en los datos del usuario si está logueado
+    if (isAuthenticated && user) {
+      useAuthStore.getState().updateUserLanguage(lang);
+    }
   };
 
   return {

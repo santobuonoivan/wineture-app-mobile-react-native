@@ -45,6 +45,27 @@
       "cancelled": "Cancelada"
     }
   },
+  "orderDetails": {
+    "title": "Detalhes do Pedido",
+    "orderNumber": "Pedido #{{number}}",
+    "orderSummary": "Resumo do Pedido",
+    "quantity": "Quantidade: {{count}}",
+    "subtotal": "Subtotal",
+    "shipping": "Envio",
+    "taxes": "Impostos",
+    "total": "Total",
+    "shippingAddress": "Endereço de Entrega",
+    "orderHistory": "Histórico do Pedido",
+    "orderSent": "Pedido Enviado",
+    "orderProcessed": "Pedido Processado",
+    "orderPlaced": "Pedido Realizado",
+    "status": {
+      "enCamino": "A Caminho",
+      "entregado": "Entregue",
+      "procesando": "Processando",
+      "cancelado": "Cancelado"
+    }
+  },
   "common": {
     "appName": "VinhedoApp",
     "error": "Erro",

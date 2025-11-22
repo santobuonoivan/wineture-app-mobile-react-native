@@ -45,6 +45,27 @@
       "cancelled": "Cancelled"
     }
   },
+  "orderDetails": {
+    "title": "Order Details",
+    "orderNumber": "Order #{{number}}",
+    "orderSummary": "Order Summary",
+    "quantity": "Quantity: {{count}}",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "taxes": "Taxes",
+    "total": "Total",
+    "shippingAddress": "Shipping Address",
+    "orderHistory": "Order History",
+    "orderSent": "Order Shipped",
+    "orderProcessed": "Order Processed",
+    "orderPlaced": "Order Placed",
+    "status": {
+      "enCamino": "On the Way",
+      "entregado": "Delivered",
+      "procesando": "Processing",
+      "cancelado": "Cancelled"
+    }
+  },
   "common": {
     "appName": "WineyardApp",
     "error": "Error",

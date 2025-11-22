@@ -1,10 +1,10 @@
 import { View, Text, ScrollView, Image, Pressable } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Screen } from "../components/Screen";
+import { Screen } from "../../components/Screen";
 import { useEffect, useState } from "react";
-import { IVineyardInfoWithWinesData } from "../interfaces";
-import { getVineyardInfoByUUID } from "../lib";
-import { VisitBookingForm } from "../components/vineyard/VisitBookingForm";
+import { IVineyardInfoWithWinesData } from "../../interfaces";
+import { getVineyardInfoByUUID } from "../../lib";
+import { VisitBookingForm } from "../../components/vineyard/VisitBookingForm";
 
 export default function VineyardDetail() {
   const { vineyard_uuid } = useLocalSearchParams<{ vineyard_uuid: string }>();

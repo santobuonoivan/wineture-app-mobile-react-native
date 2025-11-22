@@ -45,6 +45,27 @@
       "cancelled": "Cancelada"
     }
   },
+  "orderDetails": {
+    "title": "Detalles del Pedido",
+    "orderNumber": "Pedido #{{number}}",
+    "orderSummary": "Resumen del Pedido",
+    "quantity": "Cantidad: {{count}}",
+    "subtotal": "Subtotal",
+    "shipping": "Envío",
+    "taxes": "Impuestos",
+    "total": "Total",
+    "shippingAddress": "Dirección de Envío",
+    "orderHistory": "Historial del Pedido",
+    "orderSent": "Pedido Enviado",
+    "orderProcessed": "Pedido Procesado",
+    "orderPlaced": "Pedido Realizado",
+    "status": {
+      "enCamino": "En Camino",
+      "entregado": "Entregado",
+      "procesando": "Procesando",
+      "cancelado": "Cancelado"
+    }
+  },
   "common": {
     "appName": "ViñedoApp",
     "error": "Error",

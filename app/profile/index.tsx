@@ -142,11 +142,12 @@ export default function ProfileScreen() {
   };
 
   const renderOrderItem = (order: Order) => (
-    <View
+    <TouchableOpacity
       key={order.id}
-      className="flex-row items-center justify-between bg-transparent min-h-[72px] py-2"
+      className="flex-row items-center justify-between bg-transparent min-h-[72px] py-2 pr-2"
+      onPress={() => router.push(`/order/${order.id}`)}
     >
-      <View className="flex-row items-center gap-4">
+      <View className="flex-row items-center gap-4 flex-1">
         <View className="w-12 h-12 rounded-lg bg-[#c6102e]/10 items-center justify-center">
           <Ionicons name="cube-outline" size={24} color="#c6102e" />
         </View>
@@ -159,16 +160,18 @@ export default function ProfileScreen() {
           </Text>
         </View>
       </View>
-      <Text className="text-white text-base">{order.status}</Text>
-    </View>
+      <Text className="text-white text-base ml-2 text-right">
+        {order.status}
+      </Text>
+    </TouchableOpacity>
   );
 
   const renderReservationItem = (reservation: Reservation) => (
     <View
       key={reservation.id}
-      className="flex-row items-center justify-between bg-transparent min-h-[72px] py-2"
+      className="flex-row items-center justify-between bg-transparent min-h-[72px] py-2 pr-2"
     >
-      <View className="flex-row items-center gap-4">
+      <View className="flex-row items-center gap-4 flex-1">
         <View className="w-12 h-12 rounded-lg bg-[#c6102e]/10 items-center justify-center">
           <Ionicons name="calendar-outline" size={24} color="#c6102e" />
         </View>
@@ -181,7 +184,9 @@ export default function ProfileScreen() {
           </Text>
         </View>
       </View>
-      <Text className="text-white text-base">{reservation.status}</Text>
+      <Text className="text-white text-base ml-2 text-right">
+        {reservation.status}
+      </Text>
     </View>
   );
 

@@ -7,13 +7,12 @@ import {
   Animated,
   Pressable,
 } from "react-native";
-import { Score } from "../Score";
 import { Link } from "expo-router";
 import { IVineyard } from "../../interfaces";
 
 export function VineyardCard({ vineyard }: { vineyard: IVineyard }) {
   return (
-    <Link href={`/${vineyard.uuid}`} asChild>
+    <Link href={`/vineyard/${vineyard.uuid}`} asChild>
       <Pressable className="active:opacity-70 border border-black active:border-white/50 mb-2 bg-gray-500/10 rounded-xl p-2">
         <View className="flex-row gap-4" key={vineyard.uuid}>
           <Image
