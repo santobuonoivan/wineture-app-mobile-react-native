@@ -15,10 +15,15 @@ import { LoginFormV2 } from "../components/LoginFormV2";
 import "../config/i18n";
 import { LateralMenu } from "../components/ui/LateralMenu";
 import { useMenuStore } from "../store/useMenuStore";
+import { useCartStore } from "../store/useCartStore";
 
 export default function Layout() {
   const insets = useSafeAreaInsets();
   const { isOpen, toggle, close } = useMenuStore();
+
+  const cartCount = useCartStore((state) =>
+    state.items.reduce((sum, item) => sum + item.quantity, 0)
+  );
 
   const { isAuthenticated } = useAuth();
   useEffect(() => {
@@ -59,7 +64,7 @@ export default function Layout() {
                 <View className="pt-2">
                   <Link asChild href="/cart">
                     <Pressable className="relative p-3">
-                      <CartBadge count={5} />
+                      <CartBadge count={cartCount} />
                       <CartIcon />
                       {/* se podria cambiar por el carrito de compras */}
                     </Pressable>
