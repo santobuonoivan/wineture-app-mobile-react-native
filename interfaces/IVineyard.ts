@@ -62,6 +62,7 @@ export interface IVineyardInfoWithWinesData {
   email: string;
   phone: string;
   img: string;
+  images: IImage[];
   description: string;
   additionalInfo: string;
   descriptionEN: string;

@@ -1,18 +1,12 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  Pressable,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Screen } from "../../components/Screen";
 import { useEffect, useState } from "react";
 import { IVineyardInfoWithWinesData } from "../../interfaces";
 import { getVineyardInfoByUUID } from "../../lib";
 import { Ionicons } from "@expo/vector-icons";
-import MapComponent from "../../components/MapComponent";
+import { VineyardLocationMap } from "../../components/vineyard/VineyardLocationMap";
+import { VineyardImageCarousel } from "../../components/vineyard/VineyardImageCarousel";
 
 export default function VineyardDetail() {
   const { vineyard_uuid } = useLocalSearchParams<{ vineyard_uuid: string }>();
@@ -63,26 +57,8 @@ export default function VineyardDetail() {
       </View>
       <View className="flex-1 pb-20">
         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-          {/* Carrusel horizontal mock con 3 imágenes */}
-          <View className="flex-row overflow-x-scroll px-4 pt-2">
-            <View className="flex-row gap-3">
-              {[0, 1, 2].map((index) => (
-                <Image
-                  key={index}
-                  source={{ uri: vineyard.img }}
-                  className="h-56 w-[85vw] max-w-[340px] rounded-xl"
-                  resizeMode="cover"
-                />
-              ))}
-            </View>
-          </View>
-
-          {/* Indicadores de página */}
-          <View className="flex-row items-center justify-center gap-2 py-4">
-            <View className="h-2 w-4 rounded-full bg-[#800020]" />
-            <View className="h-2 w-2 rounded-full bg-[#800020]/40" />
-            <View className="h-2 w-2 rounded-full bg-[#800020]/40" />
-          </View>
+          {/* Carrusel de imágenes del viñedo */}
+          <VineyardImageCarousel images={vineyard.images} />
 
           {/* Título y resumen */}
           <View className="px-4 pb-2">
@@ -162,7 +138,7 @@ export default function VineyardDetail() {
               </View>
             </View>
 
-            {/* Ubicación con mapa mock */}
+            {/* Ubicación con mapa real */}
             <View className="bg-[#482329] p-5 rounded-xl">
               <View className="flex-row items-center gap-2 mb-3">
                 <Ionicons name="location-outline" size={18} color="#f3d6dc" />
@@ -173,18 +149,10 @@ export default function VineyardDetail() {
                 B.C., México
               </Text>
               <View className="w-full aspect-video rounded-lg overflow-hidden bg-black/30">
-                <MapComponent
-                  latitude={vineyard.latitude ?? -32.0391}
-                  longitude={vineyard.longitude ?? -60.3069}
-                  markers={[
-                    {
-                      id: vineyard.uuid,
-                      latitude: vineyard.latitude ?? -32.0391,
-                      longitude: vineyard.longitude ?? -60.3069,
-                      title: vineyard.vineyardName,
-                      description: "Ubicación del viñedo",
-                    },
-                  ]}
+                <VineyardLocationMap
+                  latitude={-32.0391}
+                  longitude={-60.3069}
+                  vineyardName={vineyard.vineyardName}
                 />
               </View>
             </View>
