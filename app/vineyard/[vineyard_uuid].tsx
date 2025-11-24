@@ -235,7 +235,7 @@ export default function VineyardDetail() {
               <TouchableOpacity
                 className="w-full h-14 rounded-xl bg-[#800020] items-center justify-center flex-row gap-2"
                 onPress={() =>
-                  router.push(`/vineyard/${vineyard_uuid}/catalog`)
+                  router.push(`/vineyard/${vineyard.vineyardId}/catalog`)
                 }
               >
                 <Ionicons name="wine" size={20} color="#fff" />

@@ -11,93 +11,26 @@ import { Ionicons } from "@expo/vector-icons";
 import { Screen } from "../../../components/Screen";
 import { useEffect, useState } from "react";
 import { IVineyardInfoWithWinesData } from "../../../interfaces";
-import { getVineyardInfoByUUID } from "../../../lib";
+import { getVineyardInfoByUUID, getWinesInfoByVineyard } from "../../../lib";
+import { IWine } from "../../../interfaces/IVineyard";
 
 export default function VineyardCatalog() {
-  const { vineyard_uuid } = useLocalSearchParams<{ vineyard_uuid: string }>();
+  const { vineyardId } = useLocalSearchParams<{ vineyardId: string }>();
   const router = useRouter();
-  const [vineyard, setVineyard] = useState<IVineyardInfoWithWinesData | null>(
-    null
-  );
+  const [wines, setWines] = useState<IWine[]>([]);
   const [search, setSearch] = useState("");
 
-  const dummyWines = [
-    {
-      wineId: 1,
-      wineBrand: "Bodega del Valle",
-      wineCategory: "Tinto",
-      wineName: "Reserva de la Familia Malbec",
-      wineBarCode: null,
-      alcoholContent: "13.5%",
-      monthsInBarrel: "12",
-      strain: "Malbec",
-      valley: "Valle de Guadalupe",
-      image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuB43PvwWov36kDUWOBvL0ZjQVAsUoHfX1K_znQoo7yqa9fOWH1ZlPcK790WWWLyYpFccX0i5NgXNJ_8i6iuk5ffBFjU66PP89A9pcOutPksYDic7CqKRdIObs2uK-U_CHagXafkG1uuePNLKnWCJ32QJWycQPF9xoh_v3BdeGqkhfPH-Bfjx-VQtkJtnrtcuKZSyFc8fCvYf22nEum6fma_Zc6lDoyb6SR_aSR2of2bPjouQIRVJVTKHb_ao1wM1zQFbuksBOYBKNc",
-      description: "Vino tinto intenso con notas a frutos rojos y especias.",
-      promoDescription: "Perfecto para carnes rojas y quesos maduros.",
-      deletedAt: null,
-      status: "active",
-      createdAt: "",
-      updatedAt: "",
-      vineyardId: 1,
-      price: "750.00",
-    },
-    {
-      wineId: 2,
-      wineBrand: "Bodega del Valle",
-      wineCategory: "Tinto",
-      wineName: "Gran Sangre de Toro",
-      wineBarCode: null,
-      alcoholContent: "14%",
-      monthsInBarrel: "18",
-      strain: "Tempranillo",
-      valley: "Valle Central",
-      image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuCcH7up4FLgJJJtVSAxYBxDkq8P_ZBSwChCgi8pAvzp8Z522QkiEHrBmMwuX6vK-Zn-51TPhIEcW1g1fk6yQ7lLTqy75hvZLQYoqyPnLGOS6DRM-_w4yjUAtocX3JC41Yxs4ob6vdRvf98bUvAiWOfRyWE5uVINMOM7PPFuAhCauO0MAtt64ixB7WrhQMCrTlh_dSkhZ_qV9jdzaAw3RVaanLBe1u4LyLzLi9oJ9qFe-IQS2TQQ8Avd9hw6x9KsYrFxYE3mM9W9Mak",
-      description: "Vino tinto estructurado con notas a madera y especias.",
-      promoDescription: "Ideal para asados y guisos intensos.",
-      deletedAt: null,
-      status: "active",
-      createdAt: "",
-      updatedAt: "",
-      vineyardId: 1,
-      price: "950.00",
-    },
-    {
-      wineId: 3,
-      wineBrand: "Bodega del Valle",
-      wineCategory: "Blanco",
-      wineName: "Cosecha Tardía Sauvignon",
-      wineBarCode: null,
-      alcoholContent: "12%",
-      monthsInBarrel: "6",
-      strain: "Sauvignon Blanc",
-      valley: "Valle de Casablanca",
-      image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuAISDYlEvAC9dyNAC9dMlfHfW04RdeO6hKUt5xFlIhJDg5EqCR03dT1J4tk8ubVCKgkjTQIpF1W4We0tZ5OAgbnWfCpagJ4NR0HVyOJ1pwlXnzADBJ1jBRjIYZfFzYhyDN_SpZczNXXwaYOCuRMzhfl1j073aaKvWTEeTf4yF81R7DVWP6iUJ9ITuY0OmXgR6yUoVftIXoM7LUKCeYE9l4wvgmuNBkFhFXDsvyHaX2zKVdpK1x3sAJXLxQcmB_mqhZ-PUp__hYpHMc",
-      description: "Vino blanco fresco y frutal, ideal para aperitivos.",
-      promoDescription: "Perfecto para mariscos y ensaladas.",
-      deletedAt: null,
-      status: "active",
-      createdAt: "",
-      updatedAt: "",
-      vineyardId: 1,
-      price: "680.00",
-    },
-  ];
-
   useEffect(() => {
-    getVineyardInfoByUUID({ uuid: vineyard_uuid }).then((data) => {
-      const vineyardData = data.data;
-      if (vineyardData) {
-        setVineyard(vineyardData as IVineyardInfoWithWinesData);
+    getWinesInfoByVineyard({ vineyardId: parseInt(vineyardId) }).then(
+      (data) => {
+        console.log("Wines data:", data);
+        const vineyardData = data.data;
+        if (vineyardData) {
+          setWines(vineyardData as IWine[]);
+        }
       }
-    });
-  }, [vineyard_uuid]);
-
-  const wines = (vineyard?.wines ??
-    dummyWines) as IVineyardInfoWithWinesData["wines"];
+    );
+  }, [vineyardId]);
 
   const filteredWines = wines.filter((wine) => {
     if (!search.trim()) return true;

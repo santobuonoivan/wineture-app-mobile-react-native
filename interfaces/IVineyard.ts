@@ -145,3 +145,8 @@ export interface IVineyardService {
     name: string;
   };
 }
+
+export interface IVineyardWinesResponse {
+  status: number;
+  data: IWine[];
+}
