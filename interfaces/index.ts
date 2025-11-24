@@ -5,7 +5,12 @@ import {
   GetVineyardCalendarParams,
   IVineyardInfoWithWinesResponse,
   IVineyardInfoWithWinesData,
+  ILocation,
+  IVineyardInfoWithServicesResponse,
+  IVineyardService,
 } from "./IVineyard";
+
+import { CartItemI } from "./ICart";
 
 export {
   IVineyardResponse,
@@ -13,5 +18,9 @@ export {
   GetVineyardWinesParams,
   IVineyardInfoWithWinesResponse,
   IVineyardInfoWithWinesData,
-  GetVineyardCalendarParams
+  GetVineyardCalendarParams,
+  ILocation,
+  CartItemI,
+  IVineyardInfoWithServicesResponse,
+  IVineyardService,
 };

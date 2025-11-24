@@ -1,12 +1,11 @@
-interface ILocation {
-  /** Identificador único de la ubicación. */
-  id: number;
-  /** Latitud geográfica de la ubicación. */
-  lat: number;
-  /** Longitud geográfica de la ubicación. */
-  long: number;
-  /** Nombre o descripción de la ubicación (ej: "Valle de Casablanca"). */
+export interface ILocation {
+  vineyardsLocationId: number;
+  vineyardId: number;
+  active: boolean;
   location: string;
+  country: string;
+  lat: string;
+  long: string;
 }
 
 interface IImage {
@@ -62,36 +61,87 @@ export interface IVineyardInfoWithWinesData {
   email: string;
   phone: string;
   img: string;
-  images: IImage[];
   description: string;
   additionalInfo: string;
   descriptionEN: string;
   additionalInfoEN: string;
   createdAt: string;
   updatedAt: string;
-  wines: {
-    wineId: number;
-    wineBrand: string;
-    wineCategory: string;
-    wineName: string;
-    wineBarCode: string | null;
-    alcoholContent: string;
-    monthsInBarrel: string;
-    strain: string;
-    valley: string;
-    image: string;
-    description: string;
-    promoDescription: string;
-    deletedAt: string | null;
-    status: string;
-    createdAt: string;
-    updatedAt: string;
-    vineyardId: number;
-    price: string;
-  }[];
+  images: IImage[];
+  wines: IWine[];
+  locations: ILocation[];
+  socialNetworks: ISocialNetwork[];
+}
+
+export interface IWine {
+  wineId: number;
+  wineBrand: string;
+  wineCategory: string;
+  wineName: string;
+  wineBarCode: string | null;
+  alcoholContent: string;
+  monthsInBarrel: string;
+  strain: string;
+  valley: string;
+  image: string;
+  description: string;
+  promoDescription: string;
+  deletedAt: string | null;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  vineyardId: number;
+  price: string;
+}
+export interface ISocialNetwork {
+  socialNetworkId: number;
+  vineyardId: number;
+  website: string | null;
+  instagram: string | null;
+  deletedAt: string | null;
+  facebook: string | null;
+  twitter: string | null;
+  tiktok: string | null;
 }
 
 export interface IVineyardInfoWithWinesResponse {
   status: number;
-  data: IVineyardInfoWithWinesData | {};
+  data: IVineyardInfoWithWinesData;
+}
+
+export interface IVineyardInfoWithServicesResponse {
+  status: number;
+  data: IVineyardService[];
+}
+
+export interface IVineyardService {
+  serviceId: number;
+  active: boolean;
+  name: string;
+  description: string;
+  img: string;
+  price: string;
+  link: string;
+  vineyard: {
+    vineyardId: number;
+    uuid: string;
+    deletedAt: string | null;
+    statusId: number;
+    active: boolean;
+    vineyardName: string;
+    email: string;
+    phone: string;
+    img: string;
+    description: string;
+    additionalInfo: string;
+    descriptionEN: string | null;
+    additionalInfoEN: string | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  serviceType: {
+    serviceTypeId: number;
+    active: boolean;
+    name: string;
+  };
 }

@@ -1,18 +1,18 @@
 import { config } from "../config/env";
 import {
   GetVineyardWinesParams,
-  IVineyardInfoWithWinesResponse,
+  IVineyardInfoWithServicesResponse,
 } from "../interfaces";
 
 // Use the config instead of direct process.env access
 const API_BASE_URL = config.API_BASE_URL;
 const API_KEY = config.API_KEY;
 
-export const getVineyardInfoByUUID = async (
+export const getVineyardServicesByUUID = async (
   params: GetVineyardWinesParams
-): Promise<IVineyardInfoWithWinesResponse> => {
+): Promise<IVineyardInfoWithServicesResponse> => {
   const { uuid } = params;
-  const url = new URL(`${API_BASE_URL}/vineyards/findByUUID/${uuid}`);
+  const url = new URL(`${API_BASE_URL}/vineyards/services/${uuid}`);
 
   try {
     // Realiza la solicitud GET a la API backend utilizando fetch

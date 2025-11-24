@@ -2,26 +2,58 @@ import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Screen } from "../../components/Screen";
 import { useEffect, useState } from "react";
-import { IVineyardInfoWithWinesData } from "../../interfaces";
+import {
+  IVineyardInfoWithWinesData,
+  ILocation,
+  IVineyardService,
+} from "../../interfaces";
 import { getVineyardInfoByUUID } from "../../lib";
 import { Ionicons } from "@expo/vector-icons";
 import { VineyardLocationMap } from "../../components/vineyard/VineyardLocationMap";
 import { VineyardImageCarousel } from "../../components/vineyard/VineyardImageCarousel";
+import { getVineyardServicesByUUID } from "../../lib/getVineyardServicesByUUID";
 
 export default function VineyardDetail() {
   const { vineyard_uuid } = useLocalSearchParams<{ vineyard_uuid: string }>();
   const router = useRouter();
-  const [vineyard, setVineyard] = useState<IVineyardInfoWithWinesData | null>(
-    null
-  );
+  const [vineyard, setVineyard] = useState<IVineyardInfoWithWinesData>();
+  const [location, setLocation] = useState<ILocation | null>(null);
+  const [services, setServices] = useState<IVineyardService[] | null>(null);
+  const [serviceTypes, setServiceTypes] = useState<string[]>([]);
 
   useEffect(() => {
-    getVineyardInfoByUUID({ uuid: vineyard_uuid }).then((data) => {
-      const vineyardData = data.data;
-      if (!!vineyardData) {
-        setVineyard(vineyardData as IVineyardInfoWithWinesData);
-      }
-    });
+    getVineyardInfoByUUID({ uuid: vineyard_uuid })
+      .then((data) => {
+        const vineyardData = data.data;
+        if (!!vineyardData) {
+          setVineyard(vineyardData as IVineyardInfoWithWinesData);
+          if (vineyardData.locations && vineyardData.locations.length > 0) {
+            setLocation(vineyardData.locations[0]);
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(`Error loading vineyard data: ${error}`);
+      });
+
+    getVineyardServicesByUUID({ uuid: vineyard_uuid })
+      .then((data) => {
+        const servicesData = data.data;
+        if (servicesData && servicesData.length > 0) {
+          setServices(servicesData);
+          const serviceNames = servicesData.map(
+            (service) => service.serviceType.name
+          );
+
+          // 1. Convertimos el array a un Set para obtener solo nombres únicos.
+          // 2. Convertimos el Set de nuevo a un Array usando el spread operator (...).
+          const uniqueServiceNames = [...new Set(serviceNames)];
+          setServiceTypes(uniqueServiceNames);
+        }
+      })
+      .catch((error) => {
+        console.error(`Error loading vineyard services: ${error}`);
+      });
   }, [vineyard_uuid]);
 
   if (!vineyard) {
@@ -119,19 +151,14 @@ export default function VineyardDetail() {
                   </Text>
                 </View>
                 <View className="flex-row flex-wrap gap-x-6 gap-y-2">
-                  {[
-                    "Cata de vinos",
-                    "Restaurante",
-                    "Tours guiados",
-                    "Accesible",
-                  ].map((label) => (
-                    <View key={label} className="flex-row items-center gap-2">
+                  {serviceTypes?.map((name) => (
+                    <View key={name} className="flex-row items-center gap-2">
                       <Ionicons
                         name="checkmark-circle-outline"
                         size={16}
                         color="#C06078"
                       />
-                      <Text className="text-[#f3d6dc] text-sm">{label}</Text>
+                      <Text className="text-[#f3d6dc] text-sm">{name}</Text>
                     </View>
                   ))}
                 </View>
@@ -145,13 +172,14 @@ export default function VineyardDetail() {
                 <Text className="text-white text-lg font-bold">Ubicación</Text>
               </View>
               <Text className="text-[#f3d6dc] text-sm mb-4">
-                Carretera Ensenada-Tecate Km 88, Valle de Guadalupe, 22760,
-                B.C., México
+                {location
+                  ? `${location.location}, ${location.country}`
+                  : "no tiene ubicación registrada"}
               </Text>
               <View className="w-full aspect-video rounded-lg overflow-hidden bg-black/30">
                 <VineyardLocationMap
-                  latitude={-32.0391}
-                  longitude={-60.3069}
+                  latitude={location ? parseFloat(location.lat) : -32.0391}
+                  longitude={location ? parseFloat(location.long) : -60.3069}
                   vineyardName={vineyard.vineyardName}
                 />
               </View>
