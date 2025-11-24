@@ -39,8 +39,8 @@ export const SocialNetworkButton = ({
         }
       }}
     >
-      <Icon size={16} color="#c6102e" />
-      <Text className="text-[#c6102e] font-bold text-sm">{name}</Text>
+      <Icon size={16} color="white" />
+      <Text className="text-white font-bold text-sm">{name}</Text>
     </TouchableOpacity>
   );
 };

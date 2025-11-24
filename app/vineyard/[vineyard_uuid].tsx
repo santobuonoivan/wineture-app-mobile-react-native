@@ -218,11 +218,66 @@ export default function VineyardDetail() {
                 Contacto
               </Text>
               <View className="flex-col gap-3">
-                <TouchableOpacity className="flex-row items-center justify-center gap-2 px-4 py-3 bg-[#800020]/20 rounded-lg">
+                <TouchableOpacity
+                  className="flex-row items-center justify-center gap-2 px-4 py-3 bg-[#800020]/20 rounded-lg"
+                  onPress={async () => {
+                    try {
+                      if (vineyard.phone) {
+                        const phoneUrl = `tel:${vineyard.phone}`;
+                        const supported = await Linking.canOpenURL(phoneUrl);
+                        if (supported) {
+                          await Linking.openURL(phoneUrl);
+                        } else {
+                          Alert.alert(
+                            "Error",
+                            "No se puede realizar la llamada en este dispositivo"
+                          );
+                        }
+                      } else {
+                        Alert.alert(
+                          "Información",
+                          "No hay número de teléfono disponible"
+                        );
+                      }
+                    } catch (error) {
+                      console.error("Error al abrir teléfono:", error);
+                      Alert.alert(
+                        "Error",
+                        "Ocurrió un error al intentar llamar"
+                      );
+                    }
+                  }}
+                >
                   <Ionicons name="call-outline" size={18} color="white" />
                   <Text className="text-white font-bold">Llamar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity className="flex-row items-center justify-center gap-2 px-4 py-3 bg-[#800020]/20 rounded-lg">
+                <TouchableOpacity
+                  className="flex-row items-center justify-center gap-2 px-4 py-3 bg-[#800020]/20 rounded-lg"
+                  onPress={async () => {
+                    try {
+                      if (vineyard.email) {
+                        const emailUrl = `mailto:${vineyard.email}`;
+                        const supported = await Linking.canOpenURL(emailUrl);
+                        if (supported) {
+                          await Linking.openURL(emailUrl);
+                        } else {
+                          Alert.alert(
+                            "Error",
+                            "No se puede abrir la aplicación de email en este dispositivo"
+                          );
+                        }
+                      } else {
+                        Alert.alert("Información", "No hay email disponible");
+                      }
+                    } catch (error) {
+                      console.error("Error al abrir email:", error);
+                      Alert.alert(
+                        "Error",
+                        "Ocurrió un error al intentar enviar email"
+                      );
+                    }
+                  }}
+                >
                   <Ionicons name="mail-outline" size={18} color="white" />
                   <Text className="text-white font-bold">Email</Text>
                 </TouchableOpacity>
