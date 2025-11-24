@@ -1,4 +1,11 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Linking,
+  Alert,
+} from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Screen } from "../../components/Screen";
 import { useEffect, useState } from "react";
@@ -12,6 +19,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { VineyardLocationMap } from "../../components/vineyard/VineyardLocationMap";
 import { VineyardImageCarousel } from "../../components/vineyard/VineyardImageCarousel";
 import { getVineyardServicesByUUID } from "../../lib/getVineyardServicesByUUID";
+import { SkeletonVineyardView } from "../../components/skeleton/SkeletonVineyardView";
+import { ISocialNetwork } from "../../interfaces/IVineyard";
+import { SocialNetworkList } from "../../components/ui/SocialNetworkList";
 
 export default function VineyardDetail() {
   const { vineyard_uuid } = useLocalSearchParams<{ vineyard_uuid: string }>();
@@ -20,6 +30,9 @@ export default function VineyardDetail() {
   const [location, setLocation] = useState<ILocation | null>(null);
   const [services, setServices] = useState<IVineyardService[] | null>(null);
   const [serviceTypes, setServiceTypes] = useState<string[]>([]);
+  const [socialNetworks, setSocialNetworks] = useState<ISocialNetwork | null>(
+    null
+  );
 
   useEffect(() => {
     getVineyardInfoByUUID({ uuid: vineyard_uuid })
@@ -27,6 +40,9 @@ export default function VineyardDetail() {
         const vineyardData = data.data;
         if (!!vineyardData) {
           setVineyard(vineyardData as IVineyardInfoWithWinesData);
+          if (vineyardData.socialNetworks) {
+            setSocialNetworks(vineyardData.socialNetworks);
+          }
           if (vineyardData.locations && vineyardData.locations.length > 0) {
             setLocation(vineyardData.locations[0]);
           }
@@ -57,15 +73,7 @@ export default function VineyardDetail() {
   }, [vineyard_uuid]);
 
   if (!vineyard) {
-    return (
-      <Screen>
-        <View className="flex-1 items-center justify-center">
-          <Text className="text-white text-center text-lg">
-            Cargando viña...
-          </Text>
-        </View>
-      </Screen>
-    );
+    return <SkeletonVineyardView />;
   }
 
   return (
@@ -200,6 +208,10 @@ export default function VineyardDetail() {
               </TouchableOpacity>
             </View>
 
+            {/* Redes sociales */}
+            {socialNetworks && (
+              <SocialNetworkList socialNetworks={socialNetworks} />
+            )}
             {/* Contacto */}
             <View className="bg-[#482329] p-5 rounded-xl mb-4">
               <Text className="text-white text-lg font-bold mb-4">
@@ -207,16 +219,12 @@ export default function VineyardDetail() {
               </Text>
               <View className="flex-col gap-3">
                 <TouchableOpacity className="flex-row items-center justify-center gap-2 px-4 py-3 bg-[#800020]/20 rounded-lg">
-                  <Ionicons name="call-outline" size={18} color="#c6102e" />
-                  <Text className="text-[#c6102e] font-bold">Llamar</Text>
+                  <Ionicons name="call-outline" size={18} color="white" />
+                  <Text className="text-white font-bold">Llamar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity className="flex-row items-center justify-center gap-2 px-4 py-3 bg-[#800020]/20 rounded-lg">
-                  <Ionicons name="mail-outline" size={18} color="#c6102e" />
-                  <Text className="text-[#c6102e] font-bold">Email</Text>
-                </TouchableOpacity>
-                <TouchableOpacity className="flex-row items-center justify-center gap-2 px-4 py-3 bg-[#800020]/20 rounded-lg">
-                  <Ionicons name="globe-outline" size={18} color="#c6102e" />
-                  <Text className="text-[#c6102e] font-bold">Sitio Web</Text>
+                  <Ionicons name="mail-outline" size={18} color="white" />
+                  <Text className="text-white font-bold">Email</Text>
                 </TouchableOpacity>
               </View>
             </View>

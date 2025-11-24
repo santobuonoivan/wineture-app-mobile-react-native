@@ -70,7 +70,7 @@ export interface IVineyardInfoWithWinesData {
   images: IImage[];
   wines: IWine[];
   locations: ILocation[];
-  socialNetworks: ISocialNetwork[];
+  socialNetworks: ISocialNetwork;
 }
 
 export interface IWine {

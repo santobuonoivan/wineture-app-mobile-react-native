@@ -83,5 +83,13 @@
     "error": "Erro",
     "success": "Sucesso",
     "loading": "Carregando..."
+  },
+  "socialNetworks": {
+    "title": "Nossas redes",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "twitter": "Twitter",
+    "tiktok": "TikTok",
+    "website": "Site"
   }
 }
