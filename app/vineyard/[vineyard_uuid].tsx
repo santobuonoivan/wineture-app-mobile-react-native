@@ -4,7 +4,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Linking,
-  Alert,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Screen } from "../../components/Screen";
@@ -22,10 +21,13 @@ import { getVineyardServicesByUUID } from "../../lib/getVineyardServicesByUUID";
 import { SkeletonVineyardView } from "../../components/skeleton/SkeletonVineyardView";
 import { ISocialNetwork } from "../../interfaces/IVineyard";
 import { SocialNetworkList } from "../../components/ui/SocialNetworkList";
+import { useLanguage } from "../../hooks/useLanguage";
+import { ConfirmModal } from "../../components/ui/ConfirmModal";
 
 export default function VineyardDetail() {
   const { vineyard_uuid } = useLocalSearchParams<{ vineyard_uuid: string }>();
   const router = useRouter();
+  const { t } = useLanguage();
   const [vineyard, setVineyard] = useState<IVineyardInfoWithWinesData>();
   const [location, setLocation] = useState<ILocation | null>(null);
   const [services, setServices] = useState<IVineyardService[] | null>(null);
@@ -33,6 +35,31 @@ export default function VineyardDetail() {
   const [socialNetworks, setSocialNetworks] = useState<ISocialNetwork | null>(
     null
   );
+
+  // Modal states
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalConfig, setModalConfig] = useState({
+    title: "",
+    body: "",
+    isError: false,
+    acceptLabel: "",
+  });
+
+  // Modal helper function
+  const showModal = (config: {
+    title?: string;
+    body: string;
+    isError?: boolean;
+    acceptLabel?: string;
+  }) => {
+    setModalConfig({
+      title: config.title || t("common.error"),
+      body: config.body,
+      isError: config.isError || false,
+      acceptLabel: config.acceptLabel || t("common.accept"),
+    });
+    setModalVisible(true);
+  };
 
   useEffect(() => {
     getVineyardInfoByUUID({ uuid: vineyard_uuid })
@@ -109,11 +136,13 @@ export default function VineyardDetail() {
               <View className="flex-row items-center gap-1">
                 <Ionicons name="star" size={16} color="#facc15" />
                 <Text className="text-white font-bold text-sm">4.8</Text>
-                <Text className="text-[#c9929b] text-sm">(215 reseñas)</Text>
+                <Text className="text-[#c9929b] text-sm">
+                  {t("vineyardDetail.reviews", { count: 215 })}
+                </Text>
               </View>
               <Text className="text-[#c9929b] text-sm">•</Text>
               <Text className="text-[#c9929b] text-sm">
-                Valle de Guadalupe, México
+                {t("vineyardDetail.defaultLocation")}
               </Text>
             </View>
           </View>
@@ -123,7 +152,7 @@ export default function VineyardDetail() {
             {/* Sobre nosotros */}
             <View className="bg-[#482329] p-5 rounded-xl">
               <Text className="text-white text-xl font-bold mb-2">
-                Sobre Nosotros
+                {t("vineyardDetail.aboutUs")}
               </Text>
               <Text className="text-[#f3d6dc] text-base leading-relaxed">
                 {vineyard.description}
@@ -136,15 +165,21 @@ export default function VineyardDetail() {
               <View className="bg-[#482329] p-5 rounded-xl">
                 <View className="flex-row items-center gap-2 mb-3">
                   <Ionicons name="time-outline" size={18} color="#f3d6dc" />
-                  <Text className="text-white text-lg font-bold">Horarios</Text>
+                  <Text className="text-white text-lg font-bold">
+                    {t("vineyardDetail.schedule")}
+                  </Text>
                 </View>
                 <View className="gap-1">
                   <Text className="text-[#f3d6dc] text-sm">
-                    <Text className="font-semibold">Lunes a Viernes:</Text>{" "}
+                    <Text className="font-semibold">
+                      {t("vineyardDetail.mondayToFriday")}
+                    </Text>{" "}
                     10:00 - 18:00
                   </Text>
                   <Text className="text-[#f3d6dc] text-sm">
-                    <Text className="font-semibold">Sábados y Domingos:</Text>{" "}
+                    <Text className="font-semibold">
+                      {t("vineyardDetail.saturdayToSunday")}
+                    </Text>{" "}
                     10:00 - 20:00
                   </Text>
                 </View>
@@ -155,7 +190,7 @@ export default function VineyardDetail() {
                 <View className="flex-row items-center gap-2 mb-3">
                   <Ionicons name="wine" size={18} color="#f3d6dc" />
                   <Text className="text-white text-lg font-bold">
-                    Servicios
+                    {t("vineyardDetail.services")}
                   </Text>
                 </View>
                 <View className="flex-row flex-wrap gap-x-6 gap-y-2">
@@ -177,12 +212,14 @@ export default function VineyardDetail() {
             <View className="bg-[#482329] p-5 rounded-xl">
               <View className="flex-row items-center gap-2 mb-3">
                 <Ionicons name="location-outline" size={18} color="#f3d6dc" />
-                <Text className="text-white text-lg font-bold">Ubicación</Text>
+                <Text className="text-white text-lg font-bold">
+                  {t("vineyardDetail.location")}
+                </Text>
               </View>
               <Text className="text-[#f3d6dc] text-sm mb-4">
                 {location
                   ? `${location.location}, ${location.country}`
-                  : "no tiene ubicación registrada"}
+                  : t("vineyardDetail.noLocationRegistered")}
               </Text>
               <View className="w-full aspect-video rounded-lg overflow-hidden bg-black/30">
                 <VineyardLocationMap
@@ -203,7 +240,7 @@ export default function VineyardDetail() {
               >
                 <Ionicons name="wine" size={20} color="#fff" />
                 <Text className="text-white text-lg font-bold">
-                  Ver nuestros vinos
+                  {t("vineyardDetail.viewOurWines")}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -215,7 +252,7 @@ export default function VineyardDetail() {
             {/* Contacto */}
             <View className="bg-[#482329] p-5 rounded-xl mb-4">
               <Text className="text-white text-lg font-bold mb-4">
-                Contacto
+                {t("vineyardDetail.contact")}
               </Text>
               <View className="flex-col gap-3">
                 <TouchableOpacity
@@ -228,28 +265,33 @@ export default function VineyardDetail() {
                         if (supported) {
                           await Linking.openURL(phoneUrl);
                         } else {
-                          Alert.alert(
-                            "Error",
-                            "No se puede realizar la llamada en este dispositivo"
-                          );
+                          showModal({
+                            title: t("vineyardDetail.alerts.phoneError"),
+                            body: t("vineyardDetail.alerts.phoneErrorMessage"),
+                            isError: true,
+                          });
                         }
                       } else {
-                        Alert.alert(
-                          "Información",
-                          "No hay número de teléfono disponible"
-                        );
+                        showModal({
+                          title: t("vineyardDetail.alerts.phoneInfo"),
+                          body: t("vineyardDetail.alerts.phoneInfoMessage"),
+                          isError: false,
+                        });
                       }
                     } catch (error) {
                       console.error("Error al abrir teléfono:", error);
-                      Alert.alert(
-                        "Error",
-                        "Ocurrió un error al intentar llamar"
-                      );
+                      showModal({
+                        title: t("vineyardDetail.alerts.phoneCallError"),
+                        body: t("vineyardDetail.alerts.phoneCallErrorMessage"),
+                        isError: true,
+                      });
                     }
                   }}
                 >
                   <Ionicons name="call-outline" size={18} color="white" />
-                  <Text className="text-white font-bold">Llamar</Text>
+                  <Text className="text-white font-bold">
+                    {t("vineyardDetail.call")}
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   className="flex-row items-center justify-center gap-2 px-4 py-3 bg-[#800020]/20 rounded-lg"
@@ -261,25 +303,33 @@ export default function VineyardDetail() {
                         if (supported) {
                           await Linking.openURL(emailUrl);
                         } else {
-                          Alert.alert(
-                            "Error",
-                            "No se puede abrir la aplicación de email en este dispositivo"
-                          );
+                          showModal({
+                            title: t("vineyardDetail.alerts.emailError"),
+                            body: t("vineyardDetail.alerts.emailErrorMessage"),
+                            isError: true,
+                          });
                         }
                       } else {
-                        Alert.alert("Información", "No hay email disponible");
+                        showModal({
+                          title: t("vineyardDetail.alerts.emailInfo"),
+                          body: t("vineyardDetail.alerts.emailInfoMessage"),
+                          isError: false,
+                        });
                       }
                     } catch (error) {
                       console.error("Error al abrir email:", error);
-                      Alert.alert(
-                        "Error",
-                        "Ocurrió un error al intentar enviar email"
-                      );
+                      showModal({
+                        title: t("vineyardDetail.alerts.emailSendError"),
+                        body: t("vineyardDetail.alerts.emailSendErrorMessage"),
+                        isError: true,
+                      });
                     }
                   }}
                 >
                   <Ionicons name="mail-outline" size={18} color="white" />
-                  <Text className="text-white font-bold">Email</Text>
+                  <Text className="text-white font-bold">
+                    {t("vineyardDetail.email")}
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -296,11 +346,23 @@ export default function VineyardDetail() {
           >
             <Ionicons name="calendar-outline" size={20} color="#fff" />
             <Text className="text-white text-lg font-bold">
-              Reservar Visita
+              {t("vineyardDetail.bookVisit")}
             </Text>
           </TouchableOpacity>
         </View>
       </View>
+
+      {/* Modal for alerts */}
+      <ConfirmModal
+        visible={modalVisible}
+        title={modalConfig.title}
+        body={modalConfig.body}
+        isError={modalConfig.isError}
+        acceptLabel={modalConfig.acceptLabel}
+        cancelLabel={t("common.close")}
+        onAccept={() => setModalVisible(false)}
+        onClose={() => setModalVisible(false)}
+      />
     </Screen>
   );
 }

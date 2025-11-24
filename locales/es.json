@@ -82,7 +82,9 @@
     "appName": "ViñedoApp",
     "error": "Error",
     "success": "Éxito",
-    "loading": "Cargando..."
+    "loading": "Cargando...",
+    "accept": "Aceptar",
+    "close": "Cerrar"
   },
   "socialNetworks": {
     "title": "Nuestras redes",
@@ -91,5 +93,35 @@
     "twitter": "Twitter",
     "tiktok": "TikTok",
     "website": "Sitio Web"
+  },
+  "vineyardDetail": {
+    "aboutUs": "Sobre Nosotros",
+    "schedule": "Horarios",
+    "mondayToFriday": "Lunes a Viernes:",
+    "saturdayToSunday": "Sábados y Domingos:",
+    "services": "Servicios",
+    "location": "Ubicación",
+    "noLocationRegistered": "no tiene ubicación registrada",
+    "viewOurWines": "Ver nuestros vinos",
+    "contact": "Contacto",
+    "call": "Llamar",
+    "email": "Email",
+    "bookVisit": "Reservar Visita",
+    "reviews": "({{count}} reseñas)",
+    "defaultLocation": "Valle de Guadalupe, México",
+    "alerts": {
+      "phoneError": "Error",
+      "phoneErrorMessage": "No se puede realizar la llamada en este dispositivo",
+      "phoneInfo": "Información",
+      "phoneInfoMessage": "No hay número de teléfono disponible",
+      "phoneCallError": "Error",
+      "phoneCallErrorMessage": "Ocurrió un error al intentar llamar",
+      "emailError": "Error",
+      "emailErrorMessage": "No se puede abrir la aplicación de email en este dispositivo",
+      "emailInfo": "Información",
+      "emailInfoMessage": "No hay email disponible",
+      "emailSendError": "Error",
+      "emailSendErrorMessage": "Ocurrió un error al intentar enviar email"
+    }
   }
 }

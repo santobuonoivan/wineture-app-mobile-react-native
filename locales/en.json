@@ -82,7 +82,9 @@
     "appName": "WineyardApp",
     "error": "Error",
     "success": "Success",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "accept": "Accept",
+    "close": "Close"
   },
   "socialNetworks": {
     "title": "Our social networks",
@@ -91,5 +93,35 @@
     "twitter": "Twitter",
     "tiktok": "TikTok",
     "website": "Website"
+  },
+  "vineyardDetail": {
+    "aboutUs": "About Us",
+    "schedule": "Schedule",
+    "mondayToFriday": "Monday to Friday:",
+    "saturdayToSunday": "Saturday and Sunday:",
+    "services": "Services",
+    "location": "Location",
+    "noLocationRegistered": "no location registered",
+    "viewOurWines": "View our wines",
+    "contact": "Contact",
+    "call": "Call",
+    "email": "Email",
+    "bookVisit": "Book Visit",
+    "reviews": "({{count}} reviews)",
+    "defaultLocation": "Guadalupe Valley, Mexico",
+    "alerts": {
+      "phoneError": "Error",
+      "phoneErrorMessage": "Cannot make a call on this device",
+      "phoneInfo": "Information",
+      "phoneInfoMessage": "No phone number available",
+      "phoneCallError": "Error",
+      "phoneCallErrorMessage": "An error occurred trying to make the call",
+      "emailError": "Error",
+      "emailErrorMessage": "Cannot open the email app on this device",
+      "emailInfo": "Information",
+      "emailInfoMessage": "No email available",
+      "emailSendError": "Error",
+      "emailSendErrorMessage": "An error occurred trying to send email"
+    }
   }
 }
