@@ -123,5 +123,17 @@
       "emailSendError": "Error",
       "emailSendErrorMessage": "Ocurrió un error al intentar enviar email"
     }
+  },
+  "catalog": {
+    "title": "Nuestro Catálogo",
+    "searchPlaceholder": "Buscar por nombre, uva...",
+    "filters": {
+      "type": "Tipo",
+      "vintage": "Añada",
+      "price": "Precio"
+    },
+    "addToCart": "Añadir",
+    "currency": "MXN",
+    "noWinesFound": "No se encontraron vinos para este viñedo."
   }
 }

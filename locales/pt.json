@@ -123,5 +123,17 @@
       "emailSendError": "Erro",
       "emailSendErrorMessage": "Ocorreu um erro ao tentar enviar email"
     }
+  },
+  "catalog": {
+    "title": "Nosso Catálogo",
+    "searchPlaceholder": "Buscar por nome, uva...",
+    "filters": {
+      "type": "Tipo",
+      "vintage": "Safra",
+      "price": "Preço"
+    },
+    "addToCart": "Adicionar",
+    "currency": "MXN",
+    "noWinesFound": "Nenhum vinho encontrado para esta vinícola."
   }
 }

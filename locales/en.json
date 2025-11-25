@@ -123,5 +123,17 @@
       "emailSendError": "Error",
       "emailSendErrorMessage": "An error occurred trying to send email"
     }
+  },
+  "catalog": {
+    "title": "Our Catalog",
+    "searchPlaceholder": "Search by name, grape...",
+    "filters": {
+      "type": "Type",
+      "vintage": "Vintage",
+      "price": "Price"
+    },
+    "addToCart": "Add",
+    "currency": "MXN",
+    "noWinesFound": "No wines found for this vineyard."
   }
 }

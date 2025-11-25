@@ -13,17 +13,19 @@ import { useEffect, useState } from "react";
 import { IVineyardInfoWithWinesData } from "../../../interfaces";
 import { getVineyardInfoByUUID, getWinesInfoByVineyard } from "../../../lib";
 import { IWine } from "../../../interfaces/IVineyard";
+import { useLanguage } from "../../../hooks/useLanguage";
+import { SkeletonWine } from "../../../components/skeleton/SkeletoneWine";
 
 export default function VineyardCatalog() {
   const { vineyardId } = useLocalSearchParams<{ vineyardId: string }>();
   const router = useRouter();
+  const { t, currentLanguage } = useLanguage();
   const [wines, setWines] = useState<IWine[]>([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     getWinesInfoByVineyard({ vineyardId: parseInt(vineyardId) }).then(
       (data) => {
-        console.log("Wines data:", data);
         const vineyardData = data.data;
         if (vineyardData) {
           setWines(vineyardData as IWine[]);
@@ -54,7 +56,7 @@ export default function VineyardCatalog() {
             <Ionicons name="arrow-back" size={24} color="white" />
           </Pressable>
           <Text className="flex-1 text-center text-lg font-bold tracking-tight text-white">
-            Nuestro Catálogo
+            {t("catalog.title")}
           </Text>
           <View className="w-12 items-center justify-end">
             <Pressable className="relative h-12 w-12 items-center justify-center">
@@ -71,7 +73,7 @@ export default function VineyardCatalog() {
             </View>
             <TextInput
               className="flex-1 px-3 text-base text-white"
-              placeholder="Buscar por nombre, uva..."
+              placeholder={t("catalog.searchPlaceholder")}
               placeholderTextColor="#a1979a"
               value={search}
               onChangeText={setSearch}
@@ -81,9 +83,13 @@ export default function VineyardCatalog() {
 
         {/* Filtros mock (sin lógica aún) */}
         <View className="flex-row gap-3 px-4 pb-3">
-          {["Tipo", "Añada", "Precio"].map((label) => (
+          {[
+            { key: "type", label: t("catalog.filters.type") },
+            { key: "vintage", label: t("catalog.filters.vintage") },
+            { key: "price", label: t("catalog.filters.price") },
+          ].map(({ key, label }) => (
             <Pressable
-              key={label}
+              key={key}
               className="flex h-8 items-center justify-center gap-2 rounded-lg bg-[#2b1518] px-4 flex-row"
             >
               <Text className="text-stone-200 text-sm font-medium">
@@ -124,11 +130,15 @@ export default function VineyardCatalog() {
                       className="text-stone-300 text-xs mt-2"
                       numberOfLines={3}
                     >
-                      {wine.description}
+                      {currentLanguage === "en"
+                        ? wine.descriptionEN
+                        : currentLanguage === "pt"
+                          ? wine.descriptionPT
+                          : wine.description}
                     </Text>
                   )}
                   <Text className="text-stone-100 text-base font-bold mt-2">
-                    ${parseFloat(wine.price).toFixed(2)} MXN
+                    ${parseFloat(wine.price).toFixed(2)} USD
                   </Text>
                 </View>
                 <Pressable className="self-start mt-2 flex h-9 flex-row items-center justify-center gap-2 rounded-lg bg-[#d41132] px-4">
@@ -137,7 +147,7 @@ export default function VineyardCatalog() {
                     className="text-white text-xs font-bold"
                     numberOfLines={1}
                   >
-                    Añadir
+                    {t("catalog.addToCart")}
                   </Text>
                 </Pressable>
               </View>
@@ -146,9 +156,11 @@ export default function VineyardCatalog() {
 
           {filteredWines.length === 0 && (
             <View className="w-full items-center justify-center mt-10">
-              <Text className="text-stone-400 text-sm">
-                No se encontraron vinos para este viñedo.
-              </Text>
+              <SkeletonWine />
+              <SkeletonWine />
+
+              <SkeletonWine />
+              <SkeletonWine />
             </View>
           )}
         </View>

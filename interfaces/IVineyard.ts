@@ -85,6 +85,8 @@ export interface IWine {
   valley: string;
   image: string;
   description: string;
+  descriptionPT: string;
+  descriptionEN: string;
   promoDescription: string;
   deletedAt: string | null;
   status: string;
