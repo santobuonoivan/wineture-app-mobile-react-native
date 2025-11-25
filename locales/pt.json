@@ -142,7 +142,12 @@
       "message": "Tem certeza de que deseja remover este vinho do carrinho?",
       "accept": "Remover",
       "cancel": "Cancelar"
-    }
+    },
+    "title": "Meu Carrinho",
+    "subtotal": "Subtotal",
+    "shipping": "Envio",
+    "total": "Total",
+    "orderButton": "PEDIR"
   },
   "wineDetail": {
     "title": "Detalhe do Vinho",

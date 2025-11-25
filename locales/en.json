@@ -142,7 +142,12 @@
       "message": "Are you sure you want to remove this wine from the cart?",
       "accept": "Remove",
       "cancel": "Cancel"
-    }
+    },
+    "title": "My Cart",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total",
+    "orderButton": "ORDER"
   },
   "wineDetail": {
     "title": "Wine Detail",
