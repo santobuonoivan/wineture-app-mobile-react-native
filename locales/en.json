@@ -218,6 +218,16 @@
       "cancel": "Close"
     }
   },
+  "summary": {
+    "title": "Payment Successful!",
+    "description": "Your order has been confirmed. You will receive an email with your purchase details.",
+    "orderSummary": "Order Summary",
+    "orderNumber": "Order No:",
+    "date": "Date:",
+    "total": "Total:",
+    "viewOrderButton": "View Order Details",
+    "backHomeButton": "Back to Home"
+  },
   "wineDetail": {
     "title": "Wine Detail",
     "alcohol": "Alcohol",
