@@ -137,19 +137,21 @@ export default function VineyardCatalog() {
                           : wine.description}
                     </Text>
                   )}
-                  <Text className="text-stone-100 text-base font-bold mt-2">
-                    ${parseFloat(wine.price).toFixed(2)} USD
-                  </Text>
+                  <View className="flex-row items-center justify-between mt-2">
+                    <Text className="text-stone-100 text-base font-bold">
+                      ${parseFloat(wine.price).toFixed(2)} USD
+                    </Text>
+                    <Pressable className="flex h-9 flex-row items-center justify-center gap-2 rounded-lg bg-[#d41132] px-4">
+                      <Ionicons name="cart-outline" size={16} color="white" />
+                      <Text
+                        className="text-white text-xs font-bold"
+                        numberOfLines={1}
+                      >
+                        {t("catalog.addToCart")}
+                      </Text>
+                    </Pressable>
+                  </View>
                 </View>
-                <Pressable className="self-start mt-2 flex h-9 flex-row items-center justify-center gap-2 rounded-lg bg-[#d41132] px-4">
-                  <Ionicons name="cart-outline" size={16} color="white" />
-                  <Text
-                    className="text-white text-xs font-bold"
-                    numberOfLines={1}
-                  >
-                    {t("catalog.addToCart")}
-                  </Text>
-                </Pressable>
               </View>
             </View>
           ))}
