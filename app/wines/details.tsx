@@ -7,6 +7,7 @@ import {
   Pressable,
 } from "react-native";
 import { useState } from "react";
+import { LinearGradient } from "expo-linear-gradient";
 import { Screen } from "../../components/Screen";
 import { Ionicons } from "@expo/vector-icons";
 import { useLanguage } from "../../hooks/useLanguage";
@@ -72,17 +73,20 @@ export default function WineDetails() {
 
       <ScrollView className="flex-1">
         {/* Hero Image */}
-        <View className="h-96 w-full px-4 rounded rounded-xl">
-          <View className="rounded-xl" />
+        <View className="relative h-96 w-full">
           <ImageBackground
             source={{ uri: wineData.image }}
-            className="h-full w-full rounded-xl"
+            className="h-full w-full"
             resizeMode="cover"
+          />
+          <LinearGradient
+            colors={['transparent', '#221013']}
+            className="absolute inset-0"
           />
         </View>
 
         {/* Content */}
-        <View className="mt-6 space-y-6 px-4">
+        <View className="relative z-10 -mt-24 space-y-6 px-4">
           {/* Wine Info */}
           <View className="space-y-2 py-4">
             <Text className="text-sm font-medium uppercase tracking-wider text-stone-400">
