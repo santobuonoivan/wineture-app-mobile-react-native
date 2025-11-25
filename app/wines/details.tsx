@@ -80,7 +80,7 @@ export default function WineDetails() {
             resizeMode="cover"
           />
           <LinearGradient
-            colors={['transparent', '#221013']}
+            colors={["transparent", "#221013"]}
             className="absolute inset-0"
           />
         </View>
