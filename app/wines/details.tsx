@@ -73,7 +73,7 @@ export default function WineDetails() {
 
       <ScrollView className="flex-1">
         {/* Hero Image */}
-        <View className="relative h-96 w-full">
+        <View className="relative h-96 w-full px-4">
           <ImageBackground
             source={{ uri: wineData.image }}
             className="h-full w-full"
@@ -88,7 +88,7 @@ export default function WineDetails() {
         {/* Content */}
         <View className="relative z-10 -mt-24 space-y-6 px-4">
           {/* Wine Info */}
-          <View className="space-y-2 py-4">
+          <View className="space-y-2 py-4 px-4">
             <Text className="text-sm font-medium uppercase tracking-wider text-stone-400">
               {wineData.wineBrand}
             </Text>
