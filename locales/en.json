@@ -136,18 +136,40 @@
     "currency": "MXN",
     "noWinesFound": "No wines found for this vineyard."
   },
-  "cart": {
-    "confirmRemove": {
-      "title": "Remove from cart",
-      "message": "Are you sure you want to remove this wine from the cart?",
-      "accept": "Remove",
-      "cancel": "Cancel"
+  "shipping": {
+    "title": "Shipping Address",
+    "stepper": {
+      "shipping": "Shipping",
+      "payment": "Payment",
+      "summary": "Summary"
     },
-    "title": "My Cart",
-    "subtotal": "Subtotal",
-    "shipping": "Shipping",
-    "total": "Total",
-    "orderButton": "ORDER"
+    "form": {
+      "fullName": {
+        "label": "Full Name",
+        "placeholder": "Enter your full name"
+      },
+      "address": {
+        "label": "Address",
+        "placeholder": "Street, number, neighborhood"
+      },
+      "city": {
+        "label": "City",
+        "placeholder": "Your city"
+      },
+      "state": {
+        "label": "State",
+        "placeholder": "Your state"
+      },
+      "postalCode": {
+        "label": "Postal Code",
+        "placeholder": "ZIP Code"
+      },
+      "country": {
+        "label": "Country"
+      },
+      "saveAddress": "Save this address for future purchases"
+    },
+    "continueButton": "Continue to Payment"
   },
   "wineDetail": {
     "title": "Wine Detail",
