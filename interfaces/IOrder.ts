@@ -58,6 +58,20 @@ export interface IOrder {
   };
   orderItems: IOrderItem[];
   userAddress: IUserAddress;
+  orderTrackings: IOrderTrackingItem[];
+}
+
+export interface IOrderTrackingItem {
+  trackingId: number;
+  trackingNumber: string;
+  created_at: string;
+  updated_at: string;
+  status: {
+    statusId: number;
+    statusName: string;
+    statusCode: string;
+    nextStatusId: number | null;
+  };
 }
 
 export interface IOrderItem {

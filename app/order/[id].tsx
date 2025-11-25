@@ -5,7 +5,7 @@ import { useLocalSearchParams, router } from "expo-router";
 import { Screen } from "../../components/Screen";
 import { useLanguage } from "../../hooks/useLanguage";
 import { getOrderDetailByUUID } from "../../lib";
-import { IOrder, IOrderItem } from "../../interfaces";
+import { IOrder, IOrderItem, IOrderTrackingItem } from "../../interfaces";
 
 export default function OrderDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -38,7 +38,7 @@ export default function OrderDetailScreen() {
     </View>
   );
 
-  const renderTimelineItem = (item: any, index: number) => (
+  const renderTimelineItem = (item: IOrderTrackingItem, index: number) => (
     <View key={index} className="flex-row gap-4">
       <View className="flex-col items-center">
         <View
@@ -50,7 +50,7 @@ export default function OrderDetailScreen() {
             <Ionicons name="checkmark" size={12} color="white" />
           )}
         </View>
-        {index < orderDetails.timeline.length - 1 && (
+        {index < orderDetails?.orderTrackings?.length - 1 && (
           <View
             className={`w-px flex-1 mt-2 ${
               item.completed ? "bg-[#c6102e]" : "bg-[#67323b]"

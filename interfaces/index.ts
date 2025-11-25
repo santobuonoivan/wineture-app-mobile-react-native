@@ -16,4 +16,9 @@ export {
 // Re-export cart interfaces
 export { CartItemI } from "./ICart";
 
-export { IOrder, IOrderRestponse, IOrderItem } from "./IOrder";
+export {
+  IOrder,
+  IOrderRestponse,
+  IOrderItem,
+  IOrderTrackingItem,
+} from "./IOrder";
