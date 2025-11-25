@@ -1,6 +1,8 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
   ImageBackground,
+  Image,
+  Modal,
   Pressable,
   ScrollView,
   Text,
@@ -26,6 +28,8 @@ export default function VineyardCatalog() {
   const [wines, setWines] = useState<IWine[]>([]);
   const [search, setSearch] = useState("");
   const [itemToRemove, setItemToRemove] = useState<number | null>(null);
+  const [imagePreviewVisible, setImagePreviewVisible] = useState(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
 
   // Modal functions
   const requestRemove = (itemId: number) => {
@@ -37,6 +41,25 @@ export default function VineyardCatalog() {
       removeItem(itemToRemove);
       setItemToRemove(null);
     }
+  };
+
+  // Image preview functions
+  const openImagePreview = (imageUrl: string) => {
+    setSelectedImageUrl(imageUrl);
+    setImagePreviewVisible(true);
+  };
+
+  const closeImagePreview = () => {
+    setImagePreviewVisible(false);
+    setSelectedImageUrl(null);
+  };
+
+  // Navigate to wine detail
+  const goToDetail = (wine: IWine) => {
+    router.push({
+      pathname: "/wines/details",
+      params: { wine: JSON.stringify(wine) },
+    });
   };
 
   // Helper function to get wine quantity in cart
@@ -134,89 +157,94 @@ export default function VineyardCatalog() {
         <View className="flex flex-col gap-4">
           {filteredWines.map((wine) => (
             <View key={wine.wineId} className="flex-row gap-4 mb-2">
-              <ImageBackground
-                source={{ uri: wine.image }}
-                className="w-24 h-32 rounded-xl overflow-hidden bg-[#3a2226]"
-                resizeMode="cover"
-              />
+              <Pressable onPress={() => openImagePreview(wine.image)}>
+                <ImageBackground
+                  source={{ uri: wine.image }}
+                  className="w-24 h-32 rounded-xl overflow-hidden bg-[#3a2226]"
+                  resizeMode="cover"
+                />
+              </Pressable>
               <View className="flex-1 flex-col justify-between">
-                <View>
-                  <Text
-                    className="text-white text-base font-bold"
-                    numberOfLines={2}
-                  >
-                    {wine.wineName}
-                  </Text>
-                  <Text
-                    className="text-stone-400 text-sm mt-1"
-                    numberOfLines={1}
-                  >
-                    {wine.wineCategory}
-                  </Text>
-                  {wine.description && (
+                <Pressable onPress={() => goToDetail(wine)}>
+                  <View>
                     <Text
-                      className="text-stone-300 text-xs mt-2"
-                      numberOfLines={3}
+                      className="text-white text-base font-bold"
+                      numberOfLines={2}
                     >
-                      {currentLanguage === "en"
-                        ? wine.descriptionEN
-                        : currentLanguage === "pt"
-                          ? wine.descriptionPT
-                          : wine.description}
+                      {wine.wineName}
                     </Text>
-                  )}
-                  <View className="flex-row items-center justify-between mt-2">
-                    <Text className="text-stone-100 text-base font-bold">
-                      ${parseFloat(wine.price).toFixed(2)} USD
+                    <Text
+                      className="text-stone-400 text-sm mt-1"
+                      numberOfLines={1}
+                    >
+                      {wine.wineCategory}
                     </Text>
-                    {getWineQuantityInCart(wine.wineId) > 0 ? (
-                      // Quantity controls when wine is in cart
-                      <View className="flex-row items-center gap-2">
-                        <Pressable
-                          className="w-8 h-8 rounded-full bg-[#2b1518] items-center justify-center border border-[#d41132]"
-                          onPress={() => {
-                            const itemId = getCartItemId(wine.wineId);
-                            const quantity = getWineQuantityInCart(wine.wineId);
-                            if (itemId) {
-                              if (quantity === 1) {
-                                requestRemove(itemId);
-                              } else {
-                                decrement(itemId);
-                              }
-                            }
-                          }}
-                        >
-                          <Ionicons name="remove" size={16} color="#d41132" />
-                        </Pressable>
-                        <Text className="text-white font-bold min-w-[20px] text-center">
-                          {getWineQuantityInCart(wine.wineId)}
-                        </Text>
-                        <Pressable
-                          className="w-8 h-8 rounded-full bg-[#d41132] items-center justify-center"
-                          onPress={() => {
-                            const itemId = getCartItemId(wine.wineId);
-                            if (itemId) increment(itemId);
-                          }}
-                        >
-                          <Ionicons name="add" size={16} color="white" />
-                        </Pressable>
-                      </View>
-                    ) : (
-                      // Add button when wine is not in cart
-                      <Pressable
-                        className="flex h-9 flex-row items-center justify-center gap-2 rounded-lg bg-[#d41132] px-4"
-                        onPress={() => addItem(wine)}
+                    {wine.description && (
+                      <Text
+                        className="text-stone-300 text-xs mt-2"
+                        numberOfLines={3}
                       >
-                        <Ionicons name="cart-outline" size={16} color="white" />
-                        <Text
-                          className="text-white text-xs font-bold"
-                          numberOfLines={1}
-                        >
-                          {t("catalog.addToCart")}
-                        </Text>
-                      </Pressable>
+                        {currentLanguage === "en"
+                          ? wine.descriptionEN
+                          : currentLanguage === "pt"
+                            ? wine.descriptionPT
+                            : wine.description}
+                      </Text>
                     )}
                   </View>
+                </Pressable>
+
+                <View className="flex-row items-center justify-between mt-2">
+                  <Text className="text-stone-100 text-base font-bold">
+                    ${parseFloat(wine.price).toFixed(2)} USD
+                  </Text>
+                  {getWineQuantityInCart(wine.wineId) > 0 ? (
+                    // Quantity controls when wine is in cart
+                    <View className="flex-row items-center gap-2">
+                      <Pressable
+                        className="w-8 h-8 rounded-full bg-[#2b1518] items-center justify-center border border-[#d41132]"
+                        onPress={() => {
+                          const itemId = getCartItemId(wine.wineId);
+                          const quantity = getWineQuantityInCart(wine.wineId);
+                          if (itemId) {
+                            if (quantity === 1) {
+                              requestRemove(itemId);
+                            } else {
+                              decrement(itemId);
+                            }
+                          }
+                        }}
+                      >
+                        <Ionicons name="remove" size={16} color="#d41132" />
+                      </Pressable>
+                      <Text className="text-white font-bold min-w-[20px] text-center">
+                        {getWineQuantityInCart(wine.wineId)}
+                      </Text>
+                      <Pressable
+                        className="w-8 h-8 rounded-full bg-[#d41132] items-center justify-center"
+                        onPress={() => {
+                          const itemId = getCartItemId(wine.wineId);
+                          if (itemId) increment(itemId);
+                        }}
+                      >
+                        <Ionicons name="add" size={16} color="white" />
+                      </Pressable>
+                    </View>
+                  ) : (
+                    // Add button when wine is not in cart
+                    <Pressable
+                      className="flex h-9 flex-row items-center justify-center gap-2 rounded-lg bg-[#d41132] px-4"
+                      onPress={() => addItem(wine)}
+                    >
+                      <Ionicons name="cart-outline" size={16} color="white" />
+                      <Text
+                        className="text-white text-xs font-bold"
+                        numberOfLines={1}
+                      >
+                        {t("catalog.addToCart")}
+                      </Text>
+                    </Pressable>
+                  )}
                 </View>
               </View>
             </View>
@@ -245,6 +273,35 @@ export default function VineyardCatalog() {
         onAccept={handleConfirmRemove}
         onClose={() => setItemToRemove(null)}
       />
+
+      {/* Image Preview Modal */}
+      <Modal
+        transparent
+        animationType="fade"
+        visible={imagePreviewVisible}
+        onRequestClose={closeImagePreview}
+      >
+        <Pressable
+          className="flex-1 bg-black/90 items-center justify-center"
+          onPress={closeImagePreview}
+        >
+          <View className="relative">
+            {selectedImageUrl && (
+              <Image
+                source={{ uri: selectedImageUrl }}
+                className="w-80 h-96 rounded-2xl"
+                resizeMode="contain"
+              />
+            )}
+            <Pressable
+              className="absolute -top-2 -right-2 w-10 h-10 bg-black/70 rounded-full items-center justify-center"
+              onPress={closeImagePreview}
+            >
+              <Ionicons name="close" size={20} color="white" />
+            </Pressable>
+          </View>
+        </Pressable>
+      </Modal>
     </Screen>
   );
 }
