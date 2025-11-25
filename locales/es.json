@@ -136,6 +136,19 @@
     "currency": "MXN",
     "noWinesFound": "No se encontraron vinos para este viñedo."
   },
+  "cart": {
+    "confirmRemove": {
+      "title": "Eliminar del carrito",
+      "message": "¿Estás seguro de que deseas eliminar este vino del carrito?",
+      "accept": "Eliminar",
+      "cancel": "Cancelar"
+    },
+    "title": "Mi Carrito",
+    "subtotal": "Subtotal",
+    "shipping": "Envío",
+    "total": "Total",
+    "orderButton": "ORDENAR"
+  },
   "shipping": {
     "title": "Dirección de Envío",
     "stepper": {
@@ -170,6 +183,40 @@
       "saveAddress": "Guardar esta dirección para futuras compras"
     },
     "continueButton": "Continuar a Pago"
+  },
+  "payment": {
+    "title": "Método de Pago",
+    "stepper": {
+      "shipping": "Envío",
+      "payment": "Pago",
+      "summary": "Resumen"
+    },
+    "form": {
+      "cardNumber": {
+        "label": "Número de Tarjeta",
+        "placeholder": "0000 0000 0000 0000"
+      },
+      "expiry": {
+        "label": "Fecha de Vencimiento",
+        "placeholder": "MM/AA"
+      },
+      "cvv": {
+        "label": "CVV",
+        "placeholder": "123"
+      },
+      "cardHolder": {
+        "label": "Nombre del Titular",
+        "placeholder": "Nombre como aparece en la tarjeta"
+      },
+      "saveCard": "Guardar esta tarjeta para futuras compras"
+    },
+    "payButton": "Pagar Ahora",
+    "error": {
+      "title": "Error al procesar el pago",
+      "message": "No se pudo procesar el pago. Revisa los datos de tu tarjeta e inténtalo nuevamente.",
+      "accept": "Entendido",
+      "cancel": "Cerrar"
+    }
   },
   "wineDetail": {
     "title": "Detalle del Vino",
