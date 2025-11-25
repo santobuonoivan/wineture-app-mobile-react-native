@@ -15,13 +15,41 @@ import { getVineyardInfoByUUID, getWinesInfoByVineyard } from "../../../lib";
 import { IWine } from "../../../interfaces/IVineyard";
 import { useLanguage } from "../../../hooks/useLanguage";
 import { SkeletonWine } from "../../../components/skeleton/SkeletoneWine";
+import { useCartStore } from "../../../store/useCartStore";
+import { ConfirmModal } from "../../../components/ui/ConfirmModal";
 
 export default function VineyardCatalog() {
   const { vineyardId } = useLocalSearchParams<{ vineyardId: string }>();
   const router = useRouter();
   const { t, currentLanguage } = useLanguage();
+  const { items, addItem, increment, decrement, removeItem } = useCartStore();
   const [wines, setWines] = useState<IWine[]>([]);
   const [search, setSearch] = useState("");
+  const [itemToRemove, setItemToRemove] = useState<number | null>(null);
+
+  // Modal functions
+  const requestRemove = (itemId: number) => {
+    setItemToRemove(itemId);
+  };
+
+  const handleConfirmRemove = () => {
+    if (itemToRemove != null) {
+      removeItem(itemToRemove);
+      setItemToRemove(null);
+    }
+  };
+
+  // Helper function to get wine quantity in cart
+  const getWineQuantityInCart = (wineId: number) => {
+    const cartItem = items.find((item) => item.wine.wineId === wineId);
+    return cartItem ? cartItem.quantity : 0;
+  };
+
+  // Helper function to get cart item ID
+  const getCartItemId = (wineId: number) => {
+    const cartItem = items.find((item) => item.wine.wineId === wineId);
+    return cartItem ? cartItem.itemId : null;
+  };
 
   useEffect(() => {
     getWinesInfoByVineyard({ vineyardId: parseInt(vineyardId) }).then(
@@ -141,15 +169,53 @@ export default function VineyardCatalog() {
                     <Text className="text-stone-100 text-base font-bold">
                       ${parseFloat(wine.price).toFixed(2)} USD
                     </Text>
-                    <Pressable className="flex h-9 flex-row items-center justify-center gap-2 rounded-lg bg-[#d41132] px-4">
-                      <Ionicons name="cart-outline" size={16} color="white" />
-                      <Text
-                        className="text-white text-xs font-bold"
-                        numberOfLines={1}
+                    {getWineQuantityInCart(wine.wineId) > 0 ? (
+                      // Quantity controls when wine is in cart
+                      <View className="flex-row items-center gap-2">
+                        <Pressable
+                          className="w-8 h-8 rounded-full bg-[#2b1518] items-center justify-center border border-[#d41132]"
+                          onPress={() => {
+                            const itemId = getCartItemId(wine.wineId);
+                            const quantity = getWineQuantityInCart(wine.wineId);
+                            if (itemId) {
+                              if (quantity === 1) {
+                                requestRemove(itemId);
+                              } else {
+                                decrement(itemId);
+                              }
+                            }
+                          }}
+                        >
+                          <Ionicons name="remove" size={16} color="#d41132" />
+                        </Pressable>
+                        <Text className="text-white font-bold min-w-[20px] text-center">
+                          {getWineQuantityInCart(wine.wineId)}
+                        </Text>
+                        <Pressable
+                          className="w-8 h-8 rounded-full bg-[#d41132] items-center justify-center"
+                          onPress={() => {
+                            const itemId = getCartItemId(wine.wineId);
+                            if (itemId) increment(itemId);
+                          }}
+                        >
+                          <Ionicons name="add" size={16} color="white" />
+                        </Pressable>
+                      </View>
+                    ) : (
+                      // Add button when wine is not in cart
+                      <Pressable
+                        className="flex h-9 flex-row items-center justify-center gap-2 rounded-lg bg-[#d41132] px-4"
+                        onPress={() => addItem(wine)}
                       >
-                        {t("catalog.addToCart")}
-                      </Text>
-                    </Pressable>
+                        <Ionicons name="cart-outline" size={16} color="white" />
+                        <Text
+                          className="text-white text-xs font-bold"
+                          numberOfLines={1}
+                        >
+                          {t("catalog.addToCart")}
+                        </Text>
+                      </Pressable>
+                    )}
                   </View>
                 </View>
               </View>
@@ -167,6 +233,18 @@ export default function VineyardCatalog() {
           )}
         </View>
       </ScrollView>
+
+      {/* Confirmation Modal */}
+      <ConfirmModal
+        visible={itemToRemove != null}
+        title={t("cart.confirmRemove.title")}
+        body={t("cart.confirmRemove.message")}
+        acceptLabel={t("cart.confirmRemove.accept")}
+        cancelLabel={t("cart.confirmRemove.cancel")}
+        isError={false}
+        onAccept={handleConfirmRemove}
+        onClose={() => setItemToRemove(null)}
+      />
     </Screen>
   );
 }

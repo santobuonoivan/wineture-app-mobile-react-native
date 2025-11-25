@@ -135,5 +135,13 @@
     "addToCart": "Add",
     "currency": "MXN",
     "noWinesFound": "No wines found for this vineyard."
+  },
+  "cart": {
+    "confirmRemove": {
+      "title": "Remove from cart",
+      "message": "Are you sure you want to remove this wine from the cart?",
+      "accept": "Remove",
+      "cancel": "Cancel"
+    }
   }
 }

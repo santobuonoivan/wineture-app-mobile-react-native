@@ -135,5 +135,13 @@
     "addToCart": "Adicionar",
     "currency": "MXN",
     "noWinesFound": "Nenhum vinho encontrado para esta vinícola."
+  },
+  "cart": {
+    "confirmRemove": {
+      "title": "Remover do carrinho",
+      "message": "Tem certeza de que deseja remover este vinho do carrinho?",
+      "accept": "Remover",
+      "cancel": "Cancelar"
+    }
   }
 }
