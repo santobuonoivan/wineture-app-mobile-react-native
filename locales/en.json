@@ -143,5 +143,15 @@
       "accept": "Remove",
       "cancel": "Cancel"
     }
+  },
+  "wineDetail": {
+    "title": "Wine Detail",
+    "alcohol": "Alcohol",
+    "barrel": "Barrel",
+    "months": "months",
+    "grape": "Grape",
+    "valley": "Valley",
+    "description": "Description",
+    "price": "Price"
   }
 }

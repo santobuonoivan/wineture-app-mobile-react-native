@@ -143,5 +143,15 @@
       "accept": "Eliminar",
       "cancel": "Cancelar"
     }
+  },
+  "wineDetail": {
+    "title": "Detalle del Vino",
+    "alcohol": "Alcohol",
+    "barrel": "Barrica",
+    "months": "meses",
+    "grape": "Cepa",
+    "valley": "Valle",
+    "description": "Descripción",
+    "price": "Precio"
   }
 }
