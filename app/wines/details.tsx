@@ -125,7 +125,7 @@ export default function WineDetails() {
               <Text className="text-xs text-stone-400">
                 {t("wineDetail.valley")}
               </Text>
-              <Text className="font-bold text-white">Valle de Uco</Text>
+              <Text className="font-bold text-white">{wineData.valley}</Text>
             </View>
           </View>
 
@@ -152,7 +152,7 @@ export default function WineDetails() {
               {t("wineDetail.price")}
             </Text>
             <Text className="text-2xl font-bold text-white">
-              ${wineData.price} MXN
+              ${wineData.price} USD
             </Text>
           </View>
 
