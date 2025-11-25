@@ -10,7 +10,10 @@ export {
   IVineyardInfoWithServicesResponse,
   IVineyardService,
   IVineyardWinesResponse,
+  IWine,
 } from "./IVineyard";
 
 // Re-export cart interfaces
 export { CartItemI } from "./ICart";
+
+export { IOrder, IOrderRestponse, IOrderItem } from "./IOrder";

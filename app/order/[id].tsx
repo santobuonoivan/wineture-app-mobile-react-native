@@ -1,112 +1,40 @@
-import React from "react";
+import React, { use, useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, router } from "expo-router";
 import { Screen } from "../../components/Screen";
 import { useLanguage } from "../../hooks/useLanguage";
-
-interface OrderItem {
-  id: string;
-  name: string;
-  image: string;
-  quantity: number;
-  price: number;
-}
-
-interface OrderDetails {
-  id: string;
-  number: string;
-  date: string;
-  status: string;
-  items: OrderItem[];
-  subtotal: number;
-  shipping: number;
-  taxes: number;
-  total: number;
-  shippingAddress: {
-    name: string;
-    address: string;
-    city: string;
-    country: string;
-  };
-  timeline: {
-    title: string;
-    date: string;
-    completed: boolean;
-  }[];
-}
+import { getOrderDetailByUUID } from "../../lib";
+import { IOrder, IOrderItem } from "../../interfaces";
 
 export default function OrderDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t } = useLanguage();
+  const [orderDetails, setOrderDetails] = React.useState<IOrder>();
 
-  // Datos de ejemplo - esto vendría de una API
-  const orderDetails: OrderDetails = {
-    id: "1",
-    number: "VIN-1024",
-    date: "15 de Octubre, 2023",
-    status: t("orderDetails.status.enCamino"),
-    items: [
-      {
-        id: "1",
-        name: "Tinto Reserva 2018",
-        image:
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuAmdjVp9yrgYbRdTy0nE4rJy83dW6pwOHlH2cPaXtXGqHzgbRaTkvROnkx7g7jQJ2zmB5Fxgy46rY9X8kMFQWPC6b8-h96oTym4T6IXmUiOto2Jl_w2Sdq1z_zEtNr5CogcGtB9zdOfpdNb5I6jZMHAeR1BDaf9KA9E7j1l_p8XetzM40qB9og1XBcIrcHs5v2ZZVW5Ib2L0V1ov22NjuPtIHhEOUDEnCaDSdMT_bg5JuzxE3hlH-G65Fim3CGrqv8yxFWOMv1fSJM",
-        quantity: 2,
-        price: 75.0,
-      },
-      {
-        id: "2",
-        name: "Blanco Chardonnay",
-        image:
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuC7UiI1HuAazbADg86ICjVGaY0m3TDW_50YFGC_pEvevhPKoEUN6xdLk_CGWYEZt6kz_ONWS4pYmh5ZJR6KxXf-00hHVCZ1TfHQaYpxcpZGzAXKeLHSMoaUdycahtqjZH1ogDN-Fpqtet3VZ6Wn2_gN0UjpTDetzuIQ2710cetXokSa_d0IWczQBUQJsmLjtaKsgftR5ewjEkEa1b8uIvZMAOnoevCxbJRYFdjO8EEgfIAKfb7wEQSDuWwyFzzTXnIN6sFhtNe1w6I",
-        quantity: 1,
-        price: 25.5,
-      },
-    ],
-    subtotal: 100.5,
-    shipping: 10.0,
-    taxes: 15.0,
-    total: 125.5,
-    shippingAddress: {
-      name: "Alejandra Vargas",
-      address: "Calle de las Vides, 123, Apto 4B",
-      city: "Valle del Vino, CA 90210",
-      country: "Estados Unidos",
-    },
-    timeline: [
-      {
-        title: t("orderDetails.orderSent"),
-        date: "16 de Octubre, 2023 - 09:30 AM",
-        completed: true,
-      },
-      {
-        title: t("orderDetails.orderProcessed"),
-        date: "15 de Octubre, 2023 - 04:15 PM",
-        completed: true,
-      },
-      {
-        title: t("orderDetails.orderPlaced"),
-        date: "15 de Octubre, 2023 - 02:00 PM",
-        completed: false,
-      },
-    ],
-  };
+  useEffect(() => {
+    getOrderDetailByUUID({ uuid: Number(id) }).then((data) => {
+      if (data.status == 200 && data.data) {
+        setOrderDetails(data.data as IOrder);
+      }
+    });
+  }, [id]);
 
-  const renderOrderItem = (item: OrderItem) => (
-    <View key={item.id} className="flex-row items-center gap-4 py-3">
-      <Image source={{ uri: item.image }} className="w-16 h-16 rounded-lg" />
+  const renderOrderItem = (item: IOrderItem) => (
+    <View key={item.orderItemId} className="flex-row items-center gap-4 py-3">
+      <Image
+        source={{ uri: item.wine.image }}
+        className="w-16 h-16 rounded-lg"
+      />
       <View className="flex-1">
         <Text className="text-white text-base font-medium line-clamp-1">
-          {item.name}
+          {item.wine.wineName}
         </Text>
         <Text className="text-[#c9929b] text-sm">
           {t("orderDetails.quantity", { count: item.quantity })}
         </Text>
       </View>
-      <Text className="text-white text-base font-medium">
-        ${item.price.toFixed(2)}
-      </Text>
+      <Text className="text-white text-base font-medium">${item.amount}</Text>
     </View>
   );
 
