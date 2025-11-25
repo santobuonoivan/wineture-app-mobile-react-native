@@ -50,7 +50,7 @@ export default function Cart() {
           <Ionicons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
         <Text className="text-white text-lg font-bold flex-1 text-center">
-          {t('cart.title')}
+          {t("cart.title")}
         </Text>
         <View className="h-12 w-12" />
       </View>
@@ -115,10 +115,10 @@ export default function Cart() {
 
       <ConfirmModal
         visible={itemToRemove != null}
-        title={t('cart.confirmRemove.title')}
-        body={t('cart.confirmRemove.message')}
-        acceptLabel={t('cart.confirmRemove.accept')}
-        cancelLabel={t('cart.confirmRemove.cancel')}
+        title={t("cart.confirmRemove.title")}
+        body={t("cart.confirmRemove.message")}
+        acceptLabel={t("cart.confirmRemove.accept")}
+        cancelLabel={t("cart.confirmRemove.cancel")}
         isError={false}
         onAccept={handleConfirmRemove}
         onClose={() => setItemToRemove(null)}
@@ -128,19 +128,21 @@ export default function Cart() {
       <View className="absolute bottom-0 left-0 right-0 bg-[#221013] border-t border-white/10 p-4">
         <View className="space-y-2">
           <View className="flex-row justify-between">
-            <Text className="text-[#b99da1] text-sm">{t('cart.subtotal')}</Text>
+            <Text className="text-[#b99da1] text-sm">{t("cart.subtotal")}</Text>
             <Text className="text-white text-sm font-medium">
               ${subtotal.toFixed(2)} USD
             </Text>
           </View>
           <View className="flex-row justify-between">
-            <Text className="text-[#b99da1] text-sm">{t('cart.shipping')}</Text>
+            <Text className="text-[#b99da1] text-sm">{t("cart.shipping")}</Text>
             <Text className="text-white text-sm font-medium">
               ${shipping.toFixed(2)} USD
             </Text>
           </View>
           <View className="flex-row justify-between border-t border-white/10 pt-2 mt-2">
-            <Text className="text-white text-base font-bold">{t('cart.total')}</Text>
+            <Text className="text-white text-base font-bold">
+              {t("cart.total")}
+            </Text>
             <Text className="text-white text-base font-bold">
               ${total.toFixed(2)} USD
             </Text>
@@ -164,7 +166,7 @@ export default function Cart() {
                 isCartEmpty ? "text-[#b99da1]" : "text-white"
               }`}
             >
-              {t('cart.orderButton')}
+              {t("cart.orderButton")}
             </Text>
           </Pressable>
         </View>
