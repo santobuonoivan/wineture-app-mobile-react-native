@@ -5,11 +5,13 @@ import { IOrderRestponse } from "../interfaces";
 const API_BASE_URL = config.API_BASE_URL;
 const API_KEY = config.API_KEY;
 
-export const getOrderDetailByUUID = async (params: {
-  uuid: string;
-}): Promise<IOrderRestponse> => {
-  const { uuid } = params;
-  const url = new URL(`${API_BASE_URL}/orders/${uuid}`);
+export const getOrdersByUser = async (params: {
+  id: number;
+}): Promise<any> => {
+  const { id } = params;
+  const url = new URL(
+    `${API_BASE_URL}/orders/users/${id}?page=1&pageSize=20&searchData={}&sorterData={}`
+  );
 
   try {
     // Realiza la solicitud GET a la API backend utilizando fetch

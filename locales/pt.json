@@ -20,6 +20,7 @@
   },
   "profile": {
     "title": "Perfil",
+    "noData": "Sem dados para exibir",
     "user": "Usuário",
     "defaultEmail": "email@exemplo.com",
     "myActivity": "Minha Atividade",
@@ -76,7 +77,8 @@
     "statusDescription": "Você receberá um lembrete por email 24 horas antes da sua visita. Estamos esperando por você!",
     "specialInstructionsTitle": "Instruções Especiais",
     "addToCalendar": "Adicionar ao Calendário",
-    "cancelReservation": "Cancelar Reserva"
+    "cancelReservation": "Cancelar Reserva",
+    "peopleSuffix": "pessoas"
   },
   "common": {
     "appName": "VinhedoApp",
@@ -237,5 +239,14 @@
     "valley": "Vale",
     "description": "Descrição",
     "price": "Preço"
+  },
+  "statuses": {
+    "pending": "Pendente",
+    "paid": "Pago",
+    "payed": "Pago",
+    "completed": "Concluído",
+    "cancelled": "Cancelado",
+    "refunded": "Reembolsado",
+    "validated": "Validado"
   }
 }

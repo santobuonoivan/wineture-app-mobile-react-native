@@ -1,15 +1,14 @@
 import { config } from "../config/env";
-import { IOrderRestponse } from "../interfaces";
 
 // Use the config instead of direct process.env access
 const API_BASE_URL = config.API_BASE_URL;
 const API_KEY = config.API_KEY;
 
-export const getOrderDetailByUUID = async (params: {
-  uuid: string;
-}): Promise<IOrderRestponse> => {
-  const { uuid } = params;
-  const url = new URL(`${API_BASE_URL}/orders/${uuid}`);
+export const getVisitById = async (params: { id: number }): Promise<any> => {
+  const { id } = params;
+  const url = new URL(
+    `${API_BASE_URL}/visits/${id}`
+  );
 
   try {
     // Realiza la solicitud GET a la API backend utilizando fetch

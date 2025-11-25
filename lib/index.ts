@@ -4,6 +4,9 @@ import { getWinesInfoByVineyard } from "./getWinesInfoByVineyard";
 import { getVineyardInfoByUUID } from "./getVineyardInfoByUUID";
 import { getVineyardCalendarConfig } from "./getVineyardCalendarConfig";
 import { getOrderDetailByUUID } from "./getOrderDetail";
+import { getOrdersByUser } from "./getOrdersByUser";
+import { getVisitsByUser } from "./getVisitsByUser";
+import { getVisitById } from "./getVisitsById";
 export {
   getVineyardsByGeo,
   getVineyardReviewsStatistic,
@@ -11,4 +14,7 @@ export {
   getVineyardInfoByUUID,
   getVineyardCalendarConfig,
   getOrderDetailByUUID,
+  getOrdersByUser,
+  getVisitsByUser,
+  getVisitById
 };

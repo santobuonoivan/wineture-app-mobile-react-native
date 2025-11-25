@@ -1,4 +1,4 @@
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, router } from "expo-router";
@@ -8,17 +8,79 @@ import { getOrderDetailByUUID } from "../../lib";
 import { IOrder, IOrderItem, IOrderTrackingItem } from "../../interfaces";
 
 export default function OrderDetailScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { uuid } = useLocalSearchParams<{ uuid: string }>();
   const { t } = useLanguage();
   const [orderDetails, setOrderDetails] = React.useState<IOrder>();
 
+  // Normaliza valores numéricos que vienen como string
+  const parseAmount = (value: any) => {
+    const num = Number(value);
+    return isNaN(num) ? 0 : num;
+  };
+
   useEffect(() => {
-    getOrderDetailByUUID({ uuid: Number(id) }).then((data) => {
-      if (data.status == 200 && data.data) {
-        setOrderDetails(data.data as IOrder);
+    let active = true;
+
+    const fetchData = async () => {
+      try {
+        const response = await getOrderDetailByUUID({ uuid });
+        if (!active) return;
+
+        if (response.status === 200 && response.data) {
+          const data = response.data as IOrder;
+
+          // Aseguramos arrays válidos
+          data.orderItems = Array.isArray(data.orderItems)
+            ? data.orderItems
+            : [];
+
+          data.orderTrackings = Array.isArray(data.orderTrackings)
+            ? data.orderTrackings
+            : [];
+
+          // Ordenar timeline por fecha ASC
+          data.orderTrackings = data.orderTrackings.sort(
+            (a, b) =>
+              new Date(a.created_at).getTime() -
+              new Date(b.created_at).getTime()
+          );
+
+          // Normalización de montos
+          data.subTotalAmount = parseAmount(data.subTotalAmount).toString();
+          data.shippingCost = parseAmount(data.shippingCost).toString();
+          data.tax = parseAmount(data.tax).toString();
+          data.totalAmount = parseAmount(data.totalAmount).toString();
+
+          // Normalizar nombre de status
+          if (data.status?.statusName) {
+            const normalized = data.status.statusName.toLowerCase();
+            data.status.statusName = t(`statuses.${normalized}`);
+          }
+
+          // Normalizar status del timeline
+          data.orderTrackings = data.orderTrackings.map((tItem) => {
+            const normalized = tItem.status.statusName.toLowerCase();
+            return {
+              ...tItem,
+              status: {
+                ...tItem.status,
+                statusName: t(`statuses.${normalized}`),
+              },
+            };
+          });
+
+          setOrderDetails(data);
+        }
+      } catch (e) {
+        console.log("Order detail error:", e);
       }
-    });
-  }, [id]);
+    };
+
+    fetchData();
+    return () => {
+      active = false;
+    };
+  }, [uuid]);
 
   const renderOrderItem = (item: IOrderItem) => (
     <View key={item.orderItemId} className="flex-row items-center gap-4 py-3">
@@ -34,13 +96,15 @@ export default function OrderDetailScreen() {
           {t("orderDetails.quantity", { count: item.quantity })}
         </Text>
       </View>
-      <Text className="text-white text-base font-medium">${item.amount}</Text>
+      <Text className="text-white text-base font-medium">
+        ${parseAmount(item.amount).toFixed(2)}
+      </Text>
     </View>
   );
 
   const renderTimelineItem = (item: IOrderTrackingItem, index: number) => {
-    // Determinar si el item está completado basado en el statusCode
-    const isCompleted = item.status.statusCode === "DELIVERED";
+    const deliveredCode = "delivered";
+    const isCompleted = item.status.statusCode?.toLowerCase() === deliveredCode;
 
     return (
       <View key={index} className="flex-row gap-4">
@@ -54,6 +118,7 @@ export default function OrderDetailScreen() {
               <Ionicons name="checkmark" size={12} color="white" />
             )}
           </View>
+
           {index < (orderDetails?.orderTrackings?.length || 0) - 1 && (
             <View
               className={`w-px flex-1 mt-2 ${
@@ -63,6 +128,7 @@ export default function OrderDetailScreen() {
             />
           )}
         </View>
+
         <View className="pb-8 flex-1">
           <Text className="text-white text-base font-medium">
             {item.status.statusName}
@@ -85,9 +151,11 @@ export default function OrderDetailScreen() {
         >
           <Ionicons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
+
         <Text className="text-white text-lg font-bold flex-1 text-center">
           {t("orderDetails.title")}
         </Text>
+
         <View className="w-10 h-10" />
       </View>
 
@@ -98,18 +166,21 @@ export default function OrderDetailScreen() {
             <View className="gap-2">
               <Text className="text-white text-2xl font-bold">
                 {t("orderDetails.orderNumber", {
-                  number: orderDetails?.uuid || "",
+                  number: orderDetails.uuid || "",
                 })}
               </Text>
+
               <View className="flex-row items-center gap-2">
                 <Text className="text-[#c9929b] text-sm">
-                  {orderDetails?.orderDate
+                  {orderDetails.orderDate
                     ? new Date(orderDetails.orderDate).toLocaleDateString()
                     : ""}
                 </Text>
+
                 <View className="w-1 h-1 rounded-full bg-[#c9929b]/50" />
+
                 <Text className="text-[#c6102e] text-sm font-bold">
-                  {orderDetails?.status?.statusName || ""}
+                  {orderDetails.status?.statusName || ""}
                 </Text>
               </View>
             </View>
@@ -119,17 +190,16 @@ export default function OrderDetailScreen() {
               <Text className="text-white text-lg font-bold">
                 {t("orderDetails.orderSummary")}
               </Text>
+
               <View className="bg-[#482329] rounded-xl p-4">
-                {(orderDetails?.orderItems || []).map(
-                  (item: IOrderItem, index: number) => (
-                    <View key={item.orderItemId}>
-                      {renderOrderItem(item)}
-                      {index < (orderDetails?.orderItems?.length || 0) - 1 && (
-                        <View className="h-px bg-[#67323b] my-2" />
-                      )}
-                    </View>
-                  )
-                )}
+                {orderDetails.orderItems.map((item, index) => (
+                  <View key={item.orderItemId}>
+                    {renderOrderItem(item)}
+                    {index < orderDetails.orderItems.length - 1 && (
+                      <View className="h-px bg-[#67323b] my-2" />
+                    )}
+                  </View>
+                ))}
               </View>
 
               {/* Totals */}
@@ -139,36 +209,36 @@ export default function OrderDetailScreen() {
                     {t("orderDetails.subtotal")}
                   </Text>
                   <Text className="text-white text-base">
-                    $
-                    {parseFloat(orderDetails?.subTotalAmount || "0").toFixed(2)}{" "}
-                    USD
+                    ${parseAmount(orderDetails.subTotalAmount).toFixed(2)} USD
                   </Text>
                 </View>
+
                 <View className="flex-row justify-between items-center">
                   <Text className="text-[#c9929b] text-base">
                     {t("orderDetails.shipping")}
                   </Text>
                   <Text className="text-white text-base">
-                    ${parseFloat(orderDetails?.shippingCost || "0").toFixed(2)}{" "}
-                    USD
+                    ${parseAmount(orderDetails.shippingCost).toFixed(2)} USD
                   </Text>
                 </View>
+
                 <View className="flex-row justify-between items-center">
                   <Text className="text-[#c9929b] text-base">
                     {t("orderDetails.taxes")}
                   </Text>
                   <Text className="text-white text-base">
-                    ${parseFloat(orderDetails?.tax || "0").toFixed(2)} USD
+                    ${parseAmount(orderDetails.tax).toFixed(2)} USD
                   </Text>
                 </View>
+
                 <View className="h-px bg-[#67323b] my-3" />
+
                 <View className="flex-row justify-between items-center">
                   <Text className="text-white text-lg font-bold">
                     {t("orderDetails.total")}
                   </Text>
                   <Text className="text-white text-lg font-bold">
-                    ${parseFloat(orderDetails?.totalAmount || "0").toFixed(2)}{" "}
-                    USD
+                    ${parseAmount(orderDetails.totalAmount).toFixed(2)} USD
                   </Text>
                 </View>
               </View>
@@ -179,18 +249,19 @@ export default function OrderDetailScreen() {
               <Text className="text-white text-lg font-bold">
                 {t("orderDetails.shippingAddress")}
               </Text>
+
               <View className="bg-[#482329] rounded-xl p-4">
                 <Text className="text-white text-base leading-relaxed">
-                  {orderDetails?.user?.firstname}{" "}
-                  {orderDetails?.user?.firstsurname}
+                  {orderDetails.user?.firstname}{" "}
+                  {orderDetails.user?.firstsurname}
                   {"\n"}
-                  {orderDetails?.userAddress?.address}
+                  {orderDetails.userAddress?.address}
                   {"\n"}
-                  {orderDetails?.userAddress?.region},{" "}
-                  {orderDetails?.userAddress?.state}
+                  {orderDetails.userAddress?.region},{" "}
+                  {orderDetails.userAddress?.state}
                   {"\n"}
-                  {orderDetails?.userAddress?.country}{" "}
-                  {orderDetails?.userAddress?.postalCode}
+                  {orderDetails.userAddress?.country}{" "}
+                  {orderDetails.userAddress?.postalCode}
                 </Text>
               </View>
             </View>
@@ -200,8 +271,9 @@ export default function OrderDetailScreen() {
               <Text className="text-white text-lg font-bold">
                 {t("orderDetails.orderHistory")}
               </Text>
+
               <View>
-                {(orderDetails?.orderTrackings || []).map((item, index) =>
+                {orderDetails.orderTrackings.map((item, index) =>
                   renderTimelineItem(item, index)
                 )}
               </View>

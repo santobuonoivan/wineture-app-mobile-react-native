@@ -78,7 +78,7 @@ export default function Cart() {
                   {item.wine.wineName}
                 </Text>
                 <Text className="text-[#b99da1] text-sm">
-                  ${item.wine.price.toFixed(2)} USD
+                  ${Number(item.wine.price).toFixed(2)} USD
                 </Text>
                 <View className="flex-row items-center gap-2 mt-2">
                   <TouchableOpacity

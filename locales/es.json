@@ -19,6 +19,7 @@
     "cancel": "Cancelar"
   },
   "profile": {
+    "noData": "No hay datos para mostrar",
     "title": "Perfil",
     "user": "Usuario",
     "defaultEmail": "email@ejemplo.com",
@@ -76,7 +77,8 @@
     "statusDescription": "Recibirás un recordatorio por correo electrónico 24 horas antes de tu visita. ¡Te esperamos!",
     "specialInstructionsTitle": "Instrucciones Especiales",
     "addToCalendar": "Añadir al Calendario",
-    "cancelReservation": "Cancelar Reserva"
+    "cancelReservation": "Cancelar Reserva",
+    "peopleSuffix": "personas"
   },
   "common": {
     "appName": "ViñedoApp",
@@ -237,5 +239,14 @@
     "valley": "Valle",
     "description": "Descripción",
     "price": "Precio"
+  },
+  "statuses": {
+    "pending": "Pendiente",
+    "paid": "Pagado",
+    "payed": "Pagado",
+    "completed": "Completado",
+    "cancelled": "Cancelado",
+    "validated": "Validado",
+    "refunded": "Reembolsado"
   }
 }

@@ -20,6 +20,7 @@
   },
   "profile": {
     "title": "Profile",
+    "noData": "No data to display",
     "user": "User",
     "defaultEmail": "email@example.com",
     "myActivity": "My Activity",
@@ -76,7 +77,8 @@
     "statusDescription": "You will receive an email reminder 24 hours before your visit. We look forward to seeing you!",
     "specialInstructionsTitle": "Special Instructions",
     "addToCalendar": "Add to Calendar",
-    "cancelReservation": "Cancel Reservation"
+    "cancelReservation": "Cancel Reservation",
+    "peopleSuffix": "people"
   },
   "common": {
     "appName": "WineyardApp",
@@ -237,5 +239,14 @@
     "valley": "Valley",
     "description": "Description",
     "price": "Price"
+  },
+  "statuses": {
+    "pending": "Pending",
+    "paid": "Paid",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "payed": "Paid",
+    "validated": "Validated",
+    "refunded": "Refunded"
   }
 }
