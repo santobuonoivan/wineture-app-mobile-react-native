@@ -6,6 +6,7 @@ interface CartState {
   subtotal: number;
   shipping: number;
   total: number;
+  addItem: (wine: any) => void;
   increment: (itemId: number) => void;
   decrement: (itemId: number) => void;
   removeItem: (itemId: number) => void;
@@ -84,6 +85,41 @@ const calcSubtotal = (items: CartItemI[]) =>
   items.reduce((sum, item) => sum + item.wine.price * item.quantity, 0);
 
 export const useCartStore = create<CartState>((set) => ({
+  items: initialItems,
+  shipping: 10,
+  subtotal: calcSubtotal(initialItems),
+  total: calcSubtotal(initialItems) + 10,
+  addItem: (wine: any) =>
+    set((state) => {
+      // Check if wine already exists in cart
+      const existingItemIndex = state.items.findIndex(
+        (item) => item.wine.wineId === wine.wineId
+      );
+
+      let items;
+      if (existingItemIndex >= 0) {
+        // If exists, increment quantity
+        items = state.items.map((item, index) =>
+          index === existingItemIndex
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        // If doesn't exist, add new item
+        const newItem: CartItemI = {
+          itemId: Math.max(...state.items.map((i) => i.itemId), 0) + 1,
+          wineId: wine.wineId,
+          cartId: 1,
+          quantity: 1,
+          wine: wine,
+        };
+        items = [...state.items, newItem];
+      }
+
+      const subtotal = calcSubtotal(items);
+      const total = subtotal + state.shipping;
+      return { items, subtotal, total };
+    }),
   items: initialItems,
   shipping: 10,
   subtotal: calcSubtotal(initialItems),

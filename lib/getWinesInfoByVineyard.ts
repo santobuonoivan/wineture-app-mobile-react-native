@@ -48,7 +48,7 @@ export const getWinesInfoByVineyard = async (
       },
     });
     const data = await response.json();
-    return data;
+    return { status: response.status, data: data };
   } catch (error) {
     console.error(`Error fetching vineyard reviews statistic: ${error}`);
     return { status: 500, data: [] };

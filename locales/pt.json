@@ -82,6 +82,160 @@
     "appName": "VinhedoApp",
     "error": "Erro",
     "success": "Sucesso",
-    "loading": "Carregando..."
+    "loading": "Carregando...",
+    "accept": "Aceitar",
+    "close": "Fechar"
+  },
+  "socialNetworks": {
+    "title": "Nossas redes",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "twitter": "Twitter",
+    "tiktok": "TikTok",
+    "website": "Site"
+  },
+  "vineyardDetail": {
+    "aboutUs": "Sobre Nós",
+    "schedule": "Horários",
+    "mondayToFriday": "Segunda a Sexta:",
+    "saturdayToSunday": "Sábado e Domingo:",
+    "services": "Serviços",
+    "location": "Localização",
+    "noLocationRegistered": "sem localização registrada",
+    "viewOurWines": "Ver nossos vinhos",
+    "contact": "Contato",
+    "call": "Ligar",
+    "email": "Email",
+    "bookVisit": "Reservar Visita",
+    "reviews": "({{count}} avaliações)",
+    "defaultLocation": "Vale de Guadalupe, México",
+    "alerts": {
+      "phoneError": "Erro",
+      "phoneErrorMessage": "Não é possível fazer a chamada neste dispositivo",
+      "phoneInfo": "Informação",
+      "phoneInfoMessage": "Nenhum número de telefone disponível",
+      "phoneCallError": "Erro",
+      "phoneCallErrorMessage": "Ocorreu um erro ao tentar ligar",
+      "emailError": "Erro",
+      "emailErrorMessage": "Não é possível abrir o aplicativo de email neste dispositivo",
+      "emailInfo": "Informação",
+      "emailInfoMessage": "Nenhum email disponível",
+      "emailSendError": "Erro",
+      "emailSendErrorMessage": "Ocorreu um erro ao tentar enviar email"
+    }
+  },
+  "catalog": {
+    "title": "Nosso Catálogo",
+    "searchPlaceholder": "Buscar por nome, uva...",
+    "filters": {
+      "type": "Tipo",
+      "vintage": "Safra",
+      "price": "Preço"
+    },
+    "addToCart": "Adicionar",
+    "currency": "MXN",
+    "noWinesFound": "Nenhum vinho encontrado para esta vinícola."
+  },
+  "cart": {
+    "confirmRemove": {
+      "title": "Remover do carrinho",
+      "message": "Tem certeza de que deseja remover este vinho do carrinho?",
+      "accept": "Remover",
+      "cancel": "Cancelar"
+    },
+    "title": "Meu Carrinho",
+    "subtotal": "Subtotal",
+    "shipping": "Envio",
+    "total": "Total",
+    "orderButton": "PEDIR"
+  },
+  "shipping": {
+    "title": "Endereço de Entrega",
+    "stepper": {
+      "shipping": "Entrega",
+      "payment": "Pagamento",
+      "summary": "Resumo"
+    },
+    "form": {
+      "fullName": {
+        "label": "Nome Completo",
+        "placeholder": "Digite seu nome completo"
+      },
+      "address": {
+        "label": "Endereço",
+        "placeholder": "Rua, número, bairro"
+      },
+      "city": {
+        "label": "Cidade",
+        "placeholder": "Sua cidade"
+      },
+      "state": {
+        "label": "Estado",
+        "placeholder": "Seu estado"
+      },
+      "postalCode": {
+        "label": "Código Postal",
+        "placeholder": "CEP"
+      },
+      "country": {
+        "label": "País"
+      },
+      "saveAddress": "Salvar este endereço para compras futuras"
+    },
+    "continueButton": "Continuar para Pagamento"
+  },
+  "payment": {
+    "title": "Método de Pagamento",
+    "stepper": {
+      "shipping": "Entrega",
+      "payment": "Pagamento",
+      "summary": "Resumo"
+    },
+    "form": {
+      "cardNumber": {
+        "label": "Número do Cartão",
+        "placeholder": "0000 0000 0000 0000"
+      },
+      "expiry": {
+        "label": "Data de Vencimento",
+        "placeholder": "MM/AA"
+      },
+      "cvv": {
+        "label": "CVV",
+        "placeholder": "123"
+      },
+      "cardHolder": {
+        "label": "Nome do Titular",
+        "placeholder": "Nome como aparece no cartão"
+      },
+      "saveCard": "Salvar este cartão para compras futuras"
+    },
+    "payButton": "Pagar Agora",
+    "error": {
+      "title": "Erro ao processar pagamento",
+      "message": "Não foi possível processar o pagamento. Verifique os dados do seu cartão e tente novamente.",
+      "accept": "Entendi",
+      "cancel": "Fechar"
+    }
+  },
+  "summary": {
+    "title": "Pagamento Realizado com Sucesso!",
+    "description": "Seu pedido foi confirmado. Você receberá um email com os detalhes da sua compra.",
+    "orderSummary": "Resumo do Pedido",
+    "orderNumber": "Pedido N°:",
+    "date": "Data:",
+    "total": "Total:",
+    "viewOrderButton": "Ver Detalhes do Pedido",
+    "backHomeButton": "Voltar ao Início"
+  },
+  "wineDetail": {
+    "title": "Detalhe do Vinho",
+    "alcohol": "Álcool",
+    "barrel": "Barrica",
+    "months": "meses",
+    "grape": "Uva",
+    "valley": "Vale",
+    "description": "Descrição",
+    "price": "Preço"
   }
 }

@@ -1,7 +1,7 @@
 import "../global.css";
 import { useEffect } from "react";
 import { Link, Stack } from "expo-router";
-import { Pressable, View, Platform } from "react-native";
+import { Pressable, View, Platform, AppState } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
@@ -26,12 +26,34 @@ export default function Layout() {
   );
 
   const { isAuthenticated } = useAuth();
-  useEffect(() => {
-    // Hide Android navigation bar
+
+  const hideNavigationBar = () => {
     if (Platform.OS === "android") {
       NavigationBar.setVisibilityAsync("hidden");
-      // setBehaviorAsync removed - not compatible with edge-to-edge
     }
+  };
+
+  useEffect(() => {
+    // Ocultar barra de navegación al iniciar
+    hideNavigationBar();
+
+    // Escuchar cambios en el estado de la app
+    const handleAppStateChange = (nextAppState: string) => {
+      if (nextAppState === "active") {
+        // Cuando la app vuelve al primer plano, ocultar la barra nuevamente
+        hideNavigationBar();
+      }
+    };
+
+    const subscription = AppState.addEventListener(
+      "change",
+      handleAppStateChange
+    );
+
+    // Cleanup
+    return () => {
+      subscription?.remove();
+    };
   }, []);
 
   return (

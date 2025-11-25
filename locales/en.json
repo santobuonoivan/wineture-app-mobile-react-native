@@ -82,6 +82,160 @@
     "appName": "WineyardApp",
     "error": "Error",
     "success": "Success",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "accept": "Accept",
+    "close": "Close"
+  },
+  "socialNetworks": {
+    "title": "Our social networks",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "twitter": "Twitter",
+    "tiktok": "TikTok",
+    "website": "Website"
+  },
+  "vineyardDetail": {
+    "aboutUs": "About Us",
+    "schedule": "Schedule",
+    "mondayToFriday": "Monday to Friday:",
+    "saturdayToSunday": "Saturday and Sunday:",
+    "services": "Services",
+    "location": "Location",
+    "noLocationRegistered": "no location registered",
+    "viewOurWines": "View our wines",
+    "contact": "Contact",
+    "call": "Call",
+    "email": "Email",
+    "bookVisit": "Book Visit",
+    "reviews": "({{count}} reviews)",
+    "defaultLocation": "Guadalupe Valley, Mexico",
+    "alerts": {
+      "phoneError": "Error",
+      "phoneErrorMessage": "Cannot make a call on this device",
+      "phoneInfo": "Information",
+      "phoneInfoMessage": "No phone number available",
+      "phoneCallError": "Error",
+      "phoneCallErrorMessage": "An error occurred trying to make the call",
+      "emailError": "Error",
+      "emailErrorMessage": "Cannot open the email app on this device",
+      "emailInfo": "Information",
+      "emailInfoMessage": "No email available",
+      "emailSendError": "Error",
+      "emailSendErrorMessage": "An error occurred trying to send email"
+    }
+  },
+  "catalog": {
+    "title": "Our Catalog",
+    "searchPlaceholder": "Search by name, grape...",
+    "filters": {
+      "type": "Type",
+      "vintage": "Vintage",
+      "price": "Price"
+    },
+    "addToCart": "Add",
+    "currency": "MXN",
+    "noWinesFound": "No wines found for this vineyard."
+  },
+  "cart": {
+    "confirmRemove": {
+      "title": "Remove from cart",
+      "message": "Are you sure you want to remove this wine from the cart?",
+      "accept": "Remove",
+      "cancel": "Cancel"
+    },
+    "title": "My Cart",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total",
+    "orderButton": "ORDER"
+  },
+  "shipping": {
+    "title": "Shipping Address",
+    "stepper": {
+      "shipping": "Shipping",
+      "payment": "Payment",
+      "summary": "Summary"
+    },
+    "form": {
+      "fullName": {
+        "label": "Full Name",
+        "placeholder": "Enter your full name"
+      },
+      "address": {
+        "label": "Address",
+        "placeholder": "Street, number, neighborhood"
+      },
+      "city": {
+        "label": "City",
+        "placeholder": "Your city"
+      },
+      "state": {
+        "label": "State",
+        "placeholder": "Your state"
+      },
+      "postalCode": {
+        "label": "Postal Code",
+        "placeholder": "ZIP Code"
+      },
+      "country": {
+        "label": "Country"
+      },
+      "saveAddress": "Save this address for future purchases"
+    },
+    "continueButton": "Continue to Payment"
+  },
+  "payment": {
+    "title": "Payment Method",
+    "stepper": {
+      "shipping": "Shipping",
+      "payment": "Payment",
+      "summary": "Summary"
+    },
+    "form": {
+      "cardNumber": {
+        "label": "Card Number",
+        "placeholder": "0000 0000 0000 0000"
+      },
+      "expiry": {
+        "label": "Expiry Date",
+        "placeholder": "MM/YY"
+      },
+      "cvv": {
+        "label": "CVV",
+        "placeholder": "123"
+      },
+      "cardHolder": {
+        "label": "Cardholder Name",
+        "placeholder": "Name as it appears on card"
+      },
+      "saveCard": "Save this card for future purchases"
+    },
+    "payButton": "Pay Now",
+    "error": {
+      "title": "Payment Processing Error",
+      "message": "Payment could not be processed. Please check your card details and try again.",
+      "accept": "Understood",
+      "cancel": "Close"
+    }
+  },
+  "summary": {
+    "title": "Payment Successful!",
+    "description": "Your order has been confirmed. You will receive an email with your purchase details.",
+    "orderSummary": "Order Summary",
+    "orderNumber": "Order No:",
+    "date": "Date:",
+    "total": "Total:",
+    "viewOrderButton": "View Order Details",
+    "backHomeButton": "Back to Home"
+  },
+  "wineDetail": {
+    "title": "Wine Detail",
+    "alcohol": "Alcohol",
+    "barrel": "Barrel",
+    "months": "months",
+    "grape": "Grape",
+    "valley": "Valley",
+    "description": "Description",
+    "price": "Price"
   }
 }

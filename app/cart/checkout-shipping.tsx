@@ -7,6 +7,7 @@ import {
   OrderCheckoutData,
   useCheckoutStore,
 } from "../../store/useCheckoutStore";
+import { useLanguage } from "../../hooks/useLanguage";
 
 const initialOrderCheckoutData: OrderCheckoutData = {
   fullName: "",
@@ -19,6 +20,7 @@ const initialOrderCheckoutData: OrderCheckoutData = {
 };
 
 export default function CheckoutShipping() {
+  const { t } = useLanguage();
   const { shippingData, setShippingData } = useCheckoutStore();
   const [form, setForm] = useState<OrderCheckoutData>(
     shippingData ?? initialOrderCheckoutData
@@ -47,7 +49,7 @@ export default function CheckoutShipping() {
           <Ionicons name="arrow-back" size={24} color="white" />
         </Pressable>
         <Text className="text-white text-lg font-bold flex-1 text-center">
-          Dirección de Envío
+          {t("shipping.title")}
         </Text>
         <View className="w-10 h-10" />
       </View>
@@ -56,15 +58,21 @@ export default function CheckoutShipping() {
       <View className="flex-row items-center justify-center gap-3 py-5 px-4">
         <View className="flex-1 flex-col items-center gap-2">
           <View className="h-2 w-full rounded-full bg-[#c20a29]" />
-          <Text className="text-[#c20a29] text-xs font-semibold">Envío</Text>
+          <Text className="text-[#c20a29] text-xs font-semibold">
+            {t("shipping.stepper.shipping")}
+          </Text>
         </View>
         <View className="flex-1 flex-col items-center gap-2">
           <View className="h-2 w-full rounded-full bg-[#c20a29]/20" />
-          <Text className="text-zinc-400 text-xs font-medium">Pago</Text>
+          <Text className="text-zinc-400 text-xs font-medium">
+            {t("shipping.stepper.payment")}
+          </Text>
         </View>
         <View className="flex-1 flex-col items-center gap-2">
           <View className="h-2 w-full rounded-full bg-[#c20a29]/20" />
-          <Text className="text-zinc-400 text-xs font-medium">Resumen</Text>
+          <Text className="text-zinc-400 text-xs font-medium">
+            {t("shipping.stepper.summary")}
+          </Text>
         </View>
       </View>
 
@@ -76,11 +84,11 @@ export default function CheckoutShipping() {
           {/* Nombre completo */}
           <View className="flex flex-col w-full">
             <Text className="text-white text-base font-medium pb-2">
-              Nombre Completo
+              {t("shipping.form.fullName.label")}
             </Text>
             <TextInput
               className="w-full rounded-lg bg-white/5 border border-zinc-700 text-white h-14 px-4 text-base"
-              placeholder="Ingresa tu nombre completo"
+              placeholder={t("shipping.form.fullName.placeholder")}
               placeholderTextColor="#9ca3af"
               value={form.fullName}
               onChangeText={(text) => handleChange("fullName", text)}
@@ -90,11 +98,11 @@ export default function CheckoutShipping() {
           {/* Dirección */}
           <View className="flex flex-col w-full">
             <Text className="text-white text-base font-medium pb-2">
-              Dirección
+              {t("shipping.form.address.label")}
             </Text>
             <TextInput
               className="w-full rounded-lg bg-white/5 border border-zinc-700 text-white h-14 px-4 text-base"
-              placeholder="Calle, número, colonia"
+              placeholder={t("shipping.form.address.placeholder")}
               placeholderTextColor="#9ca3af"
               value={form.address}
               onChangeText={(text) => handleChange("address", text)}
@@ -105,11 +113,11 @@ export default function CheckoutShipping() {
           <View className="flex-row w-full flex-wrap gap-4">
             <View className="flex-1 min-w-[40%]">
               <Text className="text-white text-base font-medium pb-2">
-                Ciudad
+                {t("shipping.form.city.label")}
               </Text>
               <TextInput
                 className="w-full rounded-lg bg_white/5 border border-zinc-700 text-white h-14 px-4 text-base"
-                placeholder="Tu ciudad"
+                placeholder={t("shipping.form.city.placeholder")}
                 placeholderTextColor="#9ca3af"
                 value={form.city}
                 onChangeText={(text) => handleChange("city", text)}
@@ -117,11 +125,11 @@ export default function CheckoutShipping() {
             </View>
             <View className="flex-1 min-w-[40%]">
               <Text className="text-white text-base font-medium pb-2">
-                Estado
+                {t("shipping.form.state.label")}
               </Text>
               <TextInput
                 className="w-full rounded-lg bg-white/5 border border-zinc-700 text-white h-14 px-4 text-base"
-                placeholder="Tu estado"
+                placeholder={t("shipping.form.state.placeholder")}
                 placeholderTextColor="#9ca3af"
                 value={form.state}
                 onChangeText={(text) => handleChange("state", text)}
@@ -133,11 +141,11 @@ export default function CheckoutShipping() {
           <View className="flex-row w-full flex-wrap gap-4">
             <View className="flex-1 min-w-[40%]">
               <Text className="text-white text-base font-medium pb-2">
-                Código Postal
+                {t("shipping.form.postalCode.label")}
               </Text>
               <TextInput
                 className="w-full rounded-lg bg-white/5 border border-zinc-700 text-white h-14 px-4 text-base"
-                placeholder="C.P."
+                placeholder={t("shipping.form.postalCode.placeholder")}
                 placeholderTextColor="#9ca3af"
                 value={form.postalCode}
                 onChangeText={(text) => handleChange("postalCode", text)}
@@ -145,7 +153,7 @@ export default function CheckoutShipping() {
             </View>
             <View className="flex-1 min-w-[40%]">
               <Text className="text-white text-base font-medium pb-2">
-                País
+                {t("shipping.form.country.label")}
               </Text>
               <TextInput
                 className="w-full rounded-lg bg-white/5 border border-zinc-700 text-white h-14 px-4 text-base"
@@ -166,7 +174,7 @@ export default function CheckoutShipping() {
               )}
             </Pressable>
             <Text className="text-white text-base font-medium">
-              Guardar esta dirección para futuras compras
+              {t("shipping.form.saveAddress")}
             </Text>
           </View>
         </View>
@@ -179,7 +187,7 @@ export default function CheckoutShipping() {
           onPress={handleContinue}
         >
           <Text className="text-base font-bold text-white">
-            Continuar a Pago
+            {t("shipping.continueButton")}
           </Text>
           <Ionicons name="arrow-forward" size={18} color="white" />
         </Pressable>

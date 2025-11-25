@@ -4,8 +4,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { Screen } from "../../components/Screen";
 import { useCheckoutStore } from "../../store/useCheckoutStore";
 import { useCartStore } from "../../store/useCartStore";
+import { useLanguage } from "../../hooks/useLanguage";
 
 export default function CheckoutSummary() {
+  const { t } = useLanguage();
   const { shippingData } = useCheckoutStore();
   const { total } = useCartStore();
 
@@ -20,30 +22,29 @@ export default function CheckoutSummary() {
             <Ionicons name="checkmark-circle" size={64} color="#c20a29" />
           </View>
           <Text className="text-3xl font-bold tracking-tight mb-2 text-white">
-            ¡Pago Exitoso!
+            {t("summary.title")}
           </Text>
           <Text className="text-zinc-400 max-w-sm text-center">
-            Tu pedido ha sido confirmado. Recibirás un correo electrónico con
-            los detalles de tu compra.
+            {t("summary.description")}
           </Text>
 
           <View className="mt-8 w-full max-w-sm rounded-xl border border-zinc-700 bg-white/5 p-4">
             <Text className="text-lg font-semibold mb-3 text-left text-white">
-              Resumen del Pedido
+              {t("summary.orderSummary")}
             </Text>
             <View className="flex justify-between items-center text-sm mb-2 flex-row">
-              <Text className="text-zinc-400">Pedido N°:</Text>
+              <Text className="text-zinc-400">{t("summary.orderNumber")}</Text>
               <Text className="font-medium text-white">{orderId}</Text>
             </View>
             <View className="flex justify-between items-center text-sm mb-2 flex-row">
-              <Text className="text-zinc-400">Fecha:</Text>
+              <Text className="text-zinc-400">{t("summary.date")}</Text>
               <Text className="font-medium text-white">{orderDate}</Text>
             </View>
             <View className="h-px bg-zinc-700 my-3" />
             <View className="flex justify-between items-center text-base flex-row">
-              <Text className="text-zinc-400">Total:</Text>
+              <Text className="text-zinc-400">{t("summary.total")}</Text>
               <Text className="font-bold text-[#c20a29]">
-                ${total.toFixed(2)} MXN
+                ${total.toFixed(2)} USD
               </Text>
             </View>
           </View>
@@ -55,7 +56,7 @@ export default function CheckoutSummary() {
             onPress={() => router.push("/order/id")}
           >
             <Text className="text-base font-bold text-white">
-              Ver Detalle del Pedido
+              {t("summary.viewOrderButton")}
             </Text>
           </Pressable>
           <Pressable
@@ -63,7 +64,7 @@ export default function CheckoutSummary() {
             onPress={() => router.push("/")}
           >
             <Text className="text-base font-bold text-[#c20a29]">
-              Volver al Inicio
+              {t("summary.backHomeButton")}
             </Text>
           </Pressable>
         </View>

@@ -1,6 +1,8 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
   ImageBackground,
+  Image,
+  Modal,
   Pressable,
   ScrollView,
   Text,
@@ -11,93 +13,77 @@ import { Ionicons } from "@expo/vector-icons";
 import { Screen } from "../../../components/Screen";
 import { useEffect, useState } from "react";
 import { IVineyardInfoWithWinesData } from "../../../interfaces";
-import { getVineyardInfoByUUID } from "../../../lib";
+import { getVineyardInfoByUUID, getWinesInfoByVineyard } from "../../../lib";
+import { IWine } from "../../../interfaces/IVineyard";
+import { useLanguage } from "../../../hooks/useLanguage";
+import { SkeletonWine } from "../../../components/skeleton/SkeletoneWine";
+import { useCartStore } from "../../../store/useCartStore";
+import { ConfirmModal } from "../../../components/ui/ConfirmModal";
 
 export default function VineyardCatalog() {
-  const { vineyard_uuid } = useLocalSearchParams<{ vineyard_uuid: string }>();
+  const { vineyardId } = useLocalSearchParams<{ vineyardId: string }>();
   const router = useRouter();
-  const [vineyard, setVineyard] = useState<IVineyardInfoWithWinesData | null>(
-    null
-  );
+  const { t, currentLanguage } = useLanguage();
+  const { items, addItem, increment, decrement, removeItem } = useCartStore();
+  const [wines, setWines] = useState<IWine[]>([]);
   const [search, setSearch] = useState("");
+  const [itemToRemove, setItemToRemove] = useState<number | null>(null);
+  const [imagePreviewVisible, setImagePreviewVisible] = useState(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
 
-  const dummyWines = [
-    {
-      wineId: 1,
-      wineBrand: "Bodega del Valle",
-      wineCategory: "Tinto",
-      wineName: "Reserva de la Familia Malbec",
-      wineBarCode: null,
-      alcoholContent: "13.5%",
-      monthsInBarrel: "12",
-      strain: "Malbec",
-      valley: "Valle de Guadalupe",
-      image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuB43PvwWov36kDUWOBvL0ZjQVAsUoHfX1K_znQoo7yqa9fOWH1ZlPcK790WWWLyYpFccX0i5NgXNJ_8i6iuk5ffBFjU66PP89A9pcOutPksYDic7CqKRdIObs2uK-U_CHagXafkG1uuePNLKnWCJ32QJWycQPF9xoh_v3BdeGqkhfPH-Bfjx-VQtkJtnrtcuKZSyFc8fCvYf22nEum6fma_Zc6lDoyb6SR_aSR2of2bPjouQIRVJVTKHb_ao1wM1zQFbuksBOYBKNc",
-      description: "Vino tinto intenso con notas a frutos rojos y especias.",
-      promoDescription: "Perfecto para carnes rojas y quesos maduros.",
-      deletedAt: null,
-      status: "active",
-      createdAt: "",
-      updatedAt: "",
-      vineyardId: 1,
-      price: "750.00",
-    },
-    {
-      wineId: 2,
-      wineBrand: "Bodega del Valle",
-      wineCategory: "Tinto",
-      wineName: "Gran Sangre de Toro",
-      wineBarCode: null,
-      alcoholContent: "14%",
-      monthsInBarrel: "18",
-      strain: "Tempranillo",
-      valley: "Valle Central",
-      image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuCcH7up4FLgJJJtVSAxYBxDkq8P_ZBSwChCgi8pAvzp8Z522QkiEHrBmMwuX6vK-Zn-51TPhIEcW1g1fk6yQ7lLTqy75hvZLQYoqyPnLGOS6DRM-_w4yjUAtocX3JC41Yxs4ob6vdRvf98bUvAiWOfRyWE5uVINMOM7PPFuAhCauO0MAtt64ixB7WrhQMCrTlh_dSkhZ_qV9jdzaAw3RVaanLBe1u4LyLzLi9oJ9qFe-IQS2TQQ8Avd9hw6x9KsYrFxYE3mM9W9Mak",
-      description: "Vino tinto estructurado con notas a madera y especias.",
-      promoDescription: "Ideal para asados y guisos intensos.",
-      deletedAt: null,
-      status: "active",
-      createdAt: "",
-      updatedAt: "",
-      vineyardId: 1,
-      price: "950.00",
-    },
-    {
-      wineId: 3,
-      wineBrand: "Bodega del Valle",
-      wineCategory: "Blanco",
-      wineName: "Cosecha Tardía Sauvignon",
-      wineBarCode: null,
-      alcoholContent: "12%",
-      monthsInBarrel: "6",
-      strain: "Sauvignon Blanc",
-      valley: "Valle de Casablanca",
-      image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuAISDYlEvAC9dyNAC9dMlfHfW04RdeO6hKUt5xFlIhJDg5EqCR03dT1J4tk8ubVCKgkjTQIpF1W4We0tZ5OAgbnWfCpagJ4NR0HVyOJ1pwlXnzADBJ1jBRjIYZfFzYhyDN_SpZczNXXwaYOCuRMzhfl1j073aaKvWTEeTf4yF81R7DVWP6iUJ9ITuY0OmXgR6yUoVftIXoM7LUKCeYE9l4wvgmuNBkFhFXDsvyHaX2zKVdpK1x3sAJXLxQcmB_mqhZ-PUp__hYpHMc",
-      description: "Vino blanco fresco y frutal, ideal para aperitivos.",
-      promoDescription: "Perfecto para mariscos y ensaladas.",
-      deletedAt: null,
-      status: "active",
-      createdAt: "",
-      updatedAt: "",
-      vineyardId: 1,
-      price: "680.00",
-    },
-  ];
+  // Modal functions
+  const requestRemove = (itemId: number) => {
+    setItemToRemove(itemId);
+  };
+
+  const handleConfirmRemove = () => {
+    if (itemToRemove != null) {
+      removeItem(itemToRemove);
+      setItemToRemove(null);
+    }
+  };
+
+  // Image preview functions
+  const openImagePreview = (imageUrl: string) => {
+    setSelectedImageUrl(imageUrl);
+    setImagePreviewVisible(true);
+  };
+
+  const closeImagePreview = () => {
+    setImagePreviewVisible(false);
+    setSelectedImageUrl(null);
+  };
+
+  // Navigate to wine detail
+  const goToDetail = (wine: IWine) => {
+    router.push({
+      pathname: "/wines/details",
+      params: { wine: JSON.stringify(wine) },
+    });
+  };
+
+  // Helper function to get wine quantity in cart
+  const getWineQuantityInCart = (wineId: number) => {
+    const cartItem = items.find((item) => item.wine.wineId === wineId);
+    return cartItem ? cartItem.quantity : 0;
+  };
+
+  // Helper function to get cart item ID
+  const getCartItemId = (wineId: number) => {
+    const cartItem = items.find((item) => item.wine.wineId === wineId);
+    return cartItem ? cartItem.itemId : null;
+  };
 
   useEffect(() => {
-    getVineyardInfoByUUID({ uuid: vineyard_uuid }).then((data) => {
-      const vineyardData = data.data;
-      if (vineyardData) {
-        setVineyard(vineyardData as IVineyardInfoWithWinesData);
+    getWinesInfoByVineyard({ vineyardId: parseInt(vineyardId) }).then(
+      (data) => {
+        const vineyardData = data.data;
+        if (vineyardData) {
+          setWines(vineyardData as IWine[]);
+        }
       }
-    });
-  }, [vineyard_uuid]);
-
-  const wines = (vineyard?.wines ??
-    dummyWines) as IVineyardInfoWithWinesData["wines"];
+    );
+  }, [vineyardId]);
 
   const filteredWines = wines.filter((wine) => {
     if (!search.trim()) return true;
@@ -121,7 +107,7 @@ export default function VineyardCatalog() {
             <Ionicons name="arrow-back" size={24} color="white" />
           </Pressable>
           <Text className="flex-1 text-center text-lg font-bold tracking-tight text-white">
-            Nuestro Catálogo
+            {t("catalog.title")}
           </Text>
           <View className="w-12 items-center justify-end">
             <Pressable className="relative h-12 w-12 items-center justify-center">
@@ -138,7 +124,7 @@ export default function VineyardCatalog() {
             </View>
             <TextInput
               className="flex-1 px-3 text-base text-white"
-              placeholder="Buscar por nombre, uva..."
+              placeholder={t("catalog.searchPlaceholder")}
               placeholderTextColor="#a1979a"
               value={search}
               onChangeText={setSearch}
@@ -148,9 +134,13 @@ export default function VineyardCatalog() {
 
         {/* Filtros mock (sin lógica aún) */}
         <View className="flex-row gap-3 px-4 pb-3">
-          {["Tipo", "Añada", "Precio"].map((label) => (
+          {[
+            { key: "type", label: t("catalog.filters.type") },
+            { key: "vintage", label: t("catalog.filters.vintage") },
+            { key: "price", label: t("catalog.filters.price") },
+          ].map(({ key, label }) => (
             <Pressable
-              key={label}
+              key={key}
               className="flex h-8 items-center justify-center gap-2 rounded-lg bg-[#2b1518] px-4 flex-row"
             >
               <Text className="text-stone-200 text-sm font-medium">
@@ -167,59 +157,151 @@ export default function VineyardCatalog() {
         <View className="flex flex-col gap-4">
           {filteredWines.map((wine) => (
             <View key={wine.wineId} className="flex-row gap-4 mb-2">
-              <ImageBackground
-                source={{ uri: wine.image }}
-                className="w-24 h-32 rounded-xl overflow-hidden bg-[#3a2226]"
-                resizeMode="cover"
-              />
+              <Pressable onPress={() => openImagePreview(wine.image)}>
+                <ImageBackground
+                  source={{ uri: wine.image }}
+                  className="w-24 h-32 rounded-xl overflow-hidden bg-[#3a2226]"
+                  resizeMode="cover"
+                />
+              </Pressable>
               <View className="flex-1 flex-col justify-between">
-                <View>
-                  <Text
-                    className="text-white text-base font-bold"
-                    numberOfLines={2}
-                  >
-                    {wine.wineName}
-                  </Text>
-                  <Text
-                    className="text-stone-400 text-sm mt-1"
-                    numberOfLines={1}
-                  >
-                    {wine.wineCategory}
-                  </Text>
-                  {wine.description && (
+                <Pressable onPress={() => goToDetail(wine)}>
+                  <View>
                     <Text
-                      className="text-stone-300 text-xs mt-2"
-                      numberOfLines={3}
+                      className="text-white text-base font-bold"
+                      numberOfLines={2}
                     >
-                      {wine.description}
+                      {wine.wineName}
                     </Text>
-                  )}
-                  <Text className="text-stone-100 text-base font-bold mt-2">
-                    ${parseFloat(wine.price).toFixed(2)} MXN
-                  </Text>
-                </View>
-                <Pressable className="self-start mt-2 flex h-9 flex-row items-center justify-center gap-2 rounded-lg bg-[#d41132] px-4">
-                  <Ionicons name="cart-outline" size={16} color="white" />
-                  <Text
-                    className="text-white text-xs font-bold"
-                    numberOfLines={1}
-                  >
-                    Añadir
-                  </Text>
+                    <Text
+                      className="text-stone-400 text-sm mt-1"
+                      numberOfLines={1}
+                    >
+                      {wine.wineCategory}
+                    </Text>
+                    {wine.description && (
+                      <Text
+                        className="text-stone-300 text-xs mt-2"
+                        numberOfLines={3}
+                      >
+                        {currentLanguage === "en"
+                          ? wine.descriptionEN
+                          : currentLanguage === "pt"
+                            ? wine.descriptionPT
+                            : wine.description}
+                      </Text>
+                    )}
+                  </View>
                 </Pressable>
+
+                <View className="flex-row items-center justify-between mt-2">
+                  <Text className="text-stone-100 text-base font-bold">
+                    ${parseFloat(wine.price).toFixed(2)} USD
+                  </Text>
+                  {getWineQuantityInCart(wine.wineId) > 0 ? (
+                    // Quantity controls when wine is in cart
+                    <View className="flex-row items-center gap-2">
+                      <Pressable
+                        className="w-8 h-8 rounded-full bg-[#2b1518] items-center justify-center border border-[#d41132]"
+                        onPress={() => {
+                          const itemId = getCartItemId(wine.wineId);
+                          const quantity = getWineQuantityInCart(wine.wineId);
+                          if (itemId) {
+                            if (quantity === 1) {
+                              requestRemove(itemId);
+                            } else {
+                              decrement(itemId);
+                            }
+                          }
+                        }}
+                      >
+                        <Ionicons name="remove" size={16} color="#d41132" />
+                      </Pressable>
+                      <Text className="text-white font-bold min-w-[20px] text-center">
+                        {getWineQuantityInCart(wine.wineId)}
+                      </Text>
+                      <Pressable
+                        className="w-8 h-8 rounded-full bg-[#d41132] items-center justify-center"
+                        onPress={() => {
+                          const itemId = getCartItemId(wine.wineId);
+                          if (itemId) increment(itemId);
+                        }}
+                      >
+                        <Ionicons name="add" size={16} color="white" />
+                      </Pressable>
+                    </View>
+                  ) : (
+                    // Add button when wine is not in cart
+                    <Pressable
+                      className="flex h-9 flex-row items-center justify-center gap-2 rounded-lg bg-[#d41132] px-4"
+                      onPress={() => addItem(wine)}
+                    >
+                      <Ionicons name="cart-outline" size={16} color="white" />
+                      <Text
+                        className="text-white text-xs font-bold"
+                        numberOfLines={1}
+                      >
+                        {t("catalog.addToCart")}
+                      </Text>
+                    </Pressable>
+                  )}
+                </View>
               </View>
             </View>
           ))}
 
           {filteredWines.length === 0 && (
             <View className="w-full items-center justify-center mt-10">
-              <Text className="text-stone-400 text-sm">
-                No se encontraron vinos para este viñedo.
-              </Text>
+              <SkeletonWine />
+              <SkeletonWine />
+
+              <SkeletonWine />
+              <SkeletonWine />
             </View>
           )}
         </View>
       </ScrollView>
+
+      {/* Confirmation Modal */}
+      <ConfirmModal
+        visible={itemToRemove != null}
+        title={t("cart.confirmRemove.title")}
+        body={t("cart.confirmRemove.message")}
+        acceptLabel={t("cart.confirmRemove.accept")}
+        cancelLabel={t("cart.confirmRemove.cancel")}
+        isError={false}
+        onAccept={handleConfirmRemove}
+        onClose={() => setItemToRemove(null)}
+      />
+
+      {/* Image Preview Modal */}
+      <Modal
+        transparent
+        animationType="fade"
+        visible={imagePreviewVisible}
+        onRequestClose={closeImagePreview}
+      >
+        <Pressable
+          className="flex-1 bg-black/90 items-center justify-center"
+          onPress={closeImagePreview}
+        >
+          <View className="relative">
+            {selectedImageUrl && (
+              <Image
+                source={{ uri: selectedImageUrl }}
+                className="w-80 h-96 rounded-2xl"
+                resizeMode="contain"
+              />
+            )}
+            <Pressable
+              className="absolute -top-2 -right-2 w-10 h-10 bg-black/70 rounded-full items-center justify-center"
+              onPress={closeImagePreview}
+            >
+              <Ionicons name="close" size={20} color="white" />
+            </Pressable>
+          </View>
+        </Pressable>
+      </Modal>
     </Screen>
   );
 }

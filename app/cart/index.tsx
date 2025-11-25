@@ -12,8 +12,10 @@ import { useCartStore } from "../../store/useCartStore";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { ConfirmModal } from "../../components/ui/ConfirmModal";
+import { useLanguage } from "../../hooks/useLanguage";
 
 export default function Cart() {
+  const { t } = useLanguage();
   const {
     items: cart,
     subtotal,
@@ -34,6 +36,7 @@ export default function Cart() {
   const handleConfirmRemove = () => {
     if (itemToRemove != null) {
       removeItem(itemToRemove);
+      setItemToRemove(null);
     }
   };
   return (
@@ -47,7 +50,7 @@ export default function Cart() {
           <Ionicons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
         <Text className="text-white text-lg font-bold flex-1 text-center">
-          Mi Carrito
+          {t("cart.title")}
         </Text>
         <View className="h-12 w-12" />
       </View>
@@ -75,7 +78,7 @@ export default function Cart() {
                   {item.wine.wineName}
                 </Text>
                 <Text className="text-[#b99da1] text-sm">
-                  ${item.wine.price.toFixed(2)}
+                  ${item.wine.price.toFixed(2)} USD
                 </Text>
                 <View className="flex-row items-center gap-2 mt-2">
                   <TouchableOpacity
@@ -112,9 +115,11 @@ export default function Cart() {
 
       <ConfirmModal
         visible={itemToRemove != null}
-        body="¿Estás seguro de que deseas eliminar este ítem del carrito?"
-        acceptLabel="Eliminar"
-        cancelLabel="Cancelar"
+        title={t("cart.confirmRemove.title")}
+        body={t("cart.confirmRemove.message")}
+        acceptLabel={t("cart.confirmRemove.accept")}
+        cancelLabel={t("cart.confirmRemove.cancel")}
+        isError={false}
         onAccept={handleConfirmRemove}
         onClose={() => setItemToRemove(null)}
       />
@@ -123,21 +128,23 @@ export default function Cart() {
       <View className="absolute bottom-0 left-0 right-0 bg-[#221013] border-t border-white/10 p-4">
         <View className="space-y-2">
           <View className="flex-row justify-between">
-            <Text className="text-[#b99da1] text-sm">Subtotal</Text>
+            <Text className="text-[#b99da1] text-sm">{t("cart.subtotal")}</Text>
             <Text className="text-white text-sm font-medium">
-              ${subtotal.toFixed(2)}
+              ${subtotal.toFixed(2)} USD
             </Text>
           </View>
           <View className="flex-row justify-between">
-            <Text className="text-[#b99da1] text-sm">Envío</Text>
+            <Text className="text-[#b99da1] text-sm">{t("cart.shipping")}</Text>
             <Text className="text-white text-sm font-medium">
-              ${shipping.toFixed(2)}
+              ${shipping.toFixed(2)} USD
             </Text>
           </View>
           <View className="flex-row justify-between border-t border-white/10 pt-2 mt-2">
-            <Text className="text-white text-base font-bold">Total</Text>
             <Text className="text-white text-base font-bold">
-              ${total.toFixed(2)}
+              {t("cart.total")}
+            </Text>
+            <Text className="text-white text-base font-bold">
+              ${total.toFixed(2)} USD
             </Text>
           </View>
         </View>
@@ -159,7 +166,7 @@ export default function Cart() {
                 isCartEmpty ? "text-[#b99da1]" : "text-white"
               }`}
             >
-              ORDENAR
+              {t("cart.orderButton")}
             </Text>
           </Pressable>
         </View>

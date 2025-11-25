@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Screen } from "../../components/Screen";
 import { PaymentData, useCheckoutStore } from "../../store/useCheckoutStore";
 import { ConfirmModal } from "../../components/ui/ConfirmModal";
+import { useLanguage } from "../../hooks/useLanguage";
 
 const initialPaymentData: PaymentData = {
   cardNumber: "",
@@ -15,6 +16,7 @@ const initialPaymentData: PaymentData = {
 };
 
 export default function CheckoutPayment() {
+  const { t } = useLanguage();
   const { paymentData, setPaymentData } = useCheckoutStore();
   const [form, setForm] = useState<PaymentData>(
     paymentData ?? initialPaymentData
@@ -52,7 +54,7 @@ export default function CheckoutPayment() {
           <Ionicons name="arrow-back" size={24} color="white" />
         </Pressable>
         <Text className="text-white text-lg font-bold flex-1 text-center">
-          Método de Pago
+          {t("payment.title")}
         </Text>
         <View className="w-10 h-10" />
       </View>
@@ -61,15 +63,21 @@ export default function CheckoutPayment() {
       <View className="flex-row items-center justify-center gap-3 py-5 px-4">
         <View className="flex-1 flex-col items-center gap-2">
           <View className="h-2 w-full rounded-full bg-[#c20a29]/20" />
-          <Text className="text-zinc-400 text-xs font-medium">Envío</Text>
+          <Text className="text-zinc-400 text-xs font-medium">
+            {t("payment.stepper.shipping")}
+          </Text>
         </View>
         <View className="flex-1 flex-col items-center gap-2">
           <View className="h-2 w-full rounded-full bg-[#c20a29]" />
-          <Text className="text-[#c20a29] text-xs font-semibold">Pago</Text>
+          <Text className="text-[#c20a29] text-xs font-semibold">
+            {t("payment.stepper.payment")}
+          </Text>
         </View>
         <View className="flex-1 flex-col items-center gap-2">
           <View className="h-2 w-full rounded-full bg-[#c20a29]/20" />
-          <Text className="text-zinc-400 text-xs font-medium">Resumen</Text>
+          <Text className="text-zinc-400 text-xs font-medium">
+            {t("payment.stepper.summary")}
+          </Text>
         </View>
       </View>
 
@@ -81,14 +89,14 @@ export default function CheckoutPayment() {
           {/* Número de Tarjeta */}
           <View className="relative flex w-full flex-col">
             <Text className="text-white text-base font-medium pb-2">
-              Número de Tarjeta
+              {t("payment.form.cardNumber.label")}
             </Text>
             <View className="absolute left-3 top-11">
               <Ionicons name="card-outline" size={20} color="#9ca3af" />
             </View>
             <TextInput
               className="w-full rounded-lg bg-white/5 border border-zinc-700 text-white h-14 pl-12 pr-4 text-base"
-              placeholder="0000 0000 0000 0000"
+              placeholder={t("payment.form.cardNumber.placeholder")}
               placeholderTextColor="#9ca3af"
               keyboardType="number-pad"
               value={form.cardNumber}
@@ -100,14 +108,14 @@ export default function CheckoutPayment() {
           <View className="flex-row w-full flex-wrap gap-4">
             <View className="relative flex-1 min-w-[40%]">
               <Text className="text-white text-base font-medium pb-2">
-                Fecha de Vencimiento
+                {t("payment.form.expiry.label")}
               </Text>
               <View className="absolute left-3 top-11">
                 <Ionicons name="calendar-outline" size={20} color="#9ca3af" />
               </View>
               <TextInput
                 className="w-full rounded-lg bg-white/5 border border-zinc-700 text-white h-14 pl-12 pr-4 text-base"
-                placeholder="MM/AA"
+                placeholder={t("payment.form.expiry.placeholder")}
                 placeholderTextColor="#9ca3af"
                 value={form.expiry}
                 onChangeText={(text) => handleChange("expiry", text)}
@@ -115,7 +123,9 @@ export default function CheckoutPayment() {
             </View>
 
             <View className="relative flex-1 min-w-[40%]">
-              <Text className="text-white text-base font-medium pb-2">CVV</Text>
+              <Text className="text-white text-base font-medium pb-2">
+                {t("payment.form.cvv.label")}
+              </Text>
               <View className="absolute left-3 top-11">
                 <Ionicons
                   name="lock-closed-outline"
@@ -125,7 +135,7 @@ export default function CheckoutPayment() {
               </View>
               <TextInput
                 className="w-full rounded-lg bg-white/5 border border-zinc-700 text-white h-14 pl-12 pr-4 text-base"
-                placeholder="123"
+                placeholder={t("payment.form.cvv.placeholder")}
                 placeholderTextColor="#9ca3af"
                 keyboardType="number-pad"
                 secureTextEntry
@@ -138,14 +148,14 @@ export default function CheckoutPayment() {
           {/* Nombre del Titular */}
           <View className="relative flex w-full flex-col">
             <Text className="text-white text-base font-medium pb-2">
-              Nombre del Titular
+              {t("payment.form.cardHolder.label")}
             </Text>
             <View className="absolute left-3 top-11">
               <Ionicons name="person-outline" size={20} color="#9ca3af" />
             </View>
             <TextInput
               className="w-full rounded-lg bg-white/5 border border-zinc-700 text-white h-14 pl-12 pr-4 text-base"
-              placeholder="Nombre como aparece en la tarjeta"
+              placeholder={t("payment.form.cardHolder.placeholder")}
               placeholderTextColor="#9ca3af"
               value={form.cardHolder}
               onChangeText={(text) => handleChange("cardHolder", text)}
@@ -163,7 +173,7 @@ export default function CheckoutPayment() {
               )}
             </Pressable>
             <Text className="text-white text-base font-medium">
-              Guardar esta tarjeta para futuras compras
+              {t("payment.form.saveCard")}
             </Text>
           </View>
         </View>
@@ -175,7 +185,9 @@ export default function CheckoutPayment() {
           className="h-14 w-full flex-row items-center justify-center gap-2 rounded-xl bg-[#c20a29] px-6"
           onPress={handlePay}
         >
-          <Text className="text-base font-bold text-white">Pagar Ahora</Text>
+          <Text className="text-base font-bold text-white">
+            {t("payment.payButton")}
+          </Text>
           <Ionicons name="card-outline" size={18} color="white" />
         </Pressable>
       </View>
@@ -183,10 +195,10 @@ export default function CheckoutPayment() {
       <ConfirmModal
         visible={showError}
         isError
-        title="Error al procesar el pago"
-        body="No se pudo procesar el pago. Revisa los datos de tu tarjeta e inténtalo nuevamente."
-        acceptLabel="Entendido"
-        cancelLabel="Cerrar"
+        title={t("payment.error.title")}
+        body={t("payment.error.message")}
+        acceptLabel={t("payment.error.accept")}
+        cancelLabel={t("payment.error.cancel")}
         onAccept={() => setShowError(false)}
         onClose={() => setShowError(false)}
       />
