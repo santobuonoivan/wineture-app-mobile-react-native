@@ -78,7 +78,8 @@
     "specialInstructionsTitle": "Special Instructions",
     "addToCalendar": "Add to Calendar",
     "cancelReservation": "Cancel Reservation",
-    "peopleSuffix": "people"
+    "peopleSuffix": "people",
+    "noInstructions": "No special instructions for this reservation."
   },
   "common": {
     "appName": "WineyardApp",

@@ -6,6 +6,7 @@ import { getVineyardCalendarConfig } from "./getVineyardCalendarConfig";
 import { getOrderDetailByUUID } from "./getOrderDetail";
 import { getOrdersByUser } from "./getOrdersByUser";
 import { getVisitsByUser } from "./getVisitsByUser";
+import { getVisitDayById } from "./getVisitDayById";
 import { getVisitById } from "./getVisitsById";
 export {
   getVineyardsByGeo,
@@ -16,5 +17,6 @@ export {
   getOrderDetailByUUID,
   getOrdersByUser,
   getVisitsByUser,
-  getVisitById
+  getVisitDayById,
+  getVisitById,
 };

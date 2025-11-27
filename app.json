@@ -4,12 +4,12 @@
     "slug": "wineture",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.webp",
+    "icon": "./assets/wineture_icon_ios.png",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "scheme": "wineture",
     "splash": {
-      "image": "./assets/logo.webp",
+      "image": "./assets/wineture_icon_ios.png",
       "resizeMode": "contain",
       "backgroundColor": "#6B0F1A"
     },
@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.webp",
+        "foregroundImage": "./assets/wineture_icon_ios.png",
         "backgroundColor": "#6B0F1A"
       },
       "edgeToEdgeEnabled": true,

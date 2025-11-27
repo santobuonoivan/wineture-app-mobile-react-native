@@ -78,7 +78,8 @@
     "specialInstructionsTitle": "Instruções Especiais",
     "addToCalendar": "Adicionar ao Calendário",
     "cancelReservation": "Cancelar Reserva",
-    "peopleSuffix": "pessoas"
+    "peopleSuffix": "pessoas",
+    "noInstructions": "Nenhuma instrução especial para esta reserva."
   },
   "common": {
     "appName": "VinhedoApp",

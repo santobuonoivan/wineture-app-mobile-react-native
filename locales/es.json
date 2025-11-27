@@ -78,7 +78,8 @@
     "specialInstructionsTitle": "Instrucciones Especiales",
     "addToCalendar": "Añadir al Calendario",
     "cancelReservation": "Cancelar Reserva",
-    "peopleSuffix": "personas"
+    "peopleSuffix": "personas",
+    "noInstructions": "No hay instrucciones especiales para esta reserva."
   },
   "common": {
     "appName": "ViñedoApp",
