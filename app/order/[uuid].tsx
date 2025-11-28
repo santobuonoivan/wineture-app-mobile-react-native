@@ -230,7 +230,9 @@ export default function OrderDetailScreen() {
                 {orderDetails.comission &&
                   parseFloat(orderDetails.comission) > 0 && (
                     <View className="flex-row justify-between items-center">
-                      <Text className="text-[#c9929b] text-base">{t("orderDetails.commission")}</Text>
+                      <Text className="text-[#c9929b] text-base">
+                        {t("orderDetails.commission")}
+                      </Text>
                       <Text className="text-white text-base">
                         ${orderDetails.comission} USD
                       </Text>
