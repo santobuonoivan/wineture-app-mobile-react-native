@@ -5,13 +5,16 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import * as Calendar from "expo-calendar";
 import { Screen } from "../../components/Screen";
 import { useLanguage } from "../../hooks/useLanguage";
 import { getVisitById, getVisitDayById } from "../../lib";
 import { PhoneIcon } from "../../components/Icons";
+import { ConfirmModal } from "../../components/ui/ConfirmModal";
 
 interface IMappedReservation {
   vineyardName: string;
@@ -20,6 +23,8 @@ interface IMappedReservation {
   peopleLabel: string;
   specialInstructions: string;
   status: string;
+  rawDate: string;
+  rawTime: string;
 }
 
 export default function ReservationDetailScreen() {
@@ -28,6 +33,100 @@ export default function ReservationDetailScreen() {
 
   const [reservation, setReservation] = useState<IMappedReservation>();
   const [loading, setLoading] = useState(true);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const addToCalendar = async () => {
+    try {
+      // Solicitar permisos para acceder al calendario
+      const { status } = await Calendar.requestCalendarPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMessage(
+          t("reservationDetails.permissionRequired") ||
+            "Se necesitan permisos para acceder al calendario"
+        );
+        setShowErrorModal(true);
+        return;
+      }
+
+      if (!reservation) return;
+
+      // Crear fecha y hora del evento - manejar diferentes formatos de fecha
+      let eventDateTime: Date;
+      try {
+        // Primero intentar con formato ISO
+        eventDateTime = new Date(
+          `${reservation.rawDate}T${reservation.rawTime}`
+        );
+
+        // Si la fecha no es válida, intentar parseado manual
+        if (isNaN(eventDateTime.getTime())) {
+          const dateParts = reservation.rawDate.split("-");
+          const timeParts = reservation.rawTime.split(":");
+          eventDateTime = new Date(
+            parseInt(dateParts[0]), // año
+            parseInt(dateParts[1]) - 1, // mes (0-indexed)
+            parseInt(dateParts[2]), // día
+            parseInt(timeParts[0]), // hora
+            parseInt(timeParts[1]) // minutos
+          );
+        }
+      } catch (dateError) {
+        console.error("Error parsing date:", dateError);
+        setErrorMessage(
+          t("reservationDetails.dateError") ||
+            "Error al procesar la fecha y hora"
+        );
+        setShowErrorModal(true);
+        return;
+      }
+
+      // Validar que la fecha sea válida
+      if (isNaN(eventDateTime.getTime())) {
+        setErrorMessage(
+          t("reservationDetails.dateError") ||
+            "Error al procesar la fecha y hora"
+        );
+        setShowErrorModal(true);
+        return;
+      }
+
+      const endDateTime = new Date(
+        eventDateTime.getTime() + 2 * 60 * 60 * 1000
+      ); // +2 horas
+
+      // Obtener el calendario por defecto
+      const defaultCalendar = await Calendar.getDefaultCalendarAsync();
+      if (!defaultCalendar) {
+        setErrorMessage(
+          t("reservationDetails.calendarError") ||
+            "No se pudo acceder al calendario por defecto"
+        );
+        setShowErrorModal(true);
+        return;
+      }
+
+      // Crear el evento
+      await Calendar.createEventAsync(defaultCalendar.id, {
+        title: `${t("reservationDetails.visitLabel")} ${reservation.vineyardName}`,
+        startDate: eventDateTime,
+        endDate: endDateTime,
+        location: reservation.vineyardName,
+        notes: `${t("reservationDetails.reservationFor")} ${reservation.peopleLabel}`,
+        timeZone: "default",
+      });
+
+      setShowSuccessModal(true);
+    } catch (error) {
+      console.error("Error al agregar evento al calendario:", error);
+      setErrorMessage(
+        t("reservationDetails.calendarError") ||
+          "Error al agregar evento al calendario"
+      );
+      setShowErrorModal(true);
+    }
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -35,8 +134,6 @@ export default function ReservationDetailScreen() {
     const fetchVisit = async () => {
       try {
         const visit = await getVisitById({ id });
-
-        console.log("visit details fetched:", visit);
 
         const mapped: IMappedReservation = {
           vineyardName: visit.vineyard.vineyardName,
@@ -48,6 +145,8 @@ export default function ReservationDetailScreen() {
               : `1 ${t("reservationDetails.peopleSuffix")}`,
           specialInstructions: t("reservationDetails.noInstructions"),
           status: visit.status?.toLowerCase() ?? "pending",
+          rawDate: visit.tour.day.date,
+          rawTime: visit.tour.tourTime,
         };
 
         setReservation(mapped);
@@ -171,7 +270,10 @@ export default function ReservationDetailScreen() {
       </ScrollView>
 
       <View className="px-4 py-6 border-t border-[#67323b]">
-        <TouchableOpacity className="w-full h-12 bg-[#c6102e] rounded-lg items-center justify-center flex-row gap-2 mb-3">
+        <TouchableOpacity
+          className="w-full h-12 bg-[#c6102e] rounded-lg items-center justify-center flex-row gap-2 mb-3"
+          onPress={addToCalendar}
+        >
           <Ionicons name="calendar-outline" size={20} color="#fff" />
           <Text className="text-white font-bold">
             {t("reservationDetails.addToCalendar")}
@@ -184,6 +286,30 @@ export default function ReservationDetailScreen() {
           </Text>
         </TouchableOpacity>
       </View>
+
+      {/* Modal de éxito */}
+      <ConfirmModal
+        visible={showSuccessModal}
+        title={t("common.success")}
+        body={
+          t("reservationDetails.calendarSuccess") ||
+          "Evento agregado al calendario exitosamente"
+        }
+        acceptLabel={t("common.accept")}
+        onAccept={() => setShowSuccessModal(false)}
+        onClose={() => setShowSuccessModal(false)}
+      />
+
+      {/* Modal de error */}
+      <ConfirmModal
+        visible={showErrorModal}
+        isError
+        title={t("common.error")}
+        body={errorMessage}
+        acceptLabel={t("common.accept")}
+        onAccept={() => setShowErrorModal(false)}
+        onClose={() => setShowErrorModal(false)}
+      />
     </Screen>
   );
 }

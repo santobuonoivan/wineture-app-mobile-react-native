@@ -83,7 +83,12 @@
     "addToCalendar": "Adicionar ao Calendário",
     "cancelReservation": "Cancelar Reserva",
     "peopleSuffix": "pessoas",
-    "noInstructions": "Nenhuma instrução especial para esta reserva."
+    "noInstructions": "Nenhuma instrução especial para esta reserva.",
+    "permissionRequired": "São necessárias permissões do calendário",
+    "dateError": "Erro ao processar data e hora",
+    "calendarError": "Erro ao acessar o calendário",
+    "calendarSuccess": "Evento adicionado ao calendário com sucesso",
+    "reservationFor": "Reserva para"
   },
   "common": {
     "appName": "VinhedoApp",

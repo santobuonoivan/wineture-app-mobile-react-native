@@ -83,7 +83,12 @@
     "addToCalendar": "Añadir al Calendario",
     "cancelReservation": "Cancelar Reserva",
     "peopleSuffix": "personas",
-    "noInstructions": "No hay instrucciones especiales para esta reserva."
+    "noInstructions": "No hay instrucciones especiales para esta reserva.",
+    "permissionRequired": "Se necesitan permisos para acceder al calendario",
+    "dateError": "Error al procesar la fecha y hora",
+    "calendarError": "Error al acceder al calendario",
+    "calendarSuccess": "Evento agregado al calendario exitosamente",
+    "reservationFor": "Reserva para"
   },
   "common": {
     "appName": "ViñedoApp",

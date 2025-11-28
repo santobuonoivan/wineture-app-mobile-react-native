@@ -14,7 +14,10 @@
       "backgroundColor": "#6B0F1A"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCalendarsUsageDescription": "Esta aplicación necesita acceso al calendario para agregar eventos de tus reservas."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -24,14 +27,13 @@
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "softwareKeyboardLayoutMode": "pan",
-      "package": "com.anonymous.wineture"
+      "package": "com.anonymous.wineture",
+      "permissions": ["WRITE_CALENDAR", "READ_CALENDAR"]
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": [
-      "expo-router"
-    ]
+    "plugins": ["expo-router", "expo-calendar"]
   }
 }

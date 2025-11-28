@@ -83,7 +83,12 @@
     "addToCalendar": "Add to Calendar",
     "cancelReservation": "Cancel Reservation",
     "peopleSuffix": "people",
-    "noInstructions": "No special instructions for this reservation."
+    "noInstructions": "No special instructions for this reservation.",
+    "permissionRequired": "Calendar permissions are required",
+    "dateError": "Error processing date and time",
+    "calendarError": "Error accessing calendar",
+    "calendarSuccess": "Event added to calendar successfully",
+    "reservationFor": "Reservation for"
   },
   "common": {
     "appName": "WineyardApp",
