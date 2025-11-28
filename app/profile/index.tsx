@@ -16,6 +16,23 @@ import { LanguageSelector } from "../../components/LanguageSelector";
 import { Screen } from "../../components/Screen";
 
 import { getOrdersByUser, getVisitsByUser } from "../../lib";
+import { IOrderSummary, IVisit } from "../../interfaces";
+interface IMappedOrder {
+  id: number;
+  uuid: string;
+  number: string;
+  date: string;
+  amount: string;
+  status: string;
+}
+
+interface IMappedReservation {
+  id: number;
+  uuid: string;
+  date: string;
+  vineyard: string;
+  status: string;
+}
 
 export default function ProfileScreen() {
   const { user, signOut } = useAuth();
@@ -25,23 +42,14 @@ export default function ProfileScreen() {
     "orders"
   );
 
-  const [orders, setOrders] = useState<any[]>([]);
-  const [reservations, setReservations] = useState<any[]>([]);
+  const [orders, setOrders] = useState<IMappedOrder[]>([]);
+  const [reservations, setReservations] = useState<IMappedReservation[]>([]);
 
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const MOCK_USER_ID = 15;
-
-  const statusTranslations: Record<string, string> = {
-    pending: t("statuses.pending"),
-    payed: t("statuses.payed"),
-    paid: t("statuses.paid"),
-    completed: t("statuses.completed"),
-    cancelled: t("statuses.cancelled"),
-    validated: t("statuses.validated"),
-  };
 
   // ---------------- FETCH FUNCTION ----------------
   const loadData = useCallback(async () => {
@@ -52,31 +60,38 @@ export default function ProfileScreen() {
       // -------- ORDERS --------
       const ordRes = await getOrdersByUser({ id: MOCK_USER_ID });
 
-      const rawOrders = ordRes?.data?.data ?? [];
-      const mappedOrders = rawOrders.map((o: any) => ({
-        id: String(o?.orderId ?? "0"),
-        uuid: o?.uuid ?? "0",
-        number: o?.uuid ?? "ORDER",
-        date: new Date(o?.orderDate ?? Date.now()).toLocaleDateString(),
-        amount: `$${o?.totalAmount ?? "0"}`,
-        status: (o?.status?.statusName ?? "N/A").toLowerCase(),
+      const rawOrders = ordRes.data;
+      const mappedOrders = rawOrders.map((order: IOrderSummary) => ({
+        id: order.orderId,
+        uuid: order.uuid,
+        number: order.uuid.slice(0, 8).toUpperCase(),
+        date: new Date(order.orderDate).toLocaleDateString(),
+        amount: `$${order.totalAmount}`,
+        status: order.status.statusName.toLowerCase(),
       }));
 
       setOrders(mappedOrders);
 
       // -------- VISITS --------
       const visRes = await getVisitsByUser({ id: MOCK_USER_ID });
-      const rawVisits = visRes?.data?.data ?? [];
+      const rawVisits = visRes?.data ?? [];
 
-      const mappedVisits = rawVisits.map((v: any) => ({
-        id: String(v?.visitId ?? "0"),
-        uuid: v?.uuid ?? "0",
-        number: v?.code ?? "RES",
-        date: new Date(v?.visitDate ?? Date.now()).toLocaleDateString(),
-        vineyard: v?.vineyard?.name ?? "Vineyard",
-        status: (v?.status ?? "N/A").toLowerCase(),
-      }));
+      const mappedVisits = rawVisits.map((visit: IVisit) => {
+        const visitDate = visit.tour.day.date;
+        const visitTourTime = visit.tour.tourTime;
+        const dateTimeString = `${visitDate}T${visitTourTime}`;
 
+        // Crear fecha en UTC y convertir a hora local del cliente
+        const utcDate = new Date(dateTimeString + "Z"); // La 'Z' indica UTC
+
+        return {
+          id: visit.visitId,
+          uuid: visit.uuid,
+          date: utcDate.toLocaleDateString(),
+          vineyard: visit.vineyard.vineyardName,
+          status: visit.status.toLowerCase(),
+        };
+      });
       setReservations(mappedVisits);
     } catch (e) {
       console.log("Profile Load Error:", e);
@@ -104,12 +119,14 @@ export default function ProfileScreen() {
 
   const handleViewMore = () => {
     router.push(
-      activeTab === "orders" ? "/profile/orders" : "/profile/reservations"
+      activeTab === "orders"
+        ? "/profile/orders/history"
+        : "/profile/reservations/history"
     );
   };
 
   // ---------------- RENDER ITEMS ----------------
-  const renderOrderItem = (order: any) => (
+  const renderOrderItem = (order: IMappedOrder) => (
     <TouchableOpacity
       key={order.id}
       className="flex-row items-center justify-between bg-transparent min-h-[72px] py-2 pr-2"
@@ -131,12 +148,12 @@ export default function ProfileScreen() {
       </View>
 
       <Text className="text-white text-base ml-2 text-right">
-        {statusTranslations[order.status] ?? order.status}
+        {t(`statuses.${order.status}`)}
       </Text>
     </TouchableOpacity>
   );
 
-  const renderReservationItem = (r: any) => (
+  const renderReservationItem = (r: IMappedReservation) => (
     <TouchableOpacity
       key={r.id}
       className="flex-row items-center justify-between bg-transparent min-h-[72px] py-2 pr-2"
@@ -149,7 +166,9 @@ export default function ProfileScreen() {
 
         <View className="flex-1">
           <Text className="text-white text-base font-medium">
-            {t("profile.reservationNumber", { number: r.number })}
+            {t("profile.reservationNumber", {
+              number: r.uuid.slice(0, 8).toUpperCase(),
+            })}
           </Text>
           <Text className="text-[#c9929b] text-sm">
             {r.date} - {r.vineyard}
@@ -158,7 +177,7 @@ export default function ProfileScreen() {
       </View>
 
       <Text className="text-white text-base ml-2 text-right">
-        {statusTranslations[r.status] ?? r.status}
+        {t(`visitStatus.${r.status}`) ?? r.status}
       </Text>
     </TouchableOpacity>
   );

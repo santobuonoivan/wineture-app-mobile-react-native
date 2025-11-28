@@ -255,6 +255,14 @@
     "validated": "Validado",
     "validating": "Validando"
   },
+  "visitStatus": {
+    "pending": "Pendente",
+    "processing": "Processando",
+    "scheduled": " Agendada",
+    "visited": "Visitada",
+    "cancelled": "Cancelado",
+    "suspended": "Suspensa"
+  },
   "trackingStatuses": {
     "delivered": "Entregue",
     "exception": "Exceção",

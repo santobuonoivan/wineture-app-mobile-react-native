@@ -25,30 +25,12 @@ export default function ReservationDetailScreen() {
     const fetchVisit = async () => {
       try {
         const res = await getVisitById({ id });
+
         const visit = res.data;
-
-        let visitDayData = null;
-
-        if (visit?.tour?.dayId) {
-          try {
-            const visitDay = await getVisitDayById({
-              id: visit.tour.dayId,
-            });
-
-            if (visitDay && visitDay.data) {
-              visitDayData = visitDay.data;
-            } else {
-              console.log("WARNING: visitDay devolvió vacío");
-            }
-          } catch (err) {
-            console.log("ERROR visitDay fetch", err);
-          }
-        } else {
-          console.log("WARNING: visit.tour.dayId no existe");
-        }
+        console.log("visit details fetched:", visit);
 
         const mapped = {
-          vineyardName: visit.vineyard?.vineyardName ?? "",
+          vineyardName: visit?.vineyardName ?? "",
 
           dateLabel: visitDayData?.date ?? "-",
 

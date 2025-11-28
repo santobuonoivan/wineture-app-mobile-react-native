@@ -255,6 +255,14 @@
     "validated": "Validated",
     "refunded": "Refunded"
   },
+  "visitStatus": {
+    "pending": "Pending",
+    "processing": "Processing",
+    "scheduled": "Scheduled",
+    "visited": "Visited",
+    "cancelled": "Cancelled",
+    "suspended": "Suspended"
+  },
   "trackingStatuses": {
     "delivered": "Delivered",
     "exception": "Exception",

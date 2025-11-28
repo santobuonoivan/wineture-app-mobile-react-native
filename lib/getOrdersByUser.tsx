@@ -1,5 +1,5 @@
 import { config } from "../config/env";
-import { IOrderRestponse } from "../interfaces";
+import { IOrdersByUserResponse } from "../interfaces";
 
 // Use the config instead of direct process.env access
 const API_BASE_URL = config.API_BASE_URL;
@@ -7,7 +7,7 @@ const API_KEY = config.API_KEY;
 
 export const getOrdersByUser = async (params: {
   id: number;
-}): Promise<any> => {
+}): Promise<IOrdersByUserResponse> => {
   const { id } = params;
   const url = new URL(
     `${API_BASE_URL}/orders/users/${id}?page=1&pageSize=20&searchData={}&sorterData={}`
@@ -22,8 +22,8 @@ export const getOrdersByUser = async (params: {
         "HTTP-X-API-KEY": API_KEY,
       },
     });
-    const data = await response.json();
-    return { status: response.status, data };
+    const { data, total } = await response.json();
+    return { status: response.status, data, total };
   } catch (error) {
     console.error(`Error fetching vineyard reviews statistic: ${error}`);
     throw error;

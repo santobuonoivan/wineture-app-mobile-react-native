@@ -21,4 +21,26 @@ export {
   IOrderRestponse,
   IOrderItem,
   IOrderTrackingItem,
+  IOrdersByUserResponse,
+  IOrderSummary,
+  IOrderUser,
+  IOrderStatus,
+  IOrderPayment,
+  IOrderVineyard,
 } from "./IOrder";
+
+// Re-export visit interfaces
+export {
+  IUserVisitsResponse,
+  IVisit,
+  IVisitPayment,
+  IVisitPerson,
+  IVisitVineyard,
+  IVisitVineyardLocation,
+  IVisitUser,
+  IVisitTour,
+  IVisitDay,
+  VisitStatus,
+  CountryISO,
+  CurrencyISO,
+} from "./IVisits";

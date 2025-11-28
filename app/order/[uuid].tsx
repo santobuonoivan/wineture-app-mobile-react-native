@@ -17,7 +17,6 @@ export default function OrderDetailScreen() {
     getOrderDetailByUUID({ uuid }).then((res) => {
       if (res?.status === 200 && res.data) {
         const order = res.data;
-        console.log("Order details fetched:", order);
         setOrderDetails(order);
       }
     });
