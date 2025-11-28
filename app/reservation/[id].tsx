@@ -11,12 +11,22 @@ import { Ionicons } from "@expo/vector-icons";
 import { Screen } from "../../components/Screen";
 import { useLanguage } from "../../hooks/useLanguage";
 import { getVisitById, getVisitDayById } from "../../lib";
+import { PhoneIcon } from "../../components/Icons";
+
+interface IMappedReservation {
+  vineyardName: string;
+  dateLabel: string;
+  timeLabel: string;
+  peopleLabel: string;
+  specialInstructions: string;
+  status: string;
+}
 
 export default function ReservationDetailScreen() {
   const { id } = useLocalSearchParams<{ id: any }>();
   const { t } = useLanguage();
 
-  const [reservation, setReservation] = useState<any>(null);
+  const [reservation, setReservation] = useState<IMappedReservation>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,26 +34,19 @@ export default function ReservationDetailScreen() {
 
     const fetchVisit = async () => {
       try {
-        const res = await getVisitById({ id });
+        const visit = await getVisitById({ id });
 
-        const visit = res.data;
         console.log("visit details fetched:", visit);
 
-        const mapped = {
-          vineyardName: visit?.vineyardName ?? "",
-
-          dateLabel: visitDayData?.date ?? "-",
-
-          timeLabel: visit.tour?.tourTime?.slice(0, 5) ?? "",
-
+        const mapped: IMappedReservation = {
+          vineyardName: visit.vineyard.vineyardName,
+          dateLabel: visit.tour.day.date,
+          timeLabel: visit.tour.tourTime,
           peopleLabel:
             Array.isArray(visit.people) && visit.people.length > 0
               ? `${visit.people.length} ${t("reservationDetails.peopleSuffix")}`
               : `1 ${t("reservationDetails.peopleSuffix")}`,
-
-          specialInstructions:
-            visit.specialInstructions ?? t("reservationDetails.noInstructions"),
-
+          specialInstructions: t("reservationDetails.noInstructions"),
           status: visit.status?.toLowerCase() ?? "pending",
         };
 
@@ -105,6 +108,9 @@ export default function ReservationDetailScreen() {
               <Text className="text-white text-lg font-bold">
                 {reservation.vineyardName}
               </Text>
+            </View>
+            <View className="bg-white/10 rounded-lg p-3 ml-auto">
+              <PhoneIcon style={{ color: "white" }} />
             </View>
           </View>
 

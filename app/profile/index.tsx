@@ -83,11 +83,17 @@ export default function ProfileScreen() {
 
         // Crear fecha en UTC y convertir a hora local del cliente
         const utcDate = new Date(dateTimeString + "Z"); // La 'Z' indica UTC
-
+        const dateFormated =
+          utcDate.toLocaleDateString() +
+          " - " +
+          utcDate.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
         return {
           id: visit.visitId,
           uuid: visit.uuid,
-          date: utcDate.toLocaleDateString(),
+          date: dateFormated,
           vineyard: visit.vineyard.vineyardName,
           status: visit.status.toLowerCase(),
         };
@@ -170,9 +176,8 @@ export default function ProfileScreen() {
               number: r.uuid.slice(0, 8).toUpperCase(),
             })}
           </Text>
-          <Text className="text-[#c9929b] text-sm">
-            {r.date} - {r.vineyard}
-          </Text>
+          <Text className="text-[#c9929b] text-sm">{r.vineyard}</Text>
+          <Text className="text-[#c9929b] text-sm">{r.date}</Text>
         </View>
       </View>
 
@@ -183,8 +188,7 @@ export default function ProfileScreen() {
   );
 
   const currentItems = activeTab === "orders" ? orders : reservations;
-  const displayItems =
-    activeTab === "orders" ? orders.slice(0, 5) : reservations.slice(0, 5);
+
   const hasMore = currentItems.length > 5;
 
   // ---------------- LOADING UI ----------------
@@ -305,9 +309,11 @@ export default function ProfileScreen() {
               {t("profile.noData")}
             </Text>
           ) : activeTab === "orders" ? (
-            displayItems.map(renderOrderItem)
+            orders.map((o: IMappedOrder) => renderOrderItem(o))
           ) : (
-            displayItems.map(renderReservationItem)
+            reservations.map((r: IMappedReservation) =>
+              renderReservationItem(r)
+            )
           )}
 
           {hasMore && (

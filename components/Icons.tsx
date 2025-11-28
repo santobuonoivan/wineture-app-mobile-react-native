@@ -2,6 +2,7 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
+import Feather from "@expo/vector-icons/Feather";
 
 export const CircleInfoIcon = (props: any) => (
   <FontAwesome6 name="circle-info" size={24} color="white" {...props} />
@@ -45,4 +46,8 @@ export const TikTokIcon = (props: any) => (
 
 export const WebsiteIcon = (props: any) => (
   <Entypo name="link" size={24} color="black" {...props} />
+);
+
+export const PhoneIcon = (props: any) => (
+  <Feather name="phone-outgoing" size={24} color="black" {...props} />
 );
