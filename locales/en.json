@@ -60,6 +60,10 @@
     "orderSent": "Order Shipped",
     "orderProcessed": "Order Processed",
     "orderPlaced": "Order Placed",
+    "priceSummary": "Price Summary",
+    "discounts": "Discounts",
+    "commission": "Commission",
+    "orderTracking": "Order Tracking",
     "status": {
       "enCamino": "On the Way",
       "entregado": "Delivered",
@@ -250,5 +254,22 @@
     "validating": "Validating",
     "validated": "Validated",
     "refunded": "Refunded"
+  },
+  "trackingStatuses": {
+    "delivered": "Delivered",
+    "exception": "Exception",
+    "new": "Order Placed",
+    "pick": "Warehouse Preparation",
+    "collected": "Picked Up by Carrier",
+    "cust_out": "In Origin Customs",
+    "port_ready": "Cargo Consolidated at Port",
+    "on_vessel": "On Board Ship (Shipped)",
+    "at_sea": "In Maritime Transit",
+    "port_arr": "Arrival at Destination Port",
+    "cust_in": "In Destination Customs",
+    "duty_wait": "Tariffs Pending Payment",
+    "deconsol": "Deconsolidation / Final Pickup",
+    "cd_arrive": "At Local Distribution Center",
+    "ofl": "Out for Delivery"
   }
 }

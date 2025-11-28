@@ -60,6 +60,10 @@
     "orderSent": "Pedido Enviado",
     "orderProcessed": "Pedido Procesado",
     "orderPlaced": "Pedido Realizado",
+    "priceSummary": "Resumen de Precios",
+    "discounts": "Descuentos",
+    "commission": "Comisión",
+    "orderTracking": "Seguimiento del Pedido",
     "status": {
       "enCamino": "En Camino",
       "entregado": "Entregado",
@@ -250,5 +254,22 @@
     "cancelled": "Cancelado",
     "validated": "Validado",
     "refunded": "Reembolsado"
+  },
+  "trackingStatuses": {
+    "delivered": "Entregado",
+    "exception": "Excepción",
+    "new": "Orden Ingresada",
+    "pick": "Preparación en Almacén",
+    "collected": "Recogida por Transportista",
+    "cust_out": "En Aduanas de Origen",
+    "port_ready": "Carga Consolidada en Puerto",
+    "on_vessel": "A Bordo del Buque",
+    "at_sea": "En Tránsito Marítimo",
+    "port_arr": "Llegada a Puerto de Destino",
+    "cust_in": "En Aduanas de Destino",
+    "duty_wait": "Aranceles Pendientes de Pago",
+    "deconsol": "Desconsolidación / Recogida Final",
+    "cd_arrive": "En Centro de Distribución Local",
+    "ofl": "En Distribución Local"
   }
 }
