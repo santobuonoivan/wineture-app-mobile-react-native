@@ -248,6 +248,7 @@
     "completed": "Concluído",
     "cancelled": "Cancelado",
     "refunded": "Reembolsado",
-    "validated": "Validado"
+    "validated": "Validado",
+    "validating": "Validando"
   }
 }

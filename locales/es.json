@@ -246,6 +246,7 @@
     "paid": "Pagado",
     "payed": "Pagado",
     "completed": "Completado",
+    "validating": "Validando",
     "cancelled": "Cancelado",
     "validated": "Validado",
     "refunded": "Reembolsado"
