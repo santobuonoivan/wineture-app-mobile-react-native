@@ -1,5 +1,7 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
+import { Platform } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface User {
   id: string;
@@ -54,6 +56,14 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-storage", // nombre para el storage
+      storage:
+        Platform.OS === "web"
+          ? createJSONStorage(() => ({
+              getItem: (name: string) => Promise.resolve(localStorage.getItem(name)),
+              setItem: (name: string, value: string) => Promise.resolve(localStorage.setItem(name, value)),
+              removeItem: (name: string) => Promise.resolve(localStorage.removeItem(name)),
+            }))
+          : createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({
         user: state.user,
         isAuthenticated: state.isAuthenticated,

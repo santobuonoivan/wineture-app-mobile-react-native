@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, Image, Pressable } from "react-native";
 import { MenuIconFold } from "../Icons";
+import { useAuth } from "../../hooks/useAuth";
 
 type LateralMenuProps = {
   visible: boolean;
@@ -7,6 +8,13 @@ type LateralMenuProps = {
 };
 
 export function LateralMenu({ visible, onClose }: LateralMenuProps) {
+  const { signOut } = useAuth();
+
+  const handleLogout = async () => {
+    await signOut();
+    onClose();
+  };
+
   if (!visible) return null;
 
   return (
@@ -42,7 +50,7 @@ export function LateralMenu({ visible, onClose }: LateralMenuProps) {
             <DrawerItem
               label="Cerrar Sesión"
               icon={"logout"}
-              onPress={onClose}
+              onPress={handleLogout}
             />
           </View>
         </View>
@@ -55,7 +63,7 @@ type DrawerItemProps = {
   label: string;
   icon: string;
   active?: boolean;
-  onPress?: () => void;
+  onPress?: () => void | Promise<void>;
 };
 
 function DrawerItem({ label, icon, active, onPress }: DrawerItemProps) {

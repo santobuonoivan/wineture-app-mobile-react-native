@@ -28,12 +28,19 @@
       "predictiveBackGestureEnabled": false,
       "softwareKeyboardLayoutMode": "pan",
       "package": "com.anonymous.wineture",
-      "permissions": ["WRITE_CALENDAR", "READ_CALENDAR"]
+      "permissions": [
+        "WRITE_CALENDAR",
+        "READ_CALENDAR"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": ["expo-router", "expo-calendar"]
+    "plugins": [
+      "expo-router",
+      "expo-calendar",
+      "expo-secure-store"
+    ]
   }
 }

@@ -12,7 +12,6 @@ export const getOrderDetailByUUID = async (params: {
   const url = new URL(`${API_BASE_URL}/orders/${uuid}`);
 
   try {
-    // Realiza la solicitud GET a la API backend utilizando fetch
     const response = await fetch(url.toString(), {
       method: "GET",
       headers: {

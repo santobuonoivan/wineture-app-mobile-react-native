@@ -16,7 +16,8 @@
     "sessionClosed": "You have successfully logged out",
     "logoutConfirm": "Are you sure you want to log out?",
     "logout": "Log Out",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "signInWithKeycloak": "Sign in"
   },
   "profile": {
     "title": "Profile",

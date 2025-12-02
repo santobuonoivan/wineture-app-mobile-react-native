@@ -16,7 +16,8 @@
     "sessionClosed": "Você saiu com sucesso",
     "logoutConfirm": "Tem certeza que quer sair?",
     "logout": "Sair",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "signInWithKeycloak": "Entrar"
   },
   "profile": {
     "title": "Perfil",

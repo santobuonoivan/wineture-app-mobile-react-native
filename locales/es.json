@@ -16,7 +16,8 @@
     "sessionClosed": "Has cerrado sesión exitosamente",
     "logoutConfirm": "¿Estás seguro que quieres cerrar sesión?",
     "logout": "Cerrar Sesión",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "signInWithKeycloak": "Iniciar sesión"
   },
   "profile": {
     "noData": "No hay datos para mostrar",
