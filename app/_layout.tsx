@@ -16,6 +16,7 @@ import "../config/i18n";
 import { LateralMenu } from "../components/ui/LateralMenu";
 import { useMenuStore } from "../store/useMenuStore";
 import { useCartStore } from "../store/useCartStore";
+import SessionExpiredModal from "../components/ui/SessionExpiredModal";
 
 export default function Layout() {
   const insets = useSafeAreaInsets();
@@ -58,6 +59,7 @@ export default function Layout() {
 
   return (
     <View className="flex-1 bg-[#221013] p-2">
+      <SessionExpiredModal />
       <StatusBar style="light" hidden={false} />
       {/* Drawer lateral */}
       <LateralMenu visible={isOpen} onClose={close} />

@@ -17,7 +17,9 @@
     "logoutConfirm": "Tem certeza que quer sair?",
     "logout": "Sair",
     "cancel": "Cancelar",
-    "signInWithKeycloak": "Entrar"
+    "signInWithKeycloak": "Entrar",
+    "sessionExpiredTitle": "Sessão expirada",
+    "sessionExpiredMessage": "Por segurança, encerramos sua sessão. Por favor, faça login novamente."
   },
   "profile": {
     "title": "Perfil",
@@ -34,6 +36,8 @@
     "memberSince": "Membro desde hoje",
     "locationUndefined": "Localização não definida",
     "selectLanguage": "Selecionar idioma",
+    "reservationHistory": "Histórico de Reservas",
+    "orderHistory": "Histórico de Pedidos",
     "orderStatus": {
       "delivered": "Entregue",
       "inTransit": "Em Trânsito",
@@ -98,6 +102,20 @@
     "loading": "Carregando...",
     "accept": "Aceitar",
     "close": "Fechar"
+  },
+  "menu": {
+    "guest": "Convidado",
+    "home": "Início",
+    "vineyards": "Vinícolas",
+    "wines": "Vinhos",
+    "reservations": "Minhas Reservas",
+    "orders": "Meus Pedidos",
+    "cart": "Carrinho",
+    "profile": "Perfil",
+    "help": "Ajuda",
+    "settings": "Ajustes",
+    "logout": "Sair",
+    "login": "Entrar"
   },
   "socialNetworks": {
     "title": "Nossas redes",
@@ -199,6 +217,7 @@
   },
   "payment": {
     "title": "Método de Pagamento",
+    "processing": "Processando",
     "stepper": {
       "shipping": "Entrega",
       "payment": "Pagamento",

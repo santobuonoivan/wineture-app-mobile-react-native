@@ -30,7 +30,6 @@ interface IMappedReservation {
 export default function ReservationDetailScreen() {
   const { id } = useLocalSearchParams<{ id: any }>();
   const { t } = useLanguage();
-
   const [reservation, setReservation] = useState<IMappedReservation>();
   const [loading, setLoading] = useState(true);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -135,9 +134,11 @@ export default function ReservationDetailScreen() {
       try {
         const visit = await getVisitById({ id });
 
+        const day = await getVisitDayById({ id: visit.tour.dayId });
+
         const mapped: IMappedReservation = {
           vineyardName: visit.vineyard.vineyardName,
-          dateLabel: visit.tour.day.date,
+          dateLabel: day.date,
           timeLabel: visit.tour.tourTime,
           peopleLabel:
             Array.isArray(visit.people) && visit.people.length > 0
@@ -145,7 +146,7 @@ export default function ReservationDetailScreen() {
               : `1 ${t("reservationDetails.peopleSuffix")}`,
           specialInstructions: t("reservationDetails.noInstructions"),
           status: visit.status?.toLowerCase() ?? "pending",
-          rawDate: visit.tour.day.date,
+          rawDate: day.date,
           rawTime: visit.tour.tourTime,
         };
 

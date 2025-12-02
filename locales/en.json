@@ -17,7 +17,9 @@
     "logoutConfirm": "Are you sure you want to log out?",
     "logout": "Log Out",
     "cancel": "Cancel",
-    "signInWithKeycloak": "Sign in"
+    "signInWithKeycloak": "Sign in",
+    "sessionExpiredTitle": "Session expired",
+    "sessionExpiredMessage": "For your security, we logged you out. Please sign in again."
   },
   "profile": {
     "title": "Profile",
@@ -34,6 +36,8 @@
     "memberSince": "Member since today",
     "locationUndefined": "Location not defined",
     "selectLanguage": "Select language",
+    "reservationHistory": "Reservation History",
+    "orderHistory": "Order History",
     "orderStatus": {
       "delivered": "Delivered",
       "inTransit": "In Transit",
@@ -98,6 +102,20 @@
     "loading": "Loading...",
     "accept": "Accept",
     "close": "Close"
+  },
+  "menu": {
+    "guest": "Guest",
+    "home": "Home",
+    "vineyards": "Vineyards",
+    "wines": "Wines",
+    "reservations": "My Reservations",
+    "orders": "My Orders",
+    "cart": "Cart",
+    "profile": "Profile",
+    "help": "Help",
+    "settings": "Settings",
+    "logout": "Log Out",
+    "login": "Log In"
   },
   "socialNetworks": {
     "title": "Our social networks",
@@ -199,6 +217,7 @@
   },
   "payment": {
     "title": "Payment Method",
+    "processing": "Processing",
     "stepper": {
       "shipping": "Shipping",
       "payment": "Payment",

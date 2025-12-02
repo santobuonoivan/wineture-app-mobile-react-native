@@ -126,8 +126,8 @@ export default function ProfileScreen() {
   const handleViewMore = () => {
     router.push(
       activeTab === "orders"
-        ? "/profile/orders/history"
-        : "/profile/reservations/history"
+        ? "/order/history"
+        : "/reservation/history"
     );
   };
 

@@ -5,7 +5,12 @@ import { makeRedirectUri } from "expo-auth-session";
 
 import { useAuthStore, User } from "../store/authStore";
 import { Language, useLanguageStore } from "../store/languageStore";
-import { useKeycloakAuth, handleAuthResponse } from "../auth/authService";
+import {
+  useKeycloakAuth,
+  handleAuthResponse,
+  getValidAccessToken,
+  refreshAccessToken,
+} from "../auth";
 import { config } from "../config/env";
 
 export const useAuth = () => {
@@ -109,5 +114,7 @@ export const useAuth = () => {
     isLoading,
     signIn,
     signOut,
+    getValidAccessToken,
+    refreshAccessToken,
   };
 };
